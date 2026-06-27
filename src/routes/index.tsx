@@ -336,16 +336,33 @@ function ResultCard({
   searchUrl: string;
 }) {
   const [copied, setCopied] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [draft, setDraft] = useState<string | null>(null);
+
+  const displayValue = draft !== null ? draft : value;
+  const liveSearchUrl = draft !== null
+    ? searchUrl.replace(/q=[^&]*/, `q=${encodeURIComponent(draft)}`).replace(/keywords=[^&]*/, `keywords=${encodeURIComponent(draft)}`)
+    : searchUrl;
 
   const copy = async () => {
-    if (!value) return;
+    if (!displayValue) return;
     try {
-      await navigator.clipboard.writeText(value);
+      await navigator.clipboard.writeText(displayValue);
       setCopied(true);
       setTimeout(() => setCopied(false), 1500);
     } catch {
       // ignore
     }
+  };
+
+  const startEdit = () => {
+    setDraft(displayValue);
+    setIsEditing(true);
+  };
+
+  const resetEdit = () => {
+    setDraft(null);
+    setIsEditing(false);
   };
 
   return (
@@ -356,23 +373,45 @@ function ResultCard({
             {icon}
           </div>
           <div>
-            <h4 className="text-sm font-semibold">{title}</h4>
+            <h4 className="text-sm font-semibold">
+              {title}
+              {draft !== null && (
+                <span className="ml-2 rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-primary">
+                  Edited
+                </span>
+              )}
+            </h4>
             <p className="text-xs text-muted-foreground">{description}</p>
           </div>
         </div>
-        <div className="flex shrink-0 items-center gap-2">
+        <div className="flex shrink-0 flex-wrap items-center justify-end gap-2">
+          {draft !== null && (
+            <button
+              onClick={resetEdit}
+              className="inline-flex items-center gap-1.5 rounded-md border border-border bg-background px-2.5 py-1.5 text-xs font-medium transition hover:bg-accent"
+            >
+              <RotateCcw className="h-3.5 w-3.5" /> Reset
+            </button>
+          )}
+          <button
+            onClick={() => (isEditing ? setIsEditing(false) : startEdit())}
+            className="inline-flex items-center gap-1.5 rounded-md border border-border bg-background px-2.5 py-1.5 text-xs font-medium transition hover:bg-accent"
+          >
+            {isEditing ? <Check className="h-3.5 w-3.5" /> : <Pencil className="h-3.5 w-3.5" />}
+            {isEditing ? "Done" : "Edit"}
+          </button>
           <a
-            href={value ? searchUrl : undefined}
+            href={displayValue ? liveSearchUrl : undefined}
             target="_blank"
             rel="noreferrer"
-            aria-disabled={!value}
-            className={`inline-flex items-center gap-1.5 rounded-md border border-border bg-background px-2.5 py-1.5 text-xs font-medium transition hover:bg-accent ${!value ? "pointer-events-none opacity-50" : ""}`}
+            aria-disabled={!displayValue}
+            className={`inline-flex items-center gap-1.5 rounded-md border border-border bg-background px-2.5 py-1.5 text-xs font-medium transition hover:bg-accent ${!displayValue ? "pointer-events-none opacity-50" : ""}`}
           >
             <Search className="h-3.5 w-3.5" /> Open
           </a>
           <button
             onClick={copy}
-            disabled={!value}
+            disabled={!displayValue}
             className="inline-flex items-center gap-1.5 rounded-md bg-primary px-2.5 py-1.5 text-xs font-medium text-primary-foreground transition hover:opacity-90 disabled:opacity-50"
           >
             {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
@@ -380,9 +419,18 @@ function ResultCard({
           </button>
         </div>
       </div>
-      <pre className="mt-4 max-h-40 overflow-auto rounded-lg bg-muted p-3 font-mono text-xs leading-relaxed text-foreground">
-        {value || "—"}
-      </pre>
+      {isEditing ? (
+        <textarea
+          value={draft ?? ""}
+          onChange={(e) => setDraft(e.target.value)}
+          spellCheck={false}
+          className="mt-4 h-40 w-full resize-none rounded-lg bg-muted p-3 font-mono text-xs leading-relaxed text-foreground outline-none ring-1 ring-primary/40 focus:ring-2 focus:ring-primary"
+        />
+      ) : (
+        <pre className="mt-4 max-h-40 overflow-auto rounded-lg bg-muted p-3 font-mono text-xs leading-relaxed text-foreground">
+          {displayValue || "—"}
+        </pre>
+      )}
     </div>
   );
 }
