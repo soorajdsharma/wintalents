@@ -71,6 +71,7 @@ function SourcePro() {
   const github = useMemo(() => toGitHubXRay(query), [query]);
   const google = useMemo(() => toGoogleXRay(query), [query]);
   const linkedin = useMemo(() => toLinkedInBoolean(query), [query]);
+  const nested = useMemo(() => toNestedSearch(query), [query]);
 
   const scrollToBuilder = () => {
     document.getElementById("builder")?.scrollIntoView({ behavior: "smooth", block: "start" });
