@@ -246,6 +246,21 @@ function SourcePro() {
               <p className="mt-3 text-xs text-muted-foreground">
                 Tip: Use quotes for exact matches and parentheses to group terms.
               </p>
+
+              <FilterGroup
+                label="Location"
+                options={LOCATION_OPTIONS}
+                selected={locations}
+                onToggle={(v) => toggle(locations, setLocations, v)}
+                onClear={() => setLocations([])}
+              />
+              <FilterGroup
+                label="Education"
+                options={EDUCATION_OPTIONS}
+                selected={education}
+                onToggle={(v) => toggle(education, setEducation, v)}
+                onClear={() => setEducation([])}
+              />
             </div>
 
             <div className="space-y-4 lg:col-span-3">
