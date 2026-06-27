@@ -48,13 +48,13 @@ function wrapIfNeeded(q: string): string {
 function toGitHubXRay(input: string): string {
   const q = normalizeBoolean(input);
   if (!q) return "";
-  return `site:github.com ${wrapIfNeeded(q)}`;
+  return `site:github.com ${q}`;
 }
 
 function toGoogleXRay(input: string): string {
   const q = normalizeBoolean(input);
   if (!q) return "";
-  return `(site:linkedin.com/in OR site:github.com) ${wrapIfNeeded(q)}`;
+  return `site:linkedin.com/in ${q}`;
 }
 
 function toNestedSearch(input: string): string {
