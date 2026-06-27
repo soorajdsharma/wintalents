@@ -38,16 +38,31 @@ function toLinkedInBoolean(input: string): string {
   return normalizeBoolean(input);
 }
 
+function wrapIfNeeded(q: string): string {
+  if (!q) return "";
+  // If already wrapped in an outer paren pair, don't double-wrap.
+  if (q.startsWith("(") && q.endsWith(")")) return q;
+  return `(${q})`;
+}
+
 function toGitHubXRay(input: string): string {
   const q = normalizeBoolean(input);
   if (!q) return "";
-  return `site:github.com (${q})`;
+  return `site:github.com ${wrapIfNeeded(q)}`;
 }
 
 function toGoogleXRay(input: string): string {
   const q = normalizeBoolean(input);
   if (!q) return "";
-  return `(site:linkedin.com/in OR site:github.com) (${q})`;
+  return `(site:linkedin.com/in OR site:github.com) ${wrapIfNeeded(q)}`;
+}
+
+function toNestedSearch(input: string): string {
+  // Nested Search: preserves the user's nested boolean structure exactly,
+  // without adding an extra outer wrapping paren pair.
+  const q = normalizeBoolean(input);
+  if (!q) return "";
+  return `site:github.com ${q}`;
 }
 
 function SourcePro() {
