@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
-import { Copy, Check, Search, Github, Globe, Linkedin, Mail, Code2, Sparkles, Twitter } from "lucide-react";
+import { Copy, Check, Search, Github, Globe, Linkedin, Mail, Code2, Sparkles, Twitter, Layers } from "lucide-react";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -38,16 +38,31 @@ function toLinkedInBoolean(input: string): string {
   return normalizeBoolean(input);
 }
 
+function wrapIfNeeded(q: string): string {
+  if (!q) return "";
+  // If already wrapped in an outer paren pair, don't double-wrap.
+  if (q.startsWith("(") && q.endsWith(")")) return q;
+  return `(${q})`;
+}
+
 function toGitHubXRay(input: string): string {
   const q = normalizeBoolean(input);
   if (!q) return "";
-  return `site:github.com (${q})`;
+  return `site:github.com ${wrapIfNeeded(q)}`;
 }
 
 function toGoogleXRay(input: string): string {
   const q = normalizeBoolean(input);
   if (!q) return "";
-  return `(site:linkedin.com/in OR site:github.com) (${q})`;
+  return `(site:linkedin.com/in OR site:github.com) ${wrapIfNeeded(q)}`;
+}
+
+function toNestedSearch(input: string): string {
+  // Nested Search: preserves the user's nested boolean structure exactly,
+  // without adding an extra outer wrapping paren pair.
+  const q = normalizeBoolean(input);
+  if (!q) return "";
+  return `site:github.com ${q}`;
 }
 
 function SourcePro() {
@@ -56,6 +71,7 @@ function SourcePro() {
   const github = useMemo(() => toGitHubXRay(query), [query]);
   const google = useMemo(() => toGoogleXRay(query), [query]);
   const linkedin = useMemo(() => toLinkedInBoolean(query), [query]);
+  const nested = useMemo(() => toNestedSearch(query), [query]);
 
   const scrollToBuilder = () => {
     document.getElementById("builder")?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -215,6 +231,13 @@ function SourcePro() {
                 icon={<Linkedin className="h-4 w-4" />}
                 value={linkedin}
                 searchUrl={`https://www.linkedin.com/search/results/people/?keywords=${encodeURIComponent(linkedin)}`}
+              />
+              <ResultCard
+                title="Nested Search"
+                description="Preserves your nested boolean structure without extra wrapping brackets."
+                icon={<Layers className="h-4 w-4" />}
+                value={nested}
+                searchUrl={`https://www.google.com/search?q=${encodeURIComponent(nested)}`}
               />
             </div>
           </div>
