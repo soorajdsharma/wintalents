@@ -58,11 +58,12 @@ function toGoogleXRay(input: string): string {
 }
 
 function toNestedSearch(input: string): string {
-  // Nested Search: preserves the user's nested boolean structure exactly,
-  // without adding an extra outer wrapping paren pair.
+  // Nested Search: raw nested boolean. Removes the space between OR/AND
+  // and a following quoted term (e.g. `OR "Staff"` -> `OR"Staff"`), per
+  // the reference style. No site: prefix.
   const q = normalizeBoolean(input);
   if (!q) return "";
-  return `site:github.com ${q}`;
+  return q.replace(/\b(OR|AND)\s+"/g, '$1"');
 }
 
 function SourcePro() {
