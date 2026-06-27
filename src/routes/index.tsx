@@ -58,11 +58,12 @@ function toGoogleXRay(input: string): string {
 }
 
 function toNestedSearch(input: string): string {
-  // Nested Search: preserves the user's nested boolean structure exactly,
-  // without adding an extra outer wrapping paren pair.
+  // Nested Search: raw nested boolean. Removes the space between OR/AND
+  // and a following quoted term (e.g. `OR "Staff"` -> `OR"Staff"`), per
+  // the reference style. No site: prefix.
   const q = normalizeBoolean(input);
   if (!q) return "";
-  return `site:github.com ${q}`;
+  return q.replace(/\b(OR|AND)\s+"/g, '$1"');
 }
 
 function SourcePro() {
@@ -212,11 +213,11 @@ function SourcePro() {
             <div className="space-y-4 lg:col-span-3">
               <h3 className="text-sm font-medium text-muted-foreground">Generated Searches</h3>
               <ResultCard
-                title="GitHub X-Ray"
-                description="Ready-to-use GitHub X-Ray search."
-                icon={<Github className="h-4 w-4" />}
-                value={github}
-                searchUrl={`https://www.google.com/search?q=${encodeURIComponent(github)}`}
+                title="LinkedIn Boolean"
+                description="LinkedIn-compatible Boolean syntax."
+                icon={<Linkedin className="h-4 w-4" />}
+                value={linkedin}
+                searchUrl={`https://www.linkedin.com/search/results/people/?keywords=${encodeURIComponent(linkedin)}`}
               />
               <ResultCard
                 title="Google X-Ray"
@@ -226,19 +227,20 @@ function SourcePro() {
                 searchUrl={`https://www.google.com/search?q=${encodeURIComponent(google)}`}
               />
               <ResultCard
-                title="LinkedIn Boolean"
-                description="LinkedIn-compatible Boolean syntax."
-                icon={<Linkedin className="h-4 w-4" />}
-                value={linkedin}
-                searchUrl={`https://www.linkedin.com/search/results/people/?keywords=${encodeURIComponent(linkedin)}`}
+                title="GitHub X-Ray"
+                description="Ready-to-use GitHub X-Ray search."
+                icon={<Github className="h-4 w-4" />}
+                value={github}
+                searchUrl={`https://www.google.com/search?q=${encodeURIComponent(github)}`}
               />
               <ResultCard
                 title="Nested Search"
-                description="Preserves your nested boolean structure without extra wrapping brackets."
+                description='Raw nested boolean with no space after OR/AND before quotes (e.g. OR"Staff").'
                 icon={<Layers className="h-4 w-4" />}
                 value={nested}
                 searchUrl={`https://www.google.com/search?q=${encodeURIComponent(nested)}`}
               />
+
             </div>
           </div>
 
