@@ -101,10 +101,10 @@ function SourcePro() {
             <Sparkles className="h-3.5 w-3.5" />
             AI Sourcing Assistant for Recruiters
           </div>
-          <h1 className="mx-auto max-w-3xl text-4xl font-semibold tracking-tight md:text-6xl">
+          <h1 className="font-display mx-auto max-w-3xl text-5xl leading-[1.05] tracking-tight md:text-7xl">
             Build powerful Boolean searches.
             <br />
-            <span className="text-muted-foreground">Source better talent, faster.</span>
+            <em className="text-primary">Source better talent, faster.</em>
           </h1>
           <p className="mx-auto mt-6 max-w-2xl text-base text-muted-foreground md:text-lg">
             Stop spending time writing complex Boolean strings. Source Pro instantly generates
@@ -133,7 +133,7 @@ function SourcePro() {
       <section id="features" className="border-t border-border/60 bg-card/30">
         <div className="mx-auto max-w-6xl px-6 py-20">
           <div className="mb-12 text-center">
-            <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">Why Source Pro?</h2>
+            <h2 className="font-display text-4xl tracking-tight md:text-5xl">Why Source Pro?</h2>
             <p className="mt-3 text-muted-foreground">Everything you need to source smarter.</p>
           </div>
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -164,7 +164,7 @@ function SourcePro() {
       <section id="builder" className="border-t border-border/60">
         <div className="mx-auto max-w-6xl px-6 py-20">
           <div className="mb-10">
-            <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">Boolean Builder</h2>
+            <h2 className="font-display text-4xl tracking-tight md:text-5xl">Boolean Builder</h2>
             <p className="mt-2 text-muted-foreground">Paste or write your Boolean query below.</p>
           </div>
 
@@ -236,7 +236,7 @@ AND
       {/* Closing */}
       <section className="border-t border-border/60 bg-card/30">
         <div className="mx-auto max-w-4xl px-6 py-20 text-center">
-          <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">
+          <h2 className="font-display text-4xl tracking-tight md:text-5xl">
             Built for recruiters who source every day.
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-muted-foreground">
