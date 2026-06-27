@@ -66,13 +66,52 @@ function toNestedSearch(input: string): string {
   return q.replace(/\b(OR|AND)\s+"/g, '$1"');
 }
 
+const LOCATION_OPTIONS = ["Surat", "Gujarat", "India"];
+const EDUCATION_OPTIONS = [
+  "BE",
+  "BTEC",
+  "CS",
+  "IT",
+  "Computer Engineering",
+  "BCA",
+  "MCA",
+  "MBA",
+];
+
+function buildGroup(values: string[]): string {
+  const parts = values.map((v) => (/\s/.test(v) ? `"${v}"` : v));
+  if (parts.length === 0) return "";
+  if (parts.length === 1) return parts[0];
+  return `(${parts.join(" OR ")})`;
+}
+
+function composeQuery(base: string, locations: string[], education: string[]): string {
+  const segments = [base.trim()].filter(Boolean);
+  const loc = buildGroup(locations);
+  const edu = buildGroup(education);
+  if (loc) segments.push(loc);
+  if (edu) segments.push(edu);
+  return segments.join(" AND ");
+}
+
 function SourcePro() {
   const [query, setQuery] = useState<string>(DEFAULT_QUERY);
+  const [locations, setLocations] = useState<string[]>([]);
+  const [education, setEducation] = useState<string[]>([]);
 
-  const github = useMemo(() => toGitHubXRay(query), [query]);
-  const google = useMemo(() => toGoogleXRay(query), [query]);
-  const linkedin = useMemo(() => toLinkedInBoolean(query), [query]);
-  const nested = useMemo(() => toNestedSearch(query), [query]);
+  const toggle = (list: string[], setList: (v: string[]) => void, value: string) => {
+    setList(list.includes(value) ? list.filter((v) => v !== value) : [...list, value]);
+  };
+
+  const composed = useMemo(
+    () => composeQuery(query, locations, education),
+    [query, locations, education],
+  );
+
+  const github = useMemo(() => toGitHubXRay(composed), [composed]);
+  const google = useMemo(() => toGoogleXRay(composed), [composed]);
+  const linkedin = useMemo(() => toLinkedInBoolean(composed), [composed]);
+  const nested = useMemo(() => toNestedSearch(composed), [composed]);
 
   const scrollToBuilder = () => {
     document.getElementById("builder")?.scrollIntoView({ behavior: "smooth", block: "start" });
