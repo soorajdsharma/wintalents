@@ -66,13 +66,52 @@ function toNestedSearch(input: string): string {
   return q.replace(/\b(OR|AND)\s+"/g, '$1"');
 }
 
+const LOCATION_OPTIONS = ["Surat", "Gujarat", "India"];
+const EDUCATION_OPTIONS = [
+  "BE",
+  "BTEC",
+  "CS",
+  "IT",
+  "Computer Engineering",
+  "BCA",
+  "MCA",
+  "MBA",
+];
+
+function buildGroup(values: string[]): string {
+  const parts = values.map((v) => (/\s/.test(v) ? `"${v}"` : v));
+  if (parts.length === 0) return "";
+  if (parts.length === 1) return parts[0];
+  return `(${parts.join(" OR ")})`;
+}
+
+function composeQuery(base: string, locations: string[], education: string[]): string {
+  const segments = [base.trim()].filter(Boolean);
+  const loc = buildGroup(locations);
+  const edu = buildGroup(education);
+  if (loc) segments.push(loc);
+  if (edu) segments.push(edu);
+  return segments.join(" AND ");
+}
+
 function SourcePro() {
   const [query, setQuery] = useState<string>(DEFAULT_QUERY);
+  const [locations, setLocations] = useState<string[]>([]);
+  const [education, setEducation] = useState<string[]>([]);
 
-  const github = useMemo(() => toGitHubXRay(query), [query]);
-  const google = useMemo(() => toGoogleXRay(query), [query]);
-  const linkedin = useMemo(() => toLinkedInBoolean(query), [query]);
-  const nested = useMemo(() => toNestedSearch(query), [query]);
+  const toggle = (list: string[], setList: (v: string[]) => void, value: string) => {
+    setList(list.includes(value) ? list.filter((v) => v !== value) : [...list, value]);
+  };
+
+  const composed = useMemo(
+    () => composeQuery(query, locations, education),
+    [query, locations, education],
+  );
+
+  const github = useMemo(() => toGitHubXRay(composed), [composed]);
+  const google = useMemo(() => toGoogleXRay(composed), [composed]);
+  const linkedin = useMemo(() => toLinkedInBoolean(composed), [composed]);
+  const nested = useMemo(() => toNestedSearch(composed), [composed]);
 
   const scrollToBuilder = () => {
     document.getElementById("builder")?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -207,6 +246,21 @@ function SourcePro() {
               <p className="mt-3 text-xs text-muted-foreground">
                 Tip: Use quotes for exact matches and parentheses to group terms.
               </p>
+
+              <FilterGroup
+                label="Location"
+                options={LOCATION_OPTIONS}
+                selected={locations}
+                onToggle={(v) => toggle(locations, setLocations, v)}
+                onClear={() => setLocations([])}
+              />
+              <FilterGroup
+                label="Education"
+                options={EDUCATION_OPTIONS}
+                selected={education}
+                onToggle={(v) => toggle(education, setEducation, v)}
+                onClear={() => setEducation([])}
+              />
             </div>
 
             <div className="space-y-4 lg:col-span-3">
@@ -430,6 +484,57 @@ function ResultCard({
           {displayValue || "—"}
         </pre>
       )}
+    </div>
+  );
+}
+
+function FilterGroup({
+  label,
+  options,
+  selected,
+  onToggle,
+  onClear,
+}: {
+  label: string;
+  options: string[];
+  selected: string[];
+  onToggle: (value: string) => void;
+  onClear: () => void;
+}) {
+  return (
+    <div className="mt-4 rounded-xl border border-border bg-card p-4">
+      <div className="mb-3 flex items-center justify-between">
+        <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+          {label}
+        </h4>
+        {selected.length > 0 && (
+          <button
+            onClick={onClear}
+            className="text-xs text-muted-foreground transition hover:text-foreground"
+          >
+            Clear
+          </button>
+        )}
+      </div>
+      <div className="flex flex-wrap gap-2">
+        {options.map((opt) => {
+          const active = selected.includes(opt);
+          return (
+            <button
+              key={opt}
+              type="button"
+              onClick={() => onToggle(opt)}
+              className={`rounded-full border px-3 py-1 text-xs font-medium transition ${
+                active
+                  ? "border-primary bg-primary text-primary-foreground"
+                  : "border-border bg-background text-muted-foreground hover:border-primary/40 hover:text-foreground"
+              }`}
+            >
+              {opt}
+            </button>
+          );
+        })}
+      </div>
     </div>
   );
 }
