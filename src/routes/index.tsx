@@ -124,9 +124,8 @@ function SourcePro() {
             <em className="text-primary">Source better talent, faster.</em>
           </h1>
           <p className="mx-auto mt-6 max-w-2xl text-base text-muted-foreground md:text-lg">
-            Stop spending time writing complex Boolean strings. Source Pro instantly generates
-            optimized Boolean and X-Ray searches for GitHub, Google, and LinkedIn so you can focus
-            on finding the right candidates.
+            Source Pro instantly generates optimized Boolean and X-Ray searches for GitHub, Google,
+            and LinkedIn so you can focus on finding the right candidates.
           </p>
           <div className="mt-8 flex items-center justify-center gap-3">
             <button
