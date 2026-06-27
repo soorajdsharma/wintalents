@@ -291,8 +291,8 @@ AND
               <h3 className="text-sm font-medium">Connect</h3>
               <ul className="mt-4 space-y-2.5 text-sm">
                 <li>
-                  <a className="inline-flex items-center gap-2 text-muted-foreground transition hover:text-foreground" href="mailto:soorajdsharmaa@gmail.com">
-                    <Mail className="h-4 w-4" /> soorajdsharmaa@gmail.com
+                  <a className="inline-flex items-center gap-2 text-muted-foreground transition hover:text-foreground" href="mailto:sharmasoorajd@gmail.com">
+                    <Mail className="h-4 w-4" /> sharmasoorajd@gmail.com
                   </a>
                 </li>
                 <li>
