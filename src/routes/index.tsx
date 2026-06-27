@@ -232,6 +232,13 @@ function SourcePro() {
                 value={linkedin}
                 searchUrl={`https://www.linkedin.com/search/results/people/?keywords=${encodeURIComponent(linkedin)}`}
               />
+              <ResultCard
+                title="Nested Search"
+                description="Preserves your nested boolean structure without extra wrapping brackets."
+                icon={<Layers className="h-4 w-4" />}
+                value={nested}
+                searchUrl={`https://www.google.com/search?q=${encodeURIComponent(nested)}`}
+              />
             </div>
           </div>
 
