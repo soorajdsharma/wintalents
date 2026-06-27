@@ -101,10 +101,10 @@ function SourcePro() {
             <Sparkles className="h-3.5 w-3.5" />
             AI Sourcing Assistant for Recruiters
           </div>
-          <h1 className="mx-auto max-w-3xl text-4xl font-semibold tracking-tight md:text-6xl">
+          <h1 className="font-display mx-auto max-w-3xl text-5xl leading-[1.05] tracking-tight md:text-7xl">
             Build powerful Boolean searches.
             <br />
-            <span className="text-muted-foreground">Source better talent, faster.</span>
+            <em className="text-primary">Source better talent, faster.</em>
           </h1>
           <p className="mx-auto mt-6 max-w-2xl text-base text-muted-foreground md:text-lg">
             Stop spending time writing complex Boolean strings. Source Pro instantly generates
