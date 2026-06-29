@@ -94,10 +94,9 @@ function toNestedSearch(input: string): string {
 
 const LOCATION_OPTIONS = ["Surat", "Gujarat", "India"];
 const EDUCATION_OPTIONS = [
-  "BE",
-  "BTEC",
-  "CS",
-  "IT",
+  "Computer Science",
+  "Information Technology",
+  "Computer Application",
   "Computer Engineering",
   "BCA",
   "MCA",
