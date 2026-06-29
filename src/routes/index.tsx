@@ -45,16 +45,23 @@ function wrapIfNeeded(q: string): string {
   return `(${q})`;
 }
 
+function toGoogleStyle(q: string): string {
+  // Google X-Ray style: drop AND (implicit), convert NOT term -> -term
+  let s = q.replace(/\bAND\b/g, " ");
+  s = s.replace(/\bNOT\s+/g, "-");
+  return s.replace(/\s+/g, " ").trim();
+}
+
 function toGitHubXRay(input: string): string {
   const q = normalizeBoolean(input);
   if (!q) return "";
-  return `site:github.com ${q}`;
+  return `site:github.com ${toGoogleStyle(q)}`;
 }
 
 function toGoogleXRay(input: string): string {
   const q = normalizeBoolean(input);
   if (!q) return "";
-  return `site:linkedin.com/in ${q}`;
+  return `site:linkedin.com/in ${toGoogleStyle(q)}`;
 }
 
 function toNestedSearch(input: string): string {
