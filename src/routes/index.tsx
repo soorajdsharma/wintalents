@@ -192,10 +192,10 @@ function SourcePro() {
 
       {/* Builder */}
       <section id="builder" className="border-t border-border/60">
-        <div className="mx-auto max-w-6xl px-6 py-20">
-          <div className="mb-10 text-center">
+        <div className="mx-auto max-w-6xl px-6 pt-8 pb-16">
+          <div className="mb-6 text-center">
             <h2 className="font-display text-4xl tracking-tight md:text-5xl text-yellow-500 dark:text-yellow-400">Find the right talent, instantly.</h2>
-            <p className="mt-2 text-muted-foreground">Paste or write your Boolean query below.</p>
+            <p className="mt-1 text-muted-foreground">Paste or write your Boolean query below.</p>
           </div>
 
 
