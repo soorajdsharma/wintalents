@@ -211,7 +211,7 @@ function SourcePro() {
                 </span>
               ))}
             </h2>
-            <p className="mt-1 text-muted-foreground">Paste or write your Boolean query below.</p>
+            <p className="mt-1 text-muted-foreground">Write your Boolean query below.</p>
           </div>
 
 
