@@ -198,8 +198,9 @@ function SourcePro() {
 
       {/* Builder */}
       <section id="builder" className="border-t border-border/60">
-        <div className="mx-auto max-w-6xl px-6 pt-8 pb-6">
-          <div className="mb-6 text-center">
+        <div className="mx-auto max-w-6xl px-6 pt-3 pb-6">
+          <div className="mb-4 text-center">
+
             <h2 className="font-display text-4xl tracking-tight md:text-5xl text-yellow-500 dark:text-yellow-400">
               {"Find the right talent, instantly.".split(" ").map((word, i) => (
                 <span
