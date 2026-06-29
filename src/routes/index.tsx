@@ -46,9 +46,31 @@ function wrapIfNeeded(q: string): string {
 }
 
 function toGoogleStyle(q: string): string {
-  // Google X-Ray style: drop AND (implicit), convert NOT term -> -term
+  // Google X-Ray style:
+  // - AND -> space (implicit)
+  // - NOT term -> -term
+  // - Keep OR and quoted phrases intact
+  // - Remove redundant parens around single tokens / non-OR groups
   let s = q.replace(/\bAND\b/g, " ");
   s = s.replace(/\bNOT\s+/g, "-");
+
+  // Strip parens around groups that contain no OR (e.g. "(Surat)" -> "Surat").
+  // Mask quoted phrases first so quoted parens/OR aren't touched.
+  const quotes: string[] = [];
+  s = s.replace(/"[^"]*"/g, (m) => {
+    quotes.push(m);
+    return `\u0000${quotes.length - 1}\u0000`;
+  });
+
+  let prev: string;
+  do {
+    prev = s;
+    s = s.replace(/\(([^()]*)\)/g, (m, inner) =>
+      /\bOR\b/.test(inner) ? m : ` ${inner} `,
+    );
+  } while (s !== prev);
+
+  s = s.replace(/\u0000(\d+)\u0000/g, (_, i) => quotes[Number(i)]);
   return s.replace(/\s+/g, " ").trim();
 }
 
