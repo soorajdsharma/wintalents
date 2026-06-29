@@ -174,12 +174,6 @@ function SourcePro() {
               <Sparkles className="h-4 w-4" />
               Generate Boolean
             </button>
-            <a
-              href="#features"
-              className="inline-flex items-center gap-2 rounded-md border border-border bg-card px-5 py-2.5 text-sm font-medium transition hover:bg-accent"
-            >
-              See features
-            </a>
           </div>
         </div>
       </section>
