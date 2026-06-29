@@ -183,12 +183,6 @@ function SourcePro() {
             >
               {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
             </button>
-            <button
-              onClick={scrollToBuilder}
-              className="rounded-md bg-primary px-3.5 py-2 text-sm font-medium text-primary-foreground transition hover:opacity-90"
-            >
-              Generate Boolean
-            </button>
           </div>
         </div>
       </header>
