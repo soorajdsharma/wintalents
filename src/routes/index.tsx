@@ -226,17 +226,6 @@ function SourcePro() {
             </div>
           </div>
 
-          {/* Example */}
-          <div className="mt-10 rounded-xl border border-dashed border-border bg-card/50 p-5">
-            <div className="mb-2 text-xs font-medium uppercase tracking-wide text-muted-foreground">
-              Example
-            </div>
-            <pre className="overflow-x-auto whitespace-pre-wrap font-mono text-sm leading-relaxed">
-{`("Software Engineer" OR "Software Developer")
-AND
-("Native Bridge" OR "Native Modules" OR "Native Flutter" OR "Modules" OR "Channel")`}
-            </pre>
-          </div>
         </div>
       </section>
 
