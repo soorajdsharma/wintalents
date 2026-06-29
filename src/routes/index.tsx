@@ -262,28 +262,28 @@ function SourcePro() {
               <ResultCard
                 title="LinkedIn Boolean"
                 description="LinkedIn-compatible Boolean syntax."
-                icon={<Linkedin className="h-4 w-4" />}
+                icon={<Linkedin className="h-5 w-5 text-[#0A66C2]" fill="#0A66C2" stroke="white" />}
                 value={linkedin}
                 searchUrl={`https://www.linkedin.com/search/results/people/?keywords=${encodeURIComponent(linkedin)}`}
               />
               <ResultCard
                 title="Google X-Ray"
                 description="Optimized Google X-Ray query."
-                icon={<Globe className="h-4 w-4" />}
+                icon={<GoogleGIcon className="h-5 w-5" />}
                 value={google}
                 searchUrl={`https://www.google.com/search?q=${encodeURIComponent(google)}`}
               />
               <ResultCard
                 title="GitHub X-Ray"
                 description="Ready-to-use GitHub X-Ray search."
-                icon={<Github className="h-4 w-4" />}
+                icon={<Github className="h-5 w-5 text-foreground" />}
                 value={github}
                 searchUrl={`https://www.google.com/search?q=${encodeURIComponent(github)}`}
               />
               <ResultCard
                 title="Nested Search"
                 description='Raw nested boolean with no space after OR/AND before quotes (e.g. OR"Staff").'
-                icon={<Layers className="h-4 w-4" />}
+                icon={<Layers className="h-5 w-5 text-primary" />}
                 value={nested}
                 searchUrl={`https://www.google.com/search?q=${encodeURIComponent(nested)}`}
               />
@@ -393,7 +393,7 @@ function ResultCard({
     <div className="rounded-xl border border-border bg-card p-5 transition hover:border-primary/40">
       <div className="flex items-start justify-between gap-4">
         <div className="flex items-center gap-3">
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10 text-primary">
+          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-white ring-1 ring-border">
             {icon}
           </div>
           <div>
@@ -419,7 +419,7 @@ function ResultCard({
           )}
           <button
             onClick={() => (isEditing ? setIsEditing(false) : startEdit())}
-            className="inline-flex items-center gap-1.5 rounded-md border border-border bg-background px-2.5 py-1.5 text-xs font-medium transition hover:bg-accent"
+            className="inline-flex items-center gap-1.5 rounded-md border border-border bg-white px-2.5 py-1.5 text-xs font-medium text-neutral-900 transition hover:bg-neutral-100"
           >
             {isEditing ? <Check className="h-3.5 w-3.5" /> : <Pencil className="h-3.5 w-3.5" />}
             {isEditing ? "Done" : "Edit"}
