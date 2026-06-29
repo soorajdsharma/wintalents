@@ -160,10 +160,6 @@ function SourcePro() {
             </div>
             <span className="text-base font-semibold tracking-tight">Source Pro</span>
           </a>
-          <nav className="hidden items-center gap-7 text-sm text-muted-foreground md:flex">
-            <a href="#builder" className="transition hover:text-foreground">Builder</a>
-            <a href="#connect" className="transition hover:text-foreground">Connect</a>
-          </nav>
           <div className="flex items-center gap-2">
             <button
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
