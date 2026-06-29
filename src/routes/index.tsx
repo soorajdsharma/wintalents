@@ -189,7 +189,17 @@ function SourcePro() {
       <section id="builder" className="border-t border-border/60">
         <div className="mx-auto max-w-6xl px-6 pt-8 pb-6">
           <div className="mb-6 text-center">
-            <h2 className="font-display text-4xl tracking-tight md:text-5xl text-yellow-500 dark:text-yellow-400">Find the right talent, instantly.</h2>
+            <h2 className="font-display text-4xl tracking-tight md:text-5xl text-yellow-500 dark:text-yellow-400">
+              {"Find the right talent, instantly.".split(" ").map((word, i) => (
+                <span
+                  key={i}
+                  className="inline-block opacity-0 animate-fade-in-up mr-[0.25em]"
+                  style={{ animationDelay: `${i * 120}ms`, animationFillMode: "forwards" }}
+                >
+                  {word}
+                </span>
+              ))}
+            </h2>
             <p className="mt-1 text-muted-foreground">Paste or write your Boolean query below.</p>
           </div>
 
