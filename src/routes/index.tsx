@@ -262,7 +262,7 @@ function SourcePro() {
               <ResultCard
                 title="LinkedIn Boolean"
                 description="LinkedIn-compatible Boolean syntax."
-                icon={<Linkedin className="h-5 w-5 text-[#0A66C2]" fill="#0A66C2" stroke="white" />}
+                icon={<LinkedInBrandIcon className="h-5 w-5" />}
                 value={linkedin}
                 searchUrl={`https://www.linkedin.com/search/results/people/?keywords=${encodeURIComponent(linkedin)}`}
               />
@@ -276,7 +276,7 @@ function SourcePro() {
               <ResultCard
                 title="GitHub X-Ray"
                 description="Ready-to-use GitHub X-Ray search."
-                icon={<Github className="h-5 w-5 text-foreground" />}
+                icon={<GitHubBrandIcon className="h-5 w-5" />}
                 value={github}
                 searchUrl={`https://www.google.com/search?q=${encodeURIComponent(github)}`}
               />
