@@ -23,11 +23,7 @@ export const Route = createFileRoute("/")({
   component: SourcePro,
 });
 
-const DEFAULT_QUERY = `("Software Engineer" OR "Backend Developer")
-AND
-(Node.js OR Golang)
-NOT
-Intern`;
+const DEFAULT_QUERY = "";
 
 function normalizeBoolean(input: string): string {
   // Collapse whitespace/newlines into single spaces while preserving quoted strings
@@ -215,7 +211,7 @@ function SourcePro() {
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
                   spellCheck={false}
-                  placeholder={DEFAULT_QUERY}
+                  placeholder='e.g. ("Software Engineer" OR "Backend Developer") AND (Node.js OR Golang) NOT Intern'
                   className="h-40 w-full resize-none bg-transparent p-4 font-mono text-sm outline-none placeholder:text-muted-foreground/60"
                 />
               </div>
