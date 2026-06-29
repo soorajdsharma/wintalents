@@ -147,10 +147,6 @@
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans);
-    background-image:
-      radial-gradient(60rem 35rem at 50% -10%, color-mix(in oklch, var(--color-primary) 28%, transparent), transparent 70%),
-      radial-gradient(45rem 30rem at 90% 0%, color-mix(in oklch, var(--color-primary) 14%, transparent), transparent 70%);
-    background-attachment: fixed;
   }
 
   .font-display {
