@@ -148,7 +148,7 @@ function SourcePro() {
       <section id="builder" className="border-t border-border/60">
         <div className="mx-auto max-w-6xl px-6 py-20">
           <div className="mb-10">
-            <h2 className="font-display text-4xl tracking-tight md:text-5xl">Boolean Builder</h2>
+            <h2 className="font-display text-4xl tracking-tight md:text-5xl">Find the right talent, instantly.</h2>
             <p className="mt-2 text-muted-foreground">Paste or write your Boolean query below.</p>
           </div>
 
