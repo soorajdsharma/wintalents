@@ -182,6 +182,32 @@ function SourcePro() {
         </div>
       </header>
 
+      {/* Connect bar */}
+      <div className="border-b border-border/60 bg-background/60">
+        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-center gap-2 px-6 py-3 md:justify-end">
+          <ConnectChip
+            href="mailto:sharmasoorajd@gmail.com"
+            icon={<Mail className="h-3.5 w-3.5 text-sky-500" />}
+            label="sharmasoorajd@gmail.com"
+          />
+          <ConnectChip
+            href="https://x.com/soorajdsharma"
+            icon={<Twitter className="h-3.5 w-3.5 text-sky-500" />}
+            label="x.com/soorajdsharma"
+          />
+          <ConnectChip
+            href="https://github.com/soorajdsharma"
+            icon={<Github className="h-3.5 w-3.5" />}
+            label="github.com/soorajdsharma"
+          />
+          <ConnectChip
+            href="https://soorajdsharma.lovable.app"
+            icon={<Globe className="h-3.5 w-3.5 text-sky-500" />}
+            label="soorajdsharma.lovable.app"
+          />
+        </div>
+      </div>
+
 
 
 
