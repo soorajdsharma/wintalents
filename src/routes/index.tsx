@@ -156,10 +156,7 @@ function SourcePro() {
       <header className="sticky top-0 z-30 border-b border-border/60 bg-background/80 backdrop-blur">
         <div className="relative mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
           <a href="#top" className="flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-              <Search className="h-4 w-4" />
-            </div>
-            <span className="text-base font-semibold tracking-tight">Source Pro</span>
+            <img src={sourceProLogo.url} alt="Source Pro" className="h-9 w-auto" />
           </a>
           <div className="pointer-events-none absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 items-center gap-2">
             <div className="pointer-events-auto flex items-center gap-2">
