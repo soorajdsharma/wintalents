@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import { Copy, Check, Search, Github, Globe, Linkedin, Mail, Code2, Sparkles, Twitter, Layers, Pencil, RotateCcw, Sun, Moon, ExternalLink } from "lucide-react";
-import sourceProLogo from "@/assets/source-pro-logo.png.asset.json";
+import sourceProLogo from "@/assets/source-pro-mark.png.asset.json";
 
 
 export const Route = createFileRoute("/")({
@@ -155,8 +155,11 @@ function SourcePro() {
       {/* Nav */}
       <header className="sticky top-0 z-30 border-b border-border/60 bg-background/80 backdrop-blur">
         <div className="relative mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-          <a href="#top" className="flex items-center gap-2">
-            <img src={sourceProLogo.url} alt="Source Pro" className="h-9 w-auto" />
+          <a href="#top" className="flex items-center gap-2.5">
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white ring-1 ring-border overflow-hidden">
+              <img src={sourceProLogo.url} alt="Source Pro" className="h-9 w-9 object-contain" />
+            </div>
+            <span className="text-base font-semibold tracking-tight">Source Pro</span>
           </a>
           <div className="pointer-events-none absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 items-center gap-2">
             <div className="pointer-events-auto flex items-center gap-2">
@@ -297,8 +300,11 @@ function SourcePro() {
         <div className="mx-auto max-w-6xl px-6 py-8">
           <div className="grid gap-10 md:grid-cols-2">
             <div>
-              <div className="flex items-center gap-2">
-                <img src={sourceProLogo.url} alt="Source Pro" className="h-9 w-auto" />
+              <div className="flex items-center gap-2.5">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white ring-1 ring-border overflow-hidden">
+                  <img src={sourceProLogo.url} alt="Source Pro" className="h-9 w-9 object-contain" />
+                </div>
+                <span className="text-base font-semibold">Source Pro</span>
               </div>
               <p className="mt-3 max-w-sm text-sm text-muted-foreground">
                 Developed by a Recruiter, for Recruiters.
