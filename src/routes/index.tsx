@@ -153,13 +153,27 @@ function SourcePro() {
     <div className="min-h-screen bg-background text-foreground">
       {/* Nav */}
       <header className="sticky top-0 z-30 border-b border-border/60 bg-background/80 backdrop-blur">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+        <div className="relative mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
           <a href="#top" className="flex items-center gap-2">
             <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
               <Search className="h-4 w-4" />
             </div>
             <span className="text-base font-semibold tracking-tight">Source Pro</span>
           </a>
+          <div className="pointer-events-none absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 items-center gap-2">
+            <div className="pointer-events-auto flex items-center gap-2">
+              <ConnectChip
+                href="https://www.linkedin.com/in/soorajdsharma/"
+                icon={<Linkedin className="h-4 w-4 text-sky-500" />}
+                label="LinkedIn"
+              />
+              <ConnectChip
+                href="https://github.com/soorajdsharma"
+                icon={<Github className="h-4 w-4" />}
+                label="GitHub"
+              />
+            </div>
+          </div>
           <div className="flex items-center gap-2">
             <button
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
@@ -178,21 +192,6 @@ function SourcePro() {
         </div>
       </header>
 
-      {/* Connect bar */}
-      <div className="border-b border-border/60 bg-background/60">
-        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-center gap-2 px-6 py-3">
-          <ConnectChip
-            href="https://www.linkedin.com/in/soorajdsharma/"
-            icon={<Linkedin className="h-4 w-4 text-sky-500" />}
-            label="LinkedIn"
-          />
-          <ConnectChip
-            href="https://github.com/soorajdsharma"
-            icon={<Github className="h-4 w-4" />}
-            label="GitHub"
-          />
-        </div>
-      </div>
 
 
 
