@@ -23,11 +23,7 @@ export const Route = createFileRoute("/")({
   component: SourcePro,
 });
 
-const DEFAULT_QUERY = `("Software Engineer" OR "Backend Developer")
-AND
-(Node.js OR Golang)
-NOT
-Intern`;
+const DEFAULT_QUERY = "";
 
 function normalizeBoolean(input: string): string {
   // Collapse whitespace/newlines into single spaces while preserving quoted strings
