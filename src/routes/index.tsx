@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import { Copy, Check, Search, Github, Globe, Linkedin, Mail, Code2, Sparkles, Twitter, Layers, Pencil, RotateCcw, Sun, Moon, ExternalLink } from "lucide-react";
-import sourceProLogo from "@/assets/source-pro-mark.png.asset.json";
+import sourceProLogo from "@/assets/videosdk-logo.png.asset.json";
 
 
 export const Route = createFileRoute("/")({
@@ -156,8 +156,8 @@ function SourcePro() {
       <header className="sticky top-0 z-30 border-b border-border/60 bg-background/80 backdrop-blur">
         <div className="relative mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
           <a href="#top" className="flex items-center gap-2.5">
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white ring-1 ring-border overflow-hidden">
-              <img src={sourceProLogo.url} alt="Source Pro" className="h-9 w-9 object-contain" />
+            <div className="h-10 w-10 rounded-full ring-1 ring-border overflow-hidden">
+              <img src={sourceProLogo.url} alt="Source Pro" className="h-full w-full object-cover" />
             </div>
             <span className="text-base font-semibold tracking-tight">Source Pro</span>
           </a>
@@ -301,8 +301,8 @@ function SourcePro() {
           <div className="grid gap-10 md:grid-cols-2">
             <div>
               <div className="flex items-center gap-2.5">
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white ring-1 ring-border overflow-hidden">
-                  <img src={sourceProLogo.url} alt="Source Pro" className="h-9 w-9 object-contain" />
+                <div className="h-10 w-10 rounded-full ring-1 ring-border overflow-hidden">
+                  <img src={sourceProLogo.url} alt="Source Pro" className="h-full w-full object-cover" />
                 </div>
                 <span className="text-base font-semibold">Source Pro</span>
               </div>
