@@ -274,7 +274,7 @@ function SourcePro() {
 
       {/* Connect / Footer */}
       <footer id="connect" className="border-t border-border/60">
-        <div className="mx-auto max-w-6xl px-6 py-14">
+        <div className="mx-auto max-w-6xl px-6 py-8">
           <div className="grid gap-10 md:grid-cols-2">
             <div>
               <div className="flex items-center gap-2">
