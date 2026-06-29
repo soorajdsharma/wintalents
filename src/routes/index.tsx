@@ -142,37 +142,6 @@ function SourcePro() {
         </div>
       </header>
 
-      {/* Hero */}
-      <section id="top" className="relative overflow-hidden">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 -z-10 opacity-60"
-          style={{
-            backgroundImage:
-              "radial-gradient(60rem 30rem at 50% -10%, color-mix(in oklch, var(--color-primary) 18%, transparent), transparent), radial-gradient(40rem 20rem at 90% 10%, color-mix(in oklch, var(--color-chart-2) 20%, transparent), transparent)",
-          }}
-        />
-        <div className="mx-auto max-w-6xl px-6 pt-20 pb-16 text-center md:pt-28 md:pb-24">
-          <h1 className="font-display mx-auto max-w-3xl text-5xl leading-[1.05] tracking-tight md:text-7xl">
-            Build powerful Boolean searches.
-            <br />
-            <span className="text-primary">Source better talent, faster.</span>
-          </h1>
-          <p className="mx-auto mt-6 max-w-2xl text-base text-muted-foreground md:text-lg">
-            Source Pro instantly generates optimized Boolean and X-Ray searches for GitHub, Google,
-            and LinkedIn so you can focus on finding the right candidates.
-          </p>
-          <div className="mt-8 flex items-center justify-center gap-3">
-            <button
-              onClick={scrollToBuilder}
-              className="inline-flex items-center gap-2 rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition hover:opacity-90"
-            >
-              <Sparkles className="h-4 w-4" />
-              Generate Boolean
-            </button>
-          </div>
-        </div>
-      </section>
 
 
       {/* Builder */}
