@@ -229,18 +229,6 @@ function SourcePro() {
         </div>
       </section>
 
-      {/* Closing */}
-      <section className="border-t border-border/60 bg-card/30">
-        <div className="mx-auto max-w-4xl px-6 py-20 text-center">
-          <h2 className="font-display text-4xl tracking-tight md:text-5xl">
-            Built for recruiters who source every day.
-          </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-muted-foreground">
-            From startup hiring to executive search, Source Pro helps you generate clean, accurate
-            Boolean searches in seconds.
-          </p>
-        </div>
-      </section>
 
       {/* Connect / Footer */}
       <footer id="connect" className="border-t border-border/60">
