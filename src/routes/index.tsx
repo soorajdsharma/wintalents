@@ -180,26 +180,16 @@ function SourcePro() {
 
       {/* Connect bar */}
       <div className="border-b border-border/60 bg-background/60">
-        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-center gap-2 px-6 py-3 md:justify-end">
+        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-center gap-2 px-6 py-3">
           <ConnectChip
-            href="mailto:sharmasoorajd@gmail.com"
-            icon={<Mail className="h-3.5 w-3.5 text-sky-500" />}
-            label="sharmasoorajd@gmail.com"
-          />
-          <ConnectChip
-            href="https://x.com/soorajdsharma"
-            icon={<Twitter className="h-3.5 w-3.5 text-sky-500" />}
-            label="x.com/soorajdsharma"
+            href="https://www.linkedin.com/in/soorajdsharma/"
+            icon={<Linkedin className="h-4 w-4 text-sky-500" />}
+            label="LinkedIn"
           />
           <ConnectChip
             href="https://github.com/soorajdsharma"
-            icon={<Github className="h-3.5 w-3.5" />}
-            label="github.com/soorajdsharma"
-          />
-          <ConnectChip
-            href="https://soorajdsharma.lovable.app"
-            icon={<Globe className="h-3.5 w-3.5 text-sky-500" />}
-            label="soorajdsharma.lovable.app"
+            icon={<Github className="h-4 w-4" />}
+            label="GitHub"
           />
         </div>
       </div>
