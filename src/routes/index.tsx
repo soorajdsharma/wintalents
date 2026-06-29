@@ -298,10 +298,7 @@ function SourcePro() {
           <div className="grid gap-10 md:grid-cols-2">
             <div>
               <div className="flex items-center gap-2">
-                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-                  <Search className="h-4 w-4" />
-                </div>
-                <span className="text-base font-semibold">Source Pro</span>
+                <img src={sourceProLogo.url} alt="Source Pro" className="h-9 w-auto" />
               </div>
               <p className="mt-3 max-w-sm text-sm text-muted-foreground">
                 Developed by a Recruiter, for Recruiters.
