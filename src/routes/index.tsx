@@ -1,18 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
-import {
-  Copy,
-  Check,
-  Search,
-  Github,
-  Globe,
-  Linkedin,
-  Mail,
-  Layers,
-  Pencil,
-  RotateCcw,
-  Twitter,
-} from "lucide-react";
+import { Copy, Check, Search, Github, Globe, Linkedin, Mail, Code2, Sparkles, Twitter, Layers, Pencil, RotateCcw } from "lucide-react";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -27,21 +15,34 @@ export const Route = createFileRoute("/")({
       {
         property: "og:description",
         content:
-          "Build powerful Boolean searches. Source better talent, faster.",
+          "Build powerful Boolean searches. Source better talent, faster. GitHub & Google X-Ray, LinkedIn-friendly Boolean.",
       },
     ],
   }),
   component: SourcePro,
 });
 
-const DEFAULT_QUERY = `("Software Engineer" OR "Backend Developer") AND (Node.js OR Golang) NOT Intern`;
+const DEFAULT_QUERY = `("Software Engineer" OR "Backend Developer")
+AND
+(Node.js OR Golang)
+NOT
+Intern`;
 
 function normalizeBoolean(input: string): string {
+  // Collapse whitespace/newlines into single spaces while preserving quoted strings
   return input.replace(/\s+/g, " ").trim();
 }
 
 function toLinkedInBoolean(input: string): string {
+  // LinkedIn supports AND OR NOT (), quotes. Just normalize.
   return normalizeBoolean(input);
+}
+
+function wrapIfNeeded(q: string): string {
+  if (!q) return "";
+  // If already wrapped in an outer paren pair, don't double-wrap.
+  if (q.startsWith("(") && q.endsWith(")")) return q;
+  return `(${q})`;
 }
 
 function toGitHubXRay(input: string): string {
@@ -57,6 +58,9 @@ function toGoogleXRay(input: string): string {
 }
 
 function toNestedSearch(input: string): string {
+  // Nested Search: raw nested boolean. Removes the space between OR/AND
+  // and a following quoted term (e.g. `OR "Staff"` -> `OR"Staff"`), per
+  // the reference style. No site: prefix.
   const q = normalizeBoolean(input);
   if (!q) return "";
   return q.replace(/\b(OR|AND)\s+"/g, '$1"');
@@ -94,7 +98,6 @@ function SourcePro() {
   const [query, setQuery] = useState<string>(DEFAULT_QUERY);
   const [locations, setLocations] = useState<string[]>([]);
   const [education, setEducation] = useState<string[]>([]);
-  const [submitted, setSubmitted] = useState(false);
 
   const toggle = (list: string[], setList: (v: string[]) => void, value: string) => {
     setList(list.includes(value) ? list.filter((v) => v !== value) : [...list, value]);
@@ -110,202 +113,277 @@ function SourcePro() {
   const linkedin = useMemo(() => toLinkedInBoolean(composed), [composed]);
   const nested = useMemo(() => toNestedSearch(composed), [composed]);
 
-  const handleGenerate = () => setSubmitted(true);
+  const scrollToBuilder = () => {
+    document.getElementById("builder")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
 
   return (
-    <div className="flex min-h-screen flex-col bg-background text-foreground">
-      {/* Top bar — minimal like Google */}
-      <header className="flex items-center justify-end gap-6 px-6 py-4 text-sm text-foreground/80">
-        <a
-          href="https://github.com/soorajdsharma"
-          target="_blank"
-          rel="noreferrer"
-          className="transition hover:underline"
-        >
-          GitHub
-        </a>
-        <a
-          href="https://www.linkedin.com/in/soorajdsharma"
-          target="_blank"
-          rel="noreferrer"
-          className="transition hover:underline"
-        >
-          LinkedIn
-        </a>
-        <a href="#connect" className="transition hover:underline">
-          Connect
-        </a>
+    <div className="min-h-screen bg-background text-foreground">
+      {/* Nav */}
+      <header className="sticky top-0 z-30 border-b border-border/60 bg-background/80 backdrop-blur">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+          <a href="#top" className="flex items-center gap-2">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+              <Search className="h-4 w-4" />
+            </div>
+            <span className="text-base font-semibold tracking-tight">Source Pro</span>
+          </a>
+          <nav className="hidden items-center gap-7 text-sm text-muted-foreground md:flex">
+            <a href="#features" className="transition hover:text-foreground">Features</a>
+            <a href="#builder" className="transition hover:text-foreground">Builder</a>
+            <a href="#connect" className="transition hover:text-foreground">Connect</a>
+          </nav>
+          <button
+            onClick={scrollToBuilder}
+            className="rounded-md bg-primary px-3.5 py-2 text-sm font-medium text-primary-foreground transition hover:opacity-90"
+          >
+            Generate Boolean
+          </button>
+        </div>
       </header>
 
-      {/* Centered hero — Google style */}
-      <main className="mx-auto flex w-full max-w-3xl flex-1 flex-col items-center px-6 pt-16 pb-12 md:pt-24">
-        {/* Wordmark */}
-        <h1 className="select-none text-center text-6xl font-medium tracking-tight md:text-7xl">
-          <span className="text-[#4285F4]">S</span>
-          <span className="text-[#EA4335]">o</span>
-          <span className="text-[#FBBC05]">u</span>
-          <span className="text-[#4285F4]">r</span>
-          <span className="text-[#34A853]">c</span>
-          <span className="text-[#EA4335]">e</span>
-          <span className="px-2" />
-          <span className="text-foreground/80">Pro</span>
-        </h1>
-        <p className="mt-3 text-center text-sm text-muted-foreground">
-          AI sourcing assistant for recruiters.
-        </p>
-
-        {/* Search box */}
-        <div className="mt-8 w-full">
-          <div className="group flex w-full items-start gap-3 rounded-3xl border border-border bg-background px-5 py-4 shadow-sm transition hover:shadow-md focus-within:shadow-md">
-            <Search className="mt-1 h-5 w-5 shrink-0 text-muted-foreground" />
-            <textarea
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              spellCheck={false}
-              placeholder='e.g. ("Developer Advocate" OR "DevRel") AND (Video OR YouTube) AND Gujarat'
-              rows={2}
-              className="min-h-[2.5rem] w-full resize-none bg-transparent text-base leading-relaxed outline-none placeholder:text-muted-foreground/70"
-            />
+      {/* Hero */}
+      <section id="top" className="relative overflow-hidden">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 -z-10 opacity-60"
+          style={{
+            backgroundImage:
+              "radial-gradient(60rem 30rem at 50% -10%, color-mix(in oklch, var(--color-primary) 18%, transparent), transparent), radial-gradient(40rem 20rem at 90% 10%, color-mix(in oklch, var(--color-chart-2) 20%, transparent), transparent)",
+          }}
+        />
+        <div className="mx-auto max-w-6xl px-6 pt-20 pb-16 text-center md:pt-28 md:pb-24">
+          <div className="mx-auto mb-6 inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1 text-xs text-muted-foreground">
+            <Sparkles className="h-3.5 w-3.5" />
+            AI Sourcing Assistant for Recruiters
           </div>
-
-          {/* Filters */}
-          <div className="mt-5 space-y-3">
-            <ChipRow
-              label="Location"
-              options={LOCATION_OPTIONS}
-              selected={locations}
-              onToggle={(v) => toggle(locations, setLocations, v)}
-            />
-            <ChipRow
-              label="Education"
-              options={EDUCATION_OPTIONS}
-              selected={education}
-              onToggle={(v) => toggle(education, setEducation, v)}
-            />
-          </div>
-
-          {/* Buttons */}
-          <div className="mt-6 flex items-center justify-center gap-3">
+          <h1 className="font-display mx-auto max-w-3xl text-5xl leading-[1.05] tracking-tight md:text-7xl">
+            Build powerful Boolean searches.
+            <br />
+            <span className="text-primary">Source better talent, faster.</span>
+          </h1>
+          <p className="mx-auto mt-6 max-w-2xl text-base text-muted-foreground md:text-lg">
+            Source Pro instantly generates optimized Boolean and X-Ray searches for GitHub, Google,
+            and LinkedIn so you can focus on finding the right candidates.
+          </p>
+          <div className="mt-8 flex items-center justify-center gap-3">
             <button
-              onClick={handleGenerate}
-              className="rounded-md bg-[#f8f9fa] px-5 py-2.5 text-sm font-medium text-foreground/80 ring-1 ring-transparent transition hover:ring-border hover:shadow-sm"
+              onClick={scrollToBuilder}
+              className="inline-flex items-center gap-2 rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition hover:opacity-90"
             >
-              Generate Searches
+              <Sparkles className="h-4 w-4" />
+              Generate Boolean
             </button>
-            <button
-              onClick={() => {
-                setQuery("");
-                setLocations([]);
-                setEducation([]);
-                setSubmitted(false);
-              }}
-              className="rounded-md bg-[#f8f9fa] px-5 py-2.5 text-sm font-medium text-foreground/80 ring-1 ring-transparent transition hover:ring-border hover:shadow-sm"
+            <a
+              href="#features"
+              className="inline-flex items-center gap-2 rounded-md border border-border bg-card px-5 py-2.5 text-sm font-medium transition hover:bg-accent"
             >
-              Reset
-            </button>
+              See features
+            </a>
           </div>
         </div>
+      </section>
 
-        {/* Results */}
-        {submitted && composed && (
-          <div className="mt-12 w-full space-y-4">
-            <ResultCard
-              title="LinkedIn Boolean"
-              icon={<Linkedin className="h-4 w-4" />}
-              value={linkedin}
-              searchUrl={`https://www.linkedin.com/search/results/people/?keywords=${encodeURIComponent(linkedin)}`}
-            />
-            <ResultCard
-              title="Google X-Ray"
-              icon={<Globe className="h-4 w-4" />}
-              value={google}
-              searchUrl={`https://www.google.com/search?q=${encodeURIComponent(google)}`}
-            />
-            <ResultCard
-              title="GitHub X-Ray"
-              icon={<Github className="h-4 w-4" />}
-              value={github}
-              searchUrl={`https://www.google.com/search?q=${encodeURIComponent(github)}`}
-            />
-            <ResultCard
-              title="Nested Search"
-              icon={<Layers className="h-4 w-4" />}
-              value={nested}
-              searchUrl={`https://www.google.com/search?q=${encodeURIComponent(nested)}`}
-            />
+      {/* Features */}
+      <section id="features" className="border-t border-border/60 bg-card/30">
+        <div className="mx-auto max-w-6xl px-6 py-20">
+          <div className="mb-12 text-center">
+            <h2 className="font-display text-4xl tracking-tight md:text-5xl">Why Source Pro?</h2>
+            <p className="mt-3 text-muted-foreground">Everything you need to source smarter.</p>
           </div>
-        )}
-      </main>
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {[
+              { icon: <Code2 className="h-5 w-5" />, title: "Boolean in seconds", desc: "Build complex Boolean queries instantly." },
+              { icon: <Github className="h-5 w-5" />, title: "GitHub X-Ray", desc: "Generate ready-to-use GitHub X-Ray searches." },
+              { icon: <Globe className="h-5 w-5" />, title: "Google X-Ray", desc: "Optimized Google X-Ray queries across profiles." },
+              { icon: <Linkedin className="h-5 w-5" />, title: "LinkedIn-friendly", desc: "Convert Boolean into LinkedIn-compatible syntax." },
+              { icon: <Sparkles className="h-5 w-5" />, title: "Full operator support", desc: 'AND, OR, NOT, (), and Exact Match " ".' },
+              { icon: <Search className="h-5 w-5" />, title: "Built for sourcers", desc: "Tech Recruiters, Talent Sourcers, Hiring Teams." },
+            ].map((f) => (
+              <div
+                key={f.title}
+                className="rounded-xl border border-border bg-card p-5 transition hover:border-primary/40"
+              >
+                <div className="mb-3 inline-flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                  {f.icon}
+                </div>
+                <h3 className="text-base font-medium">{f.title}</h3>
+                <p className="mt-1 text-sm text-muted-foreground">{f.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
-      {/* Footer — Google style */}
-      <footer
-        id="connect"
-        className="border-t border-border bg-[#f2f2f2] text-sm text-muted-foreground"
-      >
-        <div className="px-6 py-3 text-foreground/70">Suraj Sharma — built for recruiters.</div>
-        <div className="flex flex-wrap items-center justify-between gap-3 border-t border-border px-6 py-3">
-          <div className="flex flex-wrap items-center gap-5">
-            <a className="inline-flex items-center gap-1.5 transition hover:text-foreground" href="mailto:sharmasoorajd@gmail.com">
-              <Mail className="h-3.5 w-3.5" /> sharmasoorajd@gmail.com
-            </a>
-            <a className="inline-flex items-center gap-1.5 transition hover:text-foreground" href="https://x.com/soorajdsharma" target="_blank" rel="noreferrer">
-              <Twitter className="h-3.5 w-3.5" /> x.com/soorajdsharma
-            </a>
-            <a className="inline-flex items-center gap-1.5 transition hover:text-foreground" href="https://github.com/soorajdsharma" target="_blank" rel="noreferrer">
-              <Github className="h-3.5 w-3.5" /> github.com/soorajdsharma
-            </a>
+      {/* Builder */}
+      <section id="builder" className="border-t border-border/60">
+        <div className="mx-auto max-w-6xl px-6 py-20">
+          <div className="mb-10">
+            <h2 className="font-display text-4xl tracking-tight md:text-5xl">Boolean Builder</h2>
+            <p className="mt-2 text-muted-foreground">Paste or write your Boolean query below.</p>
           </div>
-          <div className="text-xs">© {new Date().getFullYear()} Source Pro</div>
+
+          <div className="grid gap-6 lg:grid-cols-5">
+            <div className="lg:col-span-2">
+              <div className="rounded-xl border border-border bg-card p-1">
+                <div className="flex items-center justify-between border-b border-border px-3 py-2 text-xs text-muted-foreground">
+                  <span>Your Boolean</span>
+                  <button
+                    onClick={() => setQuery("")}
+                    className="rounded px-2 py-1 transition hover:bg-accent"
+                  >
+                    Clear
+                  </button>
+                </div>
+                <textarea
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                  spellCheck={false}
+                  placeholder={DEFAULT_QUERY}
+                  className="h-80 w-full resize-none bg-transparent p-4 font-mono text-sm outline-none placeholder:text-muted-foreground/60"
+                />
+              </div>
+              <p className="mt-3 text-xs text-muted-foreground">
+                Tip: Use quotes for exact matches and parentheses to group terms.
+              </p>
+
+              <FilterGroup
+                label="Location"
+                options={LOCATION_OPTIONS}
+                selected={locations}
+                onToggle={(v) => toggle(locations, setLocations, v)}
+                onClear={() => setLocations([])}
+              />
+              <FilterGroup
+                label="Education"
+                options={EDUCATION_OPTIONS}
+                selected={education}
+                onToggle={(v) => toggle(education, setEducation, v)}
+                onClear={() => setEducation([])}
+              />
+            </div>
+
+            <div className="space-y-4 lg:col-span-3">
+              <h3 className="text-sm font-medium text-muted-foreground">Generated Searches</h3>
+              <ResultCard
+                title="LinkedIn Boolean"
+                description="LinkedIn-compatible Boolean syntax."
+                icon={<Linkedin className="h-4 w-4" />}
+                value={linkedin}
+                searchUrl={`https://www.linkedin.com/search/results/people/?keywords=${encodeURIComponent(linkedin)}`}
+              />
+              <ResultCard
+                title="Google X-Ray"
+                description="Optimized Google X-Ray query."
+                icon={<Globe className="h-4 w-4" />}
+                value={google}
+                searchUrl={`https://www.google.com/search?q=${encodeURIComponent(google)}`}
+              />
+              <ResultCard
+                title="GitHub X-Ray"
+                description="Ready-to-use GitHub X-Ray search."
+                icon={<Github className="h-4 w-4" />}
+                value={github}
+                searchUrl={`https://www.google.com/search?q=${encodeURIComponent(github)}`}
+              />
+              <ResultCard
+                title="Nested Search"
+                description='Raw nested boolean with no space after OR/AND before quotes (e.g. OR"Staff").'
+                icon={<Layers className="h-4 w-4" />}
+                value={nested}
+                searchUrl={`https://www.google.com/search?q=${encodeURIComponent(nested)}`}
+              />
+
+            </div>
+          </div>
+
+          {/* Example */}
+          <div className="mt-10 rounded-xl border border-dashed border-border bg-card/50 p-5">
+            <div className="mb-2 text-xs font-medium uppercase tracking-wide text-muted-foreground">
+              Example
+            </div>
+            <pre className="overflow-x-auto whitespace-pre-wrap font-mono text-sm leading-relaxed">
+{`("Software Engineer" OR "Software Developer")
+AND
+("Native Bridge" OR "Native Modules" OR "Native Flutter" OR "Modules" OR "Channel")`}
+            </pre>
+          </div>
+        </div>
+      </section>
+
+      {/* Closing */}
+      <section className="border-t border-border/60 bg-card/30">
+        <div className="mx-auto max-w-4xl px-6 py-20 text-center">
+          <h2 className="font-display text-4xl tracking-tight md:text-5xl">
+            Built for recruiters who source every day.
+          </h2>
+          <p className="mx-auto mt-4 max-w-2xl text-muted-foreground">
+            From startup hiring to executive search, Source Pro helps you generate clean, accurate
+            Boolean searches in seconds.
+          </p>
+        </div>
+      </section>
+
+      {/* Connect / Footer */}
+      <footer id="connect" className="border-t border-border/60">
+        <div className="mx-auto max-w-6xl px-6 py-14">
+          <div className="grid gap-10 md:grid-cols-2">
+            <div>
+              <div className="flex items-center gap-2">
+                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+                  <Search className="h-4 w-4" />
+                </div>
+                <span className="text-base font-semibold">Source Pro</span>
+              </div>
+              <p className="mt-3 max-w-sm text-sm text-muted-foreground">
+                Developed by a Recruiter, for Recruiters.
+              </p>
+              <p className="mt-1 text-sm font-medium">Suraj Sharma</p>
+            </div>
+            <div>
+              <h3 className="text-sm font-medium">Connect</h3>
+              <ul className="mt-4 space-y-2.5 text-sm">
+                <li>
+                  <a className="inline-flex items-center gap-2 text-muted-foreground transition hover:text-foreground" href="mailto:sharmasoorajd@gmail.com">
+                    <Mail className="h-4 w-4" /> sharmasoorajd@gmail.com
+                  </a>
+                </li>
+                <li>
+                  <a className="inline-flex items-center gap-2 text-muted-foreground transition hover:text-foreground" href="https://x.com/soorajdsharma" target="_blank" rel="noreferrer">
+                    <Twitter className="h-4 w-4" /> x.com/soorajdsharma
+                  </a>
+                </li>
+                <li>
+                  <a className="inline-flex items-center gap-2 text-muted-foreground transition hover:text-foreground" href="https://github.com/soorajdsharma" target="_blank" rel="noreferrer">
+                    <Github className="h-4 w-4" /> github.com/soorajdsharma
+                  </a>
+                </li>
+                <li>
+                  <a className="inline-flex items-center gap-2 text-muted-foreground transition hover:text-foreground" href="https://soorajdsharma.lovable.app" target="_blank" rel="noreferrer">
+                    <Globe className="h-4 w-4" /> soorajdsharma.lovable.app
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div className="mt-10 border-t border-border/60 pt-6 text-center text-xs text-muted-foreground">
+            © {new Date().getFullYear()} Source Pro. All rights reserved.
+          </div>
         </div>
       </footer>
     </div>
   );
 }
 
-function ChipRow({
-  label,
-  options,
-  selected,
-  onToggle,
-}: {
-  label: string;
-  options: string[];
-  selected: string[];
-  onToggle: (value: string) => void;
-}) {
-  return (
-    <div className="flex flex-wrap items-center gap-2">
-      <span className="mr-1 text-xs font-medium uppercase tracking-wide text-muted-foreground">
-        {label}
-      </span>
-      {options.map((opt) => {
-        const active = selected.includes(opt);
-        return (
-          <button
-            key={opt}
-            type="button"
-            onClick={() => onToggle(opt)}
-            className={`rounded-full border px-3 py-1 text-xs font-medium transition ${
-              active
-                ? "border-primary bg-primary text-primary-foreground"
-                : "border-border bg-background text-foreground/70 hover:border-foreground/30"
-            }`}
-          >
-            {opt}
-          </button>
-        );
-      })}
-    </div>
-  );
-}
-
 function ResultCard({
   title,
+  description,
   icon,
   value,
   searchUrl,
 }: {
   title: string;
+  description: string;
   icon: React.ReactNode;
   value: string;
   searchUrl: string;
@@ -315,12 +393,9 @@ function ResultCard({
   const [draft, setDraft] = useState<string | null>(null);
 
   const displayValue = draft !== null ? draft : value;
-  const liveSearchUrl =
-    draft !== null
-      ? searchUrl
-          .replace(/q=[^&]*/, `q=${encodeURIComponent(draft)}`)
-          .replace(/keywords=[^&]*/, `keywords=${encodeURIComponent(draft)}`)
-      : searchUrl;
+  const liveSearchUrl = draft !== null
+    ? searchUrl.replace(/q=[^&]*/, `q=${encodeURIComponent(draft)}`).replace(/keywords=[^&]*/, `keywords=${encodeURIComponent(draft)}`)
+    : searchUrl;
 
   const copy = async () => {
     if (!displayValue) return;
@@ -333,40 +408,47 @@ function ResultCard({
     }
   };
 
+  const startEdit = () => {
+    setDraft(displayValue);
+    setIsEditing(true);
+  };
+
+  const resetEdit = () => {
+    setDraft(null);
+    setIsEditing(false);
+  };
+
   return (
-    <div className="rounded-2xl border border-border bg-card p-4 transition hover:shadow-sm">
-      <div className="flex items-center justify-between gap-3">
-        <div className="flex items-center gap-2 text-sm font-medium">
-          <span className="text-muted-foreground">{icon}</span>
-          {title}
-          {draft !== null && (
-            <span className="ml-1 rounded-full bg-primary/10 px-2 py-0.5 text-[10px] uppercase tracking-wide text-primary">
-              Edited
-            </span>
-          )}
+    <div className="rounded-xl border border-border bg-card p-5 transition hover:border-primary/40">
+      <div className="flex items-start justify-between gap-4">
+        <div className="flex items-center gap-3">
+          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10 text-primary">
+            {icon}
+          </div>
+          <div>
+            <h4 className="text-sm font-semibold">
+              {title}
+              {draft !== null && (
+                <span className="ml-2 rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-primary">
+                  Edited
+                </span>
+              )}
+            </h4>
+            <p className="text-xs text-muted-foreground">{description}</p>
+          </div>
         </div>
-        <div className="flex items-center gap-1.5">
+        <div className="flex shrink-0 flex-wrap items-center justify-end gap-2">
           {draft !== null && (
             <button
-              onClick={() => {
-                setDraft(null);
-                setIsEditing(false);
-              }}
-              className="inline-flex items-center gap-1 rounded-md px-2 py-1 text-xs text-muted-foreground transition hover:bg-accent"
+              onClick={resetEdit}
+              className="inline-flex items-center gap-1.5 rounded-md border border-border bg-background px-2.5 py-1.5 text-xs font-medium transition hover:bg-accent"
             >
               <RotateCcw className="h-3.5 w-3.5" /> Reset
             </button>
           )}
           <button
-            onClick={() => {
-              if (isEditing) {
-                setIsEditing(false);
-              } else {
-                setDraft(displayValue);
-                setIsEditing(true);
-              }
-            }}
-            className="inline-flex items-center gap-1 rounded-md px-2 py-1 text-xs text-muted-foreground transition hover:bg-accent"
+            onClick={() => (isEditing ? setIsEditing(false) : startEdit())}
+            className="inline-flex items-center gap-1.5 rounded-md border border-border bg-background px-2.5 py-1.5 text-xs font-medium transition hover:bg-accent"
           >
             {isEditing ? <Check className="h-3.5 w-3.5" /> : <Pencil className="h-3.5 w-3.5" />}
             {isEditing ? "Done" : "Edit"}
@@ -376,14 +458,14 @@ function ResultCard({
             target="_blank"
             rel="noreferrer"
             aria-disabled={!displayValue}
-            className={`inline-flex items-center gap-1 rounded-md px-2 py-1 text-xs text-muted-foreground transition hover:bg-accent ${!displayValue ? "pointer-events-none opacity-50" : ""}`}
+            className={`inline-flex items-center gap-1.5 rounded-md border border-border bg-background px-2.5 py-1.5 text-xs font-medium transition hover:bg-accent ${!displayValue ? "pointer-events-none opacity-50" : ""}`}
           >
             <Search className="h-3.5 w-3.5" /> Open
           </a>
           <button
             onClick={copy}
             disabled={!displayValue}
-            className="inline-flex items-center gap-1 rounded-md bg-primary px-2.5 py-1 text-xs font-medium text-primary-foreground transition hover:opacity-90 disabled:opacity-50"
+            className="inline-flex items-center gap-1.5 rounded-md bg-primary px-2.5 py-1.5 text-xs font-medium text-primary-foreground transition hover:opacity-90 disabled:opacity-50"
           >
             {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
             {copied ? "Copied" : "Copy"}
@@ -395,13 +477,64 @@ function ResultCard({
           value={draft ?? ""}
           onChange={(e) => setDraft(e.target.value)}
           spellCheck={false}
-          className="mt-3 h-32 w-full resize-none rounded-lg bg-muted p-3 font-mono text-xs leading-relaxed outline-none ring-1 ring-primary/40 focus:ring-2 focus:ring-primary"
+          className="mt-4 h-40 w-full resize-none rounded-lg bg-muted p-3 font-mono text-xs leading-relaxed text-foreground outline-none ring-1 ring-primary/40 focus:ring-2 focus:ring-primary"
         />
       ) : (
-        <pre className="mt-3 max-h-40 overflow-auto rounded-lg bg-muted p-3 font-mono text-xs leading-relaxed">
+        <pre className="mt-4 max-h-40 overflow-auto rounded-lg bg-muted p-3 font-mono text-xs leading-relaxed text-foreground">
           {displayValue || "—"}
         </pre>
       )}
+    </div>
+  );
+}
+
+function FilterGroup({
+  label,
+  options,
+  selected,
+  onToggle,
+  onClear,
+}: {
+  label: string;
+  options: string[];
+  selected: string[];
+  onToggle: (value: string) => void;
+  onClear: () => void;
+}) {
+  return (
+    <div className="mt-4 rounded-xl border border-border bg-card p-4">
+      <div className="mb-3 flex items-center justify-between">
+        <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+          {label}
+        </h4>
+        {selected.length > 0 && (
+          <button
+            onClick={onClear}
+            className="text-xs text-muted-foreground transition hover:text-foreground"
+          >
+            Clear
+          </button>
+        )}
+      </div>
+      <div className="flex flex-wrap gap-2">
+        {options.map((opt) => {
+          const active = selected.includes(opt);
+          return (
+            <button
+              key={opt}
+              type="button"
+              onClick={() => onToggle(opt)}
+              className={`rounded-full border px-3 py-1 text-xs font-medium transition ${
+                active
+                  ? "border-primary bg-primary text-primary-foreground"
+                  : "border-border bg-background text-muted-foreground hover:border-primary/40 hover:text-foreground"
+              }`}
+            >
+              {opt}
+            </button>
+          );
+        })}
+      </div>
     </div>
   );
 }
