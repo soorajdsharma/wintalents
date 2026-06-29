@@ -147,6 +147,13 @@ function SourcePro() {
     document.getElementById("builder")?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
+  const [theme, setTheme] = useState<"dark" | "light">("dark");
+  useEffect(() => {
+    const root = document.documentElement;
+    if (theme === "dark") root.classList.add("dark");
+    else root.classList.remove("dark");
+  }, [theme]);
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       {/* Nav */}
@@ -160,17 +167,26 @@ function SourcePro() {
           </a>
           <nav className="hidden items-center gap-7 text-sm text-muted-foreground md:flex">
             <a href="#builder" className="transition hover:text-foreground">Builder</a>
-            <a href="#builder" className="transition hover:text-foreground">Builder</a>
             <a href="#connect" className="transition hover:text-foreground">Connect</a>
           </nav>
-          <button
-            onClick={scrollToBuilder}
-            className="rounded-md bg-primary px-3.5 py-2 text-sm font-medium text-primary-foreground transition hover:opacity-90"
-          >
-            Generate Boolean
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              aria-label="Toggle theme"
+              className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-border bg-background text-foreground transition hover:bg-accent"
+            >
+              {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+            </button>
+            <button
+              onClick={scrollToBuilder}
+              className="rounded-md bg-primary px-3.5 py-2 text-sm font-medium text-primary-foreground transition hover:opacity-90"
+            >
+              Generate Boolean
+            </button>
+          </div>
         </div>
       </header>
+
 
 
 
