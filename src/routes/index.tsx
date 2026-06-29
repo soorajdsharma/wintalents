@@ -534,11 +534,11 @@ function ConnectChip({
       href={href}
       target={isExternal ? "_blank" : undefined}
       rel={isExternal ? "noreferrer" : undefined}
-      className="inline-flex items-center gap-1.5 rounded-md border border-border bg-card px-2.5 py-1 text-xs font-medium text-foreground transition hover:border-primary/40 hover:bg-accent"
+      aria-label={label}
+      title={label}
+      className="inline-flex items-center justify-center rounded-md border border-border bg-card p-2 text-foreground transition hover:border-primary/40 hover:bg-accent"
     >
       {icon}
-      <span>{label}</span>
-      {isExternal && <ExternalLink className="h-3 w-3 text-muted-foreground" />}
     </a>
   );
 }
