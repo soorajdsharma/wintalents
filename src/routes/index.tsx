@@ -184,36 +184,6 @@ function SourcePro() {
         </div>
       </section>
 
-      {/* Features */}
-      <section id="features" className="border-t border-border/60 bg-card/30">
-        <div className="mx-auto max-w-6xl px-6 py-20">
-          <div className="mb-12 text-center">
-            <h2 className="font-display text-4xl tracking-tight md:text-5xl">Why Source Pro?</h2>
-            <p className="mt-3 text-muted-foreground">Everything you need to source smarter.</p>
-          </div>
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {[
-              { icon: <Code2 className="h-5 w-5" />, title: "Boolean in seconds", desc: "Build complex Boolean queries instantly." },
-              { icon: <Github className="h-5 w-5" />, title: "GitHub X-Ray", desc: "Generate ready-to-use GitHub X-Ray searches." },
-              { icon: <Globe className="h-5 w-5" />, title: "Google X-Ray", desc: "Optimized Google X-Ray queries across profiles." },
-              { icon: <Linkedin className="h-5 w-5" />, title: "LinkedIn-friendly", desc: "Convert Boolean into LinkedIn-compatible syntax." },
-              { icon: <Sparkles className="h-5 w-5" />, title: "Full operator support", desc: 'AND, OR, NOT, (), and Exact Match " ".' },
-              { icon: <Search className="h-5 w-5" />, title: "Built for sourcers", desc: "Tech Recruiters, Talent Sourcers, Hiring Teams." },
-            ].map((f) => (
-              <div
-                key={f.title}
-                className="rounded-xl border border-border bg-card p-5 transition hover:border-primary/40"
-              >
-                <div className="mb-3 inline-flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10 text-primary">
-                  {f.icon}
-                </div>
-                <h3 className="text-base font-medium">{f.title}</h3>
-                <p className="mt-1 text-sm text-muted-foreground">{f.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* Builder */}
       <section id="builder" className="border-t border-border/60">
