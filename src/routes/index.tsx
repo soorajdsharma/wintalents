@@ -160,7 +160,7 @@ function SourcePro() {
           <h1 className="font-display mx-auto max-w-3xl text-5xl leading-[1.05] tracking-tight md:text-7xl">
             Build powerful Boolean searches.
             <br />
-            <em className="text-primary">Source better talent, faster.</em>
+            <span className="text-primary">Source better talent, faster.</span>
           </h1>
           <p className="mx-auto mt-6 max-w-2xl text-base text-muted-foreground md:text-lg">
             Source Pro instantly generates optimized Boolean and X-Ray searches for GitHub, Google,
