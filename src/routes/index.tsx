@@ -279,8 +279,8 @@ function SourcePro() {
           </div>
 
 
-          <div className="grid gap-6 lg:grid-cols-5">
-            <div className="lg:col-span-2">
+          <div className="space-y-6">
+            <div>
               <div className="rounded-xl border border-border bg-card p-1">
                 <div className="flex items-center justify-between border-b border-border px-3 py-2 text-xs text-muted-foreground">
                   <span>Your Boolean</span>
@@ -319,7 +319,7 @@ function SourcePro() {
               />
             </div>
 
-            <div className="space-y-4 lg:col-span-3">
+            <div className="space-y-4">
               <h3 className="text-sm font-medium text-muted-foreground">Generated Searches</h3>
               <ResultCard
                 title="LinkedIn Boolean"
@@ -352,6 +352,7 @@ function SourcePro() {
 
             </div>
           </div>
+
 
         </div>
       </section>
