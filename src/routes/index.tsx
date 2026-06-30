@@ -341,7 +341,7 @@ function SourcePro() {
               <ResultCard
                 title="LinkedIn Leakage"
                 description="Bypass LinkedIn Limitation"
-                icon={<Layers className="h-5 w-5 text-primary" />}
+                icon={<LinkedInBrandIcon className="h-5 w-5" />}
                 value={nested}
                 searchUrl={`https://www.google.com/search?q=${encodeURIComponent(nested)}`}
               />
