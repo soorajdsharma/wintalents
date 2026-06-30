@@ -516,7 +516,7 @@ function ResultCard({
           )}
           <button
             onClick={() => (isEditing ? setIsEditing(false) : startEdit())}
-            className="inline-flex items-center gap-1.5 rounded-md border border-border bg-white px-2.5 py-1.5 text-xs font-medium text-neutral-900 transition hover:bg-neutral-100"
+            className="inline-flex items-center gap-1.5 rounded-md border border-border bg-background px-2.5 py-1.5 text-xs font-medium text-foreground transition hover:bg-accent"
           >
             {isEditing ? <Check className="h-3.5 w-3.5" /> : <Pencil className="h-3.5 w-3.5" />}
             {isEditing ? "Done" : "Edit"}
