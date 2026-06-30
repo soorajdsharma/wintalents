@@ -185,15 +185,6 @@ function composeQuery(base: string, locations: string[], education: string[]): s
 }
 
 function SourcePro() {
-  const { session, loading } = useAuth();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!loading && !session) {
-      navigate({ to: "/auth" });
-    }
-  }, [loading, session, navigate]);
-
   const [query, setQuery] = useState<string>(DEFAULT_QUERY);
   const [locations, setLocations] = useState<string[]>([]);
   const [education, setEducation] = useState<string[]>([]);
@@ -223,13 +214,6 @@ function SourcePro() {
     else root.classList.remove("dark");
   }, [theme]);
 
-  if (loading || !session) {
-    return (
-      <div className="flex min-h-screen items-center justify-center bg-background text-muted-foreground">
-        <Loader2 className="h-5 w-5 animate-spin" />
-      </div>
-    );
-  }
 
 
   return (
