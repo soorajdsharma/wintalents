@@ -1,7 +1,9 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
-import { Copy, Check, Search, Github, Globe, Linkedin, Mail, Code2, Sparkles, Twitter, Layers, Pencil, RotateCcw, Sun, Moon, ExternalLink } from "lucide-react";
+import { Copy, Check, Search, Github, Globe, Linkedin, Mail, Code2, Sparkles, Twitter, Layers, Pencil, RotateCcw, Sun, Moon, ExternalLink, Loader2 } from "lucide-react";
 import sourceProLogo from "@/assets/source-pro-logo.png.asset.json";
+import { useAuth } from "@/components/AuthProvider";
+import { UserMenu } from "@/components/UserMenu";
 
 
 export const Route = createFileRoute("/")({
@@ -185,6 +187,15 @@ function composeQuery(base: string, locations: string[], education: string[]): s
 }
 
 function SourcePro() {
+  const { session, loading } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!loading && !session) {
+      navigate({ to: "/auth" });
+    }
+  }, [loading, session, navigate]);
+
   const [query, setQuery] = useState<string>(DEFAULT_QUERY);
   const [locations, setLocations] = useState<string[]>([]);
   const [education, setEducation] = useState<string[]>([]);
@@ -213,6 +224,15 @@ function SourcePro() {
     if (theme === "dark") root.classList.add("dark");
     else root.classList.remove("dark");
   }, [theme]);
+
+  if (loading || !session) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-background text-muted-foreground">
+        <Loader2 className="h-5 w-5 animate-spin" />
+      </div>
+    );
+  }
+
 
   return (
     <div className="min-h-screen bg-background text-foreground">
