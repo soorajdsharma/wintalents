@@ -371,9 +371,9 @@ function SourcePro() {
                 href="https://www.linkedin.com/in/soorajdsharma/"
                 target="_blank"
                 rel="noreferrer"
-                className="mt-1 inline-block text-sm font-medium hover:text-primary transition"
+                className="mt-1 inline-flex items-center gap-1 text-sm font-medium hover:text-primary transition"
               >
-                Suraj Sharma
+                Suraj Sharma <ExternalLink className="h-3.5 w-3.5" />
               </a>
             </div>
             <div>
