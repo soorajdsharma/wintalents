@@ -340,7 +340,7 @@ function SourcePro() {
               />
               <ResultCard
                 title="LinkedIn Leakage"
-                description='Raw nested boolean with no space after OR/AND before quotes (e.g. OR"Staff").'
+                description="Bypass LinkedIn Limitation"
                 icon={<Layers className="h-5 w-5 text-primary" />}
                 value={nested}
                 searchUrl={`https://www.google.com/search?q=${encodeURIComponent(nested)}`}
