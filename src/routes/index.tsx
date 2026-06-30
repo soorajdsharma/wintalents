@@ -267,7 +267,9 @@ function SourcePro() {
             >
               {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
             </button>
+            <UserMenu />
           </div>
+
         </div>
       </header>
 
