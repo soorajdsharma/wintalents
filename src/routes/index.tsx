@@ -261,7 +261,7 @@ function SourcePro() {
           <div className="mb-4 text-center">
 
             <h2 className="font-display text-4xl tracking-tight md:text-5xl text-yellow-500 dark:text-yellow-400">
-              {"Find the right talent, instantly.".split(" ").map((word, i) => (
+              {"Talent Sourcing Assistant".split(" ").map((word, i) => (
                 <span
                   key={i}
                   className="inline-block opacity-0 animate-fade-in-up mr-[0.25em]"
