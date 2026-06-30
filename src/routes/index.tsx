@@ -275,7 +275,7 @@ function SourcePro() {
                 searchUrl={`https://www.google.com/search?q=${encodeURIComponent(github)}`}
               />
               <ResultCard
-                title="Nested Search"
+                title="LinkedIn Leakage"
                 description='Raw nested boolean with no space after OR/AND before quotes (e.g. OR"Staff").'
                 icon={<Layers className="h-5 w-5 text-primary" />}
                 value={nested}
