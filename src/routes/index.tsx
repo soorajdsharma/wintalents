@@ -367,7 +367,14 @@ function SourcePro() {
               <p className="mt-3 max-w-sm text-sm text-muted-foreground">
                 Developed by a Recruiter, for Recruiters.
               </p>
-              <p className="mt-1 text-sm font-medium">Suraj Sharma</p>
+              <a
+                href="https://www.linkedin.com/in/soorajdsharma/"
+                target="_blank"
+                rel="noreferrer"
+                className="mt-1 inline-block text-sm font-medium hover:text-primary transition"
+              >
+                Suraj Sharma
+              </a>
             </div>
             <div>
               <h3 className="text-sm font-medium">Connect</h3>
