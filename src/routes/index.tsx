@@ -85,13 +85,77 @@ function toGoogleXRay(input: string): string {
 }
 
 function toNestedSearch(input: string): string {
-  // Nested Search: raw nested boolean. Removes the space between OR/AND
-  // and a following quoted term (e.g. `OR "Staff"` -> `OR"Staff"`), per
-  // the reference style. No site: prefix.
+  // LinkedIn Free Boolean Optimizer.
+  // If operator count (AND/OR/NOT) <= 5, return as-is.
+  // Otherwise: quote bare keywords, format OR as ` OR"x"`, keep AND/NOT
+  // padded with single spaces, preserve parentheses and logic.
   const q = normalizeBoolean(input);
   if (!q) return "";
-  return q.replace(/\b(OR|AND)\s+"/g, '$1"');
+
+  type Tok =
+    | { type: "op"; val: "AND" | "OR" | "NOT" }
+    | { type: "paren"; val: "(" | ")" }
+    | { type: "phrase"; val: string }
+    | { type: "kw"; val: string };
+
+  const tokens: Tok[] = [];
+  let i = 0;
+  while (i < q.length) {
+    const c = q[i];
+    if (c === " " || c === "\t" || c === "\n") {
+      i++;
+      continue;
+    }
+    if (c === "(" || c === ")") {
+      tokens.push({ type: "paren", val: c });
+      i++;
+      continue;
+    }
+    if (c === '"') {
+      let j = i + 1;
+      while (j < q.length && q[j] !== '"') j++;
+      tokens.push({ type: "phrase", val: q.slice(i, Math.min(j + 1, q.length)) });
+      i = j + 1;
+      continue;
+    }
+    let j = i;
+    while (j < q.length && !' \t\n()"'.includes(q[j])) j++;
+    const w = q.slice(i, j);
+    if (w === "AND" || w === "OR" || w === "NOT") {
+      tokens.push({ type: "op", val: w });
+    } else {
+      tokens.push({ type: "kw", val: `"${w}"` });
+    }
+    i = j;
+  }
+
+  const opCount = tokens.filter((t) => t.type === "op").length;
+  if (opCount <= 5) return q;
+
+  let out = "";
+  for (let k = 0; k < tokens.length; k++) {
+    const t = tokens[k];
+    const p = tokens[k - 1];
+    let prefix = "";
+    if (p) {
+      if (t.type === "op") {
+        prefix = " ";
+      } else if (t.type === "paren" && t.val === ")") {
+        prefix = "";
+      } else if (t.type === "paren" && t.val === "(") {
+        prefix = p.type === "op" && p.val === "OR" ? "" : " ";
+      } else {
+        // kw or phrase
+        if (p.type === "op" && p.val === "OR") prefix = "";
+        else if (p.type === "paren" && p.val === "(") prefix = "";
+        else prefix = " ";
+      }
+    }
+    out += prefix + t.val;
+  }
+  return out;
 }
+
 
 const LOCATION_OPTIONS = ["Surat", "Gujarat", "India"];
 const EDUCATION_OPTIONS = [
