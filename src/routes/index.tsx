@@ -202,6 +202,7 @@ function composeQuery(base: string, locations: string[], education: string[]): s
 function SourcePro() {
   const [query, setQuery] = useState<string>(DEFAULT_QUERY);
   const [locations, setLocations] = useState<string[]>([]);
+  const [competitive, setCompetitive] = useState<string[]>([]);
   const [education, setEducation] = useState<string[]>([]);
 
   const toggle = (list: string[], setList: (v: string[]) => void, value: string) => {
@@ -209,8 +210,8 @@ function SourcePro() {
   };
 
   const composed = useMemo(
-    () => composeQuery(query, locations, education),
-    [query, locations, education],
+    () => composeQuery(query, locations, competitive, education),
+    [query, locations, competitive, education],
   );
 
   const github = useMemo(() => toGitHubXRay(composed), [composed]);
