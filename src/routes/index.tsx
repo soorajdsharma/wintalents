@@ -190,11 +190,13 @@ function buildGroup(values: string[]): string {
   return `(${parts.join(" OR ")})`;
 }
 
-function composeQuery(base: string, locations: string[], education: string[]): string {
+function composeQuery(base: string, locations: string[], competitive: string[], education: string[]): string {
   const segments = [base.trim()].filter(Boolean);
   const loc = buildGroup(locations);
+  const cp = buildGroup(competitive);
   const edu = buildGroup(education);
   if (loc) segments.push(loc);
+  if (cp) segments.push(cp);
   if (edu) segments.push(edu);
   return segments.join(" AND ");
 }
