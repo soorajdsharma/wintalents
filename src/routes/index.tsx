@@ -321,13 +321,22 @@ function SourcePro() {
                 Tip: Use quotes for exact matches and parentheses to group terms.
               </p>
 
-              <FilterGroup
-                label="Location"
-                options={LOCATION_OPTIONS}
-                selected={locations}
-                onToggle={(v) => toggle(locations, setLocations, v)}
-                onClear={() => setLocations([])}
-              />
+              <div className="mt-4 grid gap-4 md:grid-cols-2">
+                <FilterGroup
+                  label="Location"
+                  options={LOCATION_OPTIONS}
+                  selected={locations}
+                  onToggle={(v) => toggle(locations, setLocations, v)}
+                  onClear={() => setLocations([])}
+                />
+                <FilterGroup
+                  label="Competitive Programming"
+                  options={COMPETITIVE_PROGRAMMING_OPTIONS}
+                  selected={competitive}
+                  onToggle={(v) => toggle(competitive, setCompetitive, v)}
+                  onClear={() => setCompetitive([])}
+                />
+              </div>
               <FilterGroup
                 label="Education"
                 options={EDUCATION_OPTIONS}
