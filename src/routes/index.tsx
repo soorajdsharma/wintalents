@@ -162,6 +162,17 @@ function toNestedSearch(input: string): string {
 
 
 const LOCATION_OPTIONS = ["Surat", "Gujarat", "India"];
+const COMPETITIVE_PROGRAMMING_OPTIONS = [
+  "LeetCode",
+  "CodeChef",
+  "Codeforces",
+  "HackerRank",
+  "HackerEarth",
+  "GeeksforGeeks",
+  "DSA",
+  "Data Structures and Algorithms",
+  "Competitive Programming",
+];
 const EDUCATION_OPTIONS = [
   "Computer Science",
   "Information Technology",
