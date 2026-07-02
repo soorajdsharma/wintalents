@@ -162,6 +162,17 @@ function toNestedSearch(input: string): string {
 
 
 const LOCATION_OPTIONS = ["Surat", "Gujarat", "India"];
+const COMPETITIVE_PROGRAMMING_OPTIONS = [
+  "LeetCode",
+  "CodeChef",
+  "Codeforces",
+  "HackerRank",
+  "HackerEarth",
+  "GeeksforGeeks",
+  "DSA",
+  "Data Structures and Algorithms",
+  "Competitive Programming",
+];
 const EDUCATION_OPTIONS = [
   "Computer Science",
   "Information Technology",
@@ -179,11 +190,13 @@ function buildGroup(values: string[]): string {
   return `(${parts.join(" OR ")})`;
 }
 
-function composeQuery(base: string, locations: string[], education: string[]): string {
+function composeQuery(base: string, locations: string[], competitive: string[], education: string[]): string {
   const segments = [base.trim()].filter(Boolean);
   const loc = buildGroup(locations);
+  const cp = buildGroup(competitive);
   const edu = buildGroup(education);
   if (loc) segments.push(loc);
+  if (cp) segments.push(cp);
   if (edu) segments.push(edu);
   return segments.join(" AND ");
 }
@@ -191,6 +204,7 @@ function composeQuery(base: string, locations: string[], education: string[]): s
 function SourcePro() {
   const [query, setQuery] = useState<string>(DEFAULT_QUERY);
   const [locations, setLocations] = useState<string[]>([]);
+  const [competitive, setCompetitive] = useState<string[]>([]);
   const [education, setEducation] = useState<string[]>([]);
 
   const toggle = (list: string[], setList: (v: string[]) => void, value: string) => {
@@ -198,8 +212,8 @@ function SourcePro() {
   };
 
   const composed = useMemo(
-    () => composeQuery(query, locations, education),
-    [query, locations, education],
+    () => composeQuery(query, locations, competitive, education),
+    [query, locations, competitive, education],
   );
 
   const github = useMemo(() => toGitHubXRay(composed), [composed]);
@@ -307,13 +321,22 @@ function SourcePro() {
                 Tip: Use quotes for exact matches and parentheses to group terms.
               </p>
 
-              <FilterGroup
-                label="Location"
-                options={LOCATION_OPTIONS}
-                selected={locations}
-                onToggle={(v) => toggle(locations, setLocations, v)}
-                onClear={() => setLocations([])}
-              />
+              <div className="mt-4 grid gap-4 md:grid-cols-2">
+                <FilterGroup
+                  label="Location"
+                  options={LOCATION_OPTIONS}
+                  selected={locations}
+                  onToggle={(v) => toggle(locations, setLocations, v)}
+                  onClear={() => setLocations([])}
+                />
+                <FilterGroup
+                  label="Competitive Programming"
+                  options={COMPETITIVE_PROGRAMMING_OPTIONS}
+                  selected={competitive}
+                  onToggle={(v) => toggle(competitive, setCompetitive, v)}
+                  onClear={() => setCompetitive([])}
+                />
+              </div>
               <FilterGroup
                 label="Education"
                 options={EDUCATION_OPTIONS}
