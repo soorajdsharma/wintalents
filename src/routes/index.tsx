@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import { Copy, Check, Search, Github, Globe, Linkedin, Mail, Code2, Sparkles, Twitter, Layers, Pencil, RotateCcw, Sun, Moon, ExternalLink } from "lucide-react";
-import sourceProLogo from "@/assets/source-pro-logo.png.asset.json";
+import sourceProLogo from "@/assets/suraj-profile.jpeg.asset.json";
 
 
 export const Route = createFileRoute("/")({
