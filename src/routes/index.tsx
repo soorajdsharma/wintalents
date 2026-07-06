@@ -242,6 +242,7 @@ function SourcePro() {
   const google = useMemo(() => toGoogleXRay(composed), [composed]);
   const linkedin = useMemo(() => toLinkedInBoolean(composed), [composed]);
   const nested = useMemo(() => toNestedSearch(composed), [composed]);
+  const operatorCount = useMemo(() => countOperators(composed), [composed]);
 
   const scrollToBuilder = () => {
     document.getElementById("builder")?.scrollIntoView({ behavior: "smooth", block: "start" });
