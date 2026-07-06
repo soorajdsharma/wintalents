@@ -192,23 +192,12 @@ function buildGroup(values: string[]): string {
 
 function countOperators(input: string): number {
   if (!input) return 0;
-  let count = 0;
-  // Mask quoted phrases so operator words inside quotes aren't counted,
-  // but count each quotation mark as an operator.
-  const quoteMatches = input.match(/"/g);
-  if (quoteMatches) count += quoteMatches.length;
+  // Only AND, OR, NOT count as operators. Ignore anything inside quotes.
   const unquoted = input.replace(/"[^"]*"/g, " ");
-  // Boolean word operators
+  let count = 0;
   count += (unquoted.match(/\bAND\b/g) || []).length;
   count += (unquoted.match(/\bOR\b/g) || []).length;
   count += (unquoted.match(/\bNOT\b/g) || []).length;
-  // Parentheses
-  count += (unquoted.match(/[()]/g) || []).length;
-  // Wildcards: * and ?
-  count += (unquoted.match(/[*?]/g) || []).length;
-  // Proximity / other operators: ~ (proximity), + (required), - (exclude)
-  count += (unquoted.match(/[~+]/g) || []).length;
-  count += (unquoted.match(/(^|\s)-(?=\S)/g) || []).length;
   return count;
 }
 
