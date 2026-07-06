@@ -192,23 +192,12 @@ function buildGroup(values: string[]): string {
 
 function countOperators(input: string): number {
   if (!input) return 0;
-  let count = 0;
-  // Mask quoted phrases so operator words inside quotes aren't counted,
-  // but count each quotation mark as an operator.
-  const quoteMatches = input.match(/"/g);
-  if (quoteMatches) count += quoteMatches.length;
+  // Only AND, OR, NOT count as operators. Ignore anything inside quotes.
   const unquoted = input.replace(/"[^"]*"/g, " ");
-  // Boolean word operators
+  let count = 0;
   count += (unquoted.match(/\bAND\b/g) || []).length;
   count += (unquoted.match(/\bOR\b/g) || []).length;
   count += (unquoted.match(/\bNOT\b/g) || []).length;
-  // Parentheses
-  count += (unquoted.match(/[()]/g) || []).length;
-  // Wildcards: * and ?
-  count += (unquoted.match(/[*?]/g) || []).length;
-  // Proximity / other operators: ~ (proximity), + (required), - (exclude)
-  count += (unquoted.match(/[~+]/g) || []).length;
-  count += (unquoted.match(/(^|\s)-(?=\S)/g) || []).length;
   return count;
 }
 
@@ -566,6 +555,12 @@ function ResultCard({
                   Edited
                 </span>
               )}
+              <span
+                className="ml-2 inline-flex items-center gap-1 rounded-full border border-border bg-background px-2 py-0.5 text-[10px] font-medium text-muted-foreground"
+                title="AND / OR / NOT operators used"
+              >
+                Operators: <span className="tabular-nums text-foreground">{countOperators(displayValue)}</span>
+              </span>
             </h4>
             <p className="text-xs text-muted-foreground">{description}</p>
           </div>
