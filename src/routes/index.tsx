@@ -190,6 +190,28 @@ function buildGroup(values: string[]): string {
   return `(${parts.join(" OR ")})`;
 }
 
+function countOperators(input: string): number {
+  if (!input) return 0;
+  let count = 0;
+  // Mask quoted phrases so operator words inside quotes aren't counted,
+  // but count each quotation mark as an operator.
+  const quoteMatches = input.match(/"/g);
+  if (quoteMatches) count += quoteMatches.length;
+  const unquoted = input.replace(/"[^"]*"/g, " ");
+  // Boolean word operators
+  count += (unquoted.match(/\bAND\b/g) || []).length;
+  count += (unquoted.match(/\bOR\b/g) || []).length;
+  count += (unquoted.match(/\bNOT\b/g) || []).length;
+  // Parentheses
+  count += (unquoted.match(/[()]/g) || []).length;
+  // Wildcards: * and ?
+  count += (unquoted.match(/[*?]/g) || []).length;
+  // Proximity / other operators: ~ (proximity), + (required), - (exclude)
+  count += (unquoted.match(/[~+]/g) || []).length;
+  count += (unquoted.match(/(^|\s)-(?=\S)/g) || []).length;
+  return count;
+}
+
 function composeQuery(base: string, locations: string[], competitive: string[], education: string[]): string {
   const segments = [base.trim()].filter(Boolean);
   const loc = buildGroup(locations);
@@ -220,6 +242,7 @@ function SourcePro() {
   const google = useMemo(() => toGoogleXRay(composed), [composed]);
   const linkedin = useMemo(() => toLinkedInBoolean(composed), [composed]);
   const nested = useMemo(() => toNestedSearch(composed), [composed]);
+  const operatorCount = useMemo(() => countOperators(composed), [composed]);
 
   const scrollToBuilder = () => {
     document.getElementById("builder")?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -302,12 +325,22 @@ function SourcePro() {
               <div className="rounded-xl border border-border bg-card p-1">
                 <div className="flex items-center justify-between border-b border-border px-3 py-2 text-xs text-muted-foreground">
                   <span>Your Boolean</span>
-                  <button
-                    onClick={() => setQuery("")}
-                    className="rounded px-2 py-1 transition hover:bg-accent"
-                  >
-                    Clear
-                  </button>
+                  <div className="flex items-center gap-3">
+                    <span
+                      aria-live="polite"
+                      className="inline-flex items-center gap-1.5 rounded-full border border-border bg-background px-2 py-0.5 font-medium text-foreground"
+                      title="Total AND / OR / NOT / parentheses / quotes / wildcards / proximity operators in your current query"
+                    >
+                      <Sparkles className="h-3 w-3 text-yellow-500" />
+                      Operators Used: <span className="tabular-nums">{operatorCount}</span>
+                    </span>
+                    <button
+                      onClick={() => setQuery("")}
+                      className="rounded px-2 py-1 transition hover:bg-accent"
+                    >
+                      Clear
+                    </button>
+                  </div>
                 </div>
                 <textarea
                   value={query}
