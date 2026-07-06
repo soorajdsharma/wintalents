@@ -632,7 +632,7 @@ function FilterGroup({
   return (
     <div className="mt-4 rounded-xl border border-border bg-card p-4">
       <div className="mb-3 flex items-center justify-between">
-        <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+        <h4 className="text-xs font-semibold tracking-wide text-muted-foreground">
           {label}
         </h4>
         {selected.length > 0 && (
