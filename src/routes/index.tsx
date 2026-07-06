@@ -555,6 +555,12 @@ function ResultCard({
                   Edited
                 </span>
               )}
+              <span
+                className="ml-2 inline-flex items-center gap-1 rounded-full border border-border bg-background px-2 py-0.5 text-[10px] font-medium text-muted-foreground"
+                title="AND / OR / NOT operators used"
+              >
+                Operators: <span className="tabular-nums text-foreground">{countOperators(displayValue)}</span>
+              </span>
             </h4>
             <p className="text-xs text-muted-foreground">{description}</p>
           </div>
