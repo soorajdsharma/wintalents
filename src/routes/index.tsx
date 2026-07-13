@@ -7,13 +7,13 @@ import sourceProLogo from "@/assets/suraj-profile.jpeg.asset.json";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Source Pro — AI Sourcing Assistant for Recruiters" },
+      { title: "Win Talent — AI Sourcing Assistant for Recruiters" },
       {
         name: "description",
         content:
-          "Source Pro instantly generates optimized Boolean and X-Ray searches for GitHub, Google, and LinkedIn. Built for recruiters and talent sourcers.",
+          "Win Talent instantly generates optimized Boolean and X-Ray searches for GitHub, Google, and LinkedIn. Built for recruiters and talent sourcers.",
       },
-      { property: "og:title", content: "Source Pro — AI Sourcing Assistant for Recruiters" },
+      { property: "og:title", content: "Win Talent — AI Sourcing Assistant for Recruiters" },
       {
         property: "og:description",
         content:
@@ -327,9 +327,9 @@ function SourcePro() {
         <div className="relative mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
           <a href="#top" className="flex items-center gap-2.5">
             <div className="h-10 w-10 rounded-full ring-1 ring-border overflow-hidden">
-              <img src={sourceProLogo.url} alt="Source Pro" className="h-full w-full object-cover" />
+              <img src={sourceProLogo.url} alt="Win Talent" className="h-full w-full object-cover" />
             </div>
-            <span className="text-base font-semibold tracking-tight">Source Pro</span>
+            <span className="text-base font-semibold tracking-tight">Win Talent</span>
           </a>
           <div className="pointer-events-none absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 items-center gap-2">
             <div className="pointer-events-auto flex items-center gap-2">
@@ -528,9 +528,9 @@ function SourcePro() {
             <div>
               <div className="flex items-center gap-2.5">
                 <div className="h-10 w-10 rounded-full ring-1 ring-border overflow-hidden">
-                  <img src={sourceProLogo.url} alt="Source Pro" className="h-full w-full object-cover" />
+                  <img src={sourceProLogo.url} alt="Win Talent" className="h-full w-full object-cover" />
                 </div>
-                <span className="text-base font-semibold">Source Pro</span>
+                <span className="text-base font-semibold">Win Talent</span>
               </div>
               <p className="mt-3 max-w-sm text-sm text-muted-foreground">
                 Developed by a Recruiter, for Recruiters.
@@ -568,7 +568,7 @@ function SourcePro() {
             </div>
           </div>
           <div className="mt-10 border-t border-border/60 pt-6 text-center text-xs text-muted-foreground">
-            © {new Date().getFullYear()} Source Pro. All rights reserved.
+            © {new Date().getFullYear()} Win Talent. All rights reserved.
           </div>
         </div>
       </footer>

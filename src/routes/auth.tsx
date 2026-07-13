@@ -9,7 +9,7 @@ import sourceProLogo from "@/assets/source-pro-logo.png.asset.json";
 
 export const Route = createFileRoute("/auth")({
   head: () => ({
-    meta: [{ title: "Sign in — Source Pro" }],
+    meta: [{ title: "Sign in — Win Talent" }],
   }),
   component: AuthPage,
 });
@@ -130,9 +130,9 @@ function AuthPage() {
       <div className="mx-auto flex min-h-screen max-w-md flex-col justify-center px-6 py-12">
         <div className="mb-8 flex items-center justify-center gap-2.5">
           <div className="h-10 w-10 overflow-hidden rounded-full ring-1 ring-border">
-            <img src={sourceProLogo.url} alt="Source Pro" className="h-full w-full object-cover" />
+            <img src={sourceProLogo.url} alt="Win Talent" className="h-full w-full object-cover" />
           </div>
-          <span className="text-lg font-semibold tracking-tight">Source Pro</span>
+          <span className="text-lg font-semibold tracking-tight">Win Talent</span>
         </div>
 
         <div className="rounded-2xl border border-border bg-card p-6 shadow-lg">
@@ -216,7 +216,7 @@ function AuthPage() {
         </div>
 
         <p className="mt-6 text-center text-xs text-muted-foreground">
-          By continuing you agree to use Source Pro responsibly.
+          By continuing you agree to use Win Talent responsibly.
         </p>
         <div className="mt-2 text-center">
           <Link to="/" className="text-xs text-muted-foreground hover:text-foreground">
