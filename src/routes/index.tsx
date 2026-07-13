@@ -264,7 +264,7 @@ function SourcePro() {
     document.getElementById("builder")?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
-  const [theme, setTheme] = useState<"dark" | "light">("dark");
+  const [theme, setTheme] = useState<"dark" | "light">("light");
   useEffect(() => {
     const root = document.documentElement;
     if (theme === "dark") root.classList.add("dark");
