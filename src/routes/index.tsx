@@ -25,6 +25,8 @@ export const Route = createFileRoute("/")({
 });
 
 const DEFAULT_QUERY = "";
+const HISTORY_KEY = "source-pro-boolean-history";
+const MAX_HISTORY = 5;
 
 function normalizeBoolean(input: string): string {
   // Collapse whitespace/newlines into single spaces while preserving quoted strings
