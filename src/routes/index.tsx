@@ -247,24 +247,28 @@ function SourcePro() {
   const [competitive, setCompetitive] = useState<string[]>([]);
   const [education, setEducation] = useState<string[]>([]);
 
-  const [history, setHistory] = useState<string[]>(() => {
-    if (typeof window === "undefined") return [];
+  const [history, setHistory] = useState<string[]>([]);
+  const [historyReady, setHistoryReady] = useState(false);
+
+  useEffect(() => {
     try {
       const raw = localStorage.getItem(HISTORY_KEY);
       const parsed = raw ? JSON.parse(raw) : [];
-      return Array.isArray(parsed) ? parsed.filter((h) => typeof h === "string") : [];
+      setHistory(Array.isArray(parsed) ? parsed.filter((h) => typeof h === "string") : []);
     } catch {
-      return [];
+      setHistory([]);
     }
-  });
+    setHistoryReady(true);
+  }, []);
 
   useEffect(() => {
+    if (!historyReady) return;
     try {
       localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
     } catch {
       // ignore
     }
-  }, [history]);
+  }, [history, historyReady]);
 
   const restoreHistory = (item: string) => {
     setQuery(item);
@@ -312,11 +316,15 @@ function SourcePro() {
   };
 
   const [theme, setTheme] = useState<"dark" | "light">("light");
+  const [year, setYear] = useState<number>(2026);
   useEffect(() => {
     const root = document.documentElement;
     if (theme === "dark") root.classList.add("dark");
     else root.classList.remove("dark");
   }, [theme]);
+  useEffect(() => {
+    setYear(new Date().getFullYear());
+  }, []);
 
 
 
@@ -473,7 +481,7 @@ function SourcePro() {
                 searchUrl={`https://www.google.com/search?q=${encodeURIComponent(nested)}`}
               />
 
-              {history.length > 0 && (
+              {historyReady && history.length > 0 && (
                 <div className="rounded-xl border border-border bg-card p-5">
                   <div className="mb-4 flex items-center justify-between">
                     <div className="flex items-center gap-2">
@@ -568,7 +576,7 @@ function SourcePro() {
             </div>
           </div>
           <div className="mt-10 border-t border-border/60 pt-6 text-center text-xs text-muted-foreground">
-            © {new Date().getFullYear()} Win Talent. All rights reserved.
+            © {year} Win Talent. All rights reserved.
           </div>
         </div>
       </footer>
