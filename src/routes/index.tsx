@@ -90,10 +90,8 @@ function toGoogleStyle(q: string): string {
       /\bOR\b/.test(inner) ? mm : ` ${inner} `,
     );
   } while (s !== prev);
-  s = s.replace(/\u0000(\d+)\u0000/g, (_, idx) => quotes[Number(idx)]);
-
   // Tidy: fix "- foo" -> "-foo" from token join, tighten parens,
-  // ensure spaces around OR (only in Google X-Ray), and collapse whitespace.
+  // ensure spaces around OR (only in Google X-Ray), then restore quotes.
   s = s.replace(/-\s+/g, "-");
   s = s.replace(/\(\s+/g, "(").replace(/\s+\)/g, ")");
   s = s.replace(/\s*OR\s*/g, " OR ");
