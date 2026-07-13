@@ -294,6 +294,19 @@ function SourcePro() {
   const nested = useMemo(() => toNestedSearch(composed), [composed]);
   const operatorCount = useMemo(() => countOperators(composed), [composed]);
 
+  useEffect(() => {
+    const trimmed = composed.trim();
+    if (!trimmed) return;
+    const id = setTimeout(() => {
+      setHistory((prev) => {
+        if (prev[0] === trimmed) return prev;
+        const next = [trimmed, ...prev.filter((h) => h !== trimmed)];
+        return next.slice(0, MAX_HISTORY);
+      });
+    }, 1200);
+    return () => clearTimeout(id);
+  }, [composed]);
+
   const scrollToBuilder = () => {
     document.getElementById("builder")?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
