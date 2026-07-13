@@ -477,7 +477,7 @@ function SourcePro() {
                 searchUrl={`https://www.google.com/search?q=${encodeURIComponent(nested)}`}
               />
 
-              {history.length > 0 && (
+              {historyReady && history.length > 0 && (
                 <div className="rounded-xl border border-border bg-card p-5">
                   <div className="mb-4 flex items-center justify-between">
                     <div className="flex items-center gap-2">
