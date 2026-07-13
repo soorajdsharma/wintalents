@@ -576,7 +576,7 @@ function SourcePro() {
             </div>
           </div>
           <div className="mt-10 border-t border-border/60 pt-6 text-center text-xs text-muted-foreground">
-            © {new Date().getFullYear()} Win Talent. All rights reserved.
+            © {year} Win Talent. All rights reserved.
           </div>
         </div>
       </footer>
