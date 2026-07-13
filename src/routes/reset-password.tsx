@@ -6,7 +6,7 @@ import { supabase } from "@/integrations/supabase/client";
 import sourceProLogo from "@/assets/source-pro-logo.png.asset.json";
 
 export const Route = createFileRoute("/reset-password")({
-  head: () => ({ meta: [{ title: "Reset password — Source Pro" }] }),
+  head: () => ({ meta: [{ title: "Reset password — Win Talent" }] }),
   component: ResetPasswordPage,
 });
 
@@ -43,9 +43,9 @@ function ResetPasswordPage() {
       <div className="mx-auto flex min-h-screen max-w-md flex-col justify-center px-6 py-12">
         <div className="mb-8 flex items-center justify-center gap-2.5">
           <div className="h-10 w-10 overflow-hidden rounded-full ring-1 ring-border">
-            <img src={sourceProLogo.url} alt="Source Pro" className="h-full w-full object-cover" />
+            <img src={sourceProLogo.url} alt="Win Talent" className="h-full w-full object-cover" />
           </div>
-          <span className="text-lg font-semibold tracking-tight">Source Pro</span>
+          <span className="text-lg font-semibold tracking-tight">Win Talent</span>
         </div>
         <form onSubmit={submit} className="space-y-4 rounded-2xl border border-border bg-card p-6 shadow-lg">
           <div>
