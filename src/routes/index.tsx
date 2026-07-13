@@ -201,10 +201,9 @@ const COMPETITIVE_PROGRAMMING_OPTIONS = [
   "Competitive Programming",
 ];
 const EDUCATION_OPTIONS = [
+  "Computer Engineering",
   "Computer Science",
   "Information Technology",
-  "Computer Application",
-  "Computer Engineering",
   "CSE",
   "BCA",
   "MCA",
