@@ -44,31 +44,56 @@ function wrapIfNeeded(q: string): string {
 }
 
 function toGoogleStyle(q: string): string {
-  // Google X-Ray style:
-  // - AND -> space (implicit)
-  // - NOT term -> -term
-  // - Keep OR and quoted phrases intact
-  // - Remove redundant parens around single tokens / non-OR groups
-  let s = q.replace(/\bAND\b/g, " ");
-  s = s.replace(/\bNOT\s+/g, "-");
+  // Google X-Ray transform — token-based, case-sensitive:
+  //   AND (uppercase)  -> ignored  (whitespace = implicit AND)
+  //   NOT (uppercase)  -> "-" prefix on the next token/group  (exclusion)
+  //   OR  (uppercase)  -> kept as explicit OR node
+  //   "or" (lowercase) -> treated as a plain keyword
+  //   quoted phrases   -> preserved verbatim
+  //   parentheses      -> preserved when they contain an OR, otherwise stripped
+  //   search operators (site:, filetype:, intitle:, etc.) -> preserved as keywords
 
-  // Strip parens around groups that contain no OR (e.g. "(Surat)" -> "Surat").
-  // Mask quoted phrases first so quoted parens/OR aren't touched.
+  // 1. Tokenize while preserving quoted phrases and parens as their own tokens.
+  const tokens: string[] = [];
+  const re = /"[^"]*"|\(|\)|\S+/g;
+  let m: RegExpExecArray | null;
+  while ((m = re.exec(q)) !== null) tokens.push(m[0]);
+
+  // 2. Transform token stream per the rules above.
+  const out: string[] = [];
+  for (let i = 0; i < tokens.length; i++) {
+    const t = tokens[i];
+    if (t === "AND") continue;                    // ignore
+    if (t === "NOT") {                            // exclusion prefix on next token
+      const next = tokens[i + 1];
+      if (next !== undefined) {
+        out.push(`-${next}`);
+        i++;
+      }
+      continue;
+    }
+    // Uppercase OR is the only OR operator. Lowercase "or" falls through as keyword.
+    out.push(t);
+  }
+
+  // 3. Join, then strip redundant parens (groups without an explicit OR).
+  let s = out.join(" ");
   const quotes: string[] = [];
-  s = s.replace(/"[^"]*"/g, (m) => {
-    quotes.push(m);
+  s = s.replace(/"[^"]*"/g, (mm) => {
+    quotes.push(mm);
     return `\u0000${quotes.length - 1}\u0000`;
   });
-
   let prev: string;
   do {
     prev = s;
-    s = s.replace(/\(([^()]*)\)/g, (m, inner) =>
-      /\bOR\b/.test(inner) ? m : ` ${inner} `,
+    s = s.replace(/\(([^()]*)\)/g, (mm, inner) =>
+      /\bOR\b/.test(inner) ? mm : ` ${inner} `,
     );
   } while (s !== prev);
+  s = s.replace(/\u0000(\d+)\u0000/g, (_, idx) => quotes[Number(idx)]);
 
-  s = s.replace(/\u0000(\d+)\u0000/g, (_, i) => quotes[Number(i)]);
+  // Tidy: fix "- foo" -> "-foo" from token join, collapse whitespace.
+  s = s.replace(/-\s+/g, "-");
   return s.replace(/\s+/g, " ").trim();
 }
 
