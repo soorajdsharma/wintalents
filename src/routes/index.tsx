@@ -296,15 +296,20 @@ function SourcePro() {
 
   useEffect(() => {
     const trimmed = composed.trim();
+    console.log("history effect", { composed, trimmed });
     if (!trimmed) return;
     const id = setTimeout(() => {
+      console.log("history save", trimmed);
       setHistory((prev) => {
         if (prev[0] === trimmed) return prev;
         const next = [trimmed, ...prev.filter((h) => h !== trimmed)];
         return next.slice(0, MAX_HISTORY);
       });
     }, 1200);
-    return () => clearTimeout(id);
+    return () => {
+      console.log("history clear timeout", trimmed);
+      clearTimeout(id);
+    };
   }, [composed]);
 
   const scrollToBuilder = () => {
