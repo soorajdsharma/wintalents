@@ -205,6 +205,7 @@ const EDUCATION_OPTIONS = [
   "Information Technology",
   "Computer Application",
   "Computer Engineering",
+  "CSE",
   "BCA",
   "MCA",
   "MBA",
