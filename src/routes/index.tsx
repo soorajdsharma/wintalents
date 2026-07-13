@@ -92,9 +92,12 @@ function toGoogleStyle(q: string): string {
   } while (s !== prev);
   s = s.replace(/\u0000(\d+)\u0000/g, (_, idx) => quotes[Number(idx)]);
 
-  // Tidy: fix "- foo" -> "-foo" from token join, tighten parens, collapse whitespace.
+  // Tidy: fix "- foo" -> "-foo" from token join, tighten parens,
+  // ensure spaces around OR (only in Google X-Ray), and collapse whitespace.
   s = s.replace(/-\s+/g, "-");
   s = s.replace(/\(\s+/g, "(").replace(/\s+\)/g, ")");
+  s = s.replace(/\s*OR\s*/g, " OR ");
+  s = s.replace(/\u0000(\d+)\u0000/g, (_, idx) => quotes[Number(idx)]);
   return s.replace(/\s+/g, " ").trim();
 }
 
