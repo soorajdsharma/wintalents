@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
-import { Copy, Check, Search, Github, Globe, Linkedin, Mail, Code2, Sparkles, Twitter, Layers, Pencil, RotateCcw, Sun, Moon, ExternalLink } from "lucide-react";
+import { Copy, Check, Search, Github, Globe, Linkedin, Mail, Code2, Sparkles, Twitter, Layers, Pencil, RotateCcw, Sun, Moon, ExternalLink, History, Trash2, Clock } from "lucide-react";
 import sourceProLogo from "@/assets/suraj-profile.jpeg.asset.json";
 
 
@@ -25,6 +25,8 @@ export const Route = createFileRoute("/")({
 });
 
 const DEFAULT_QUERY = "";
+const HISTORY_KEY = "source-pro-boolean-history";
+const MAX_HISTORY = 5;
 
 function normalizeBoolean(input: string): string {
   // Collapse whitespace/newlines into single spaces while preserving quoted strings
@@ -245,6 +247,38 @@ function SourcePro() {
   const [competitive, setCompetitive] = useState<string[]>([]);
   const [education, setEducation] = useState<string[]>([]);
 
+  const [history, setHistory] = useState<string[]>(() => {
+    if (typeof window === "undefined") return [];
+    try {
+      const raw = localStorage.getItem(HISTORY_KEY);
+      const parsed = raw ? JSON.parse(raw) : [];
+      return Array.isArray(parsed) ? parsed.filter((h) => typeof h === "string") : [];
+    } catch {
+      return [];
+    }
+  });
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
+    } catch {
+      // ignore
+    }
+  }, [history]);
+
+  const restoreHistory = (item: string) => {
+    setQuery(item);
+    setLocations([]);
+    setCompetitive([]);
+    setEducation([]);
+  };
+
+  const removeHistory = (item: string) => {
+    setHistory((prev) => prev.filter((h) => h !== item));
+  };
+
+  const clearHistory = () => setHistory([]);
+
   const toggle = (list: string[], setList: (v: string[]) => void, value: string) => {
     setList(list.includes(value) ? list.filter((v) => v !== value) : [...list, value]);
   };
@@ -259,6 +293,19 @@ function SourcePro() {
   const linkedin = useMemo(() => toLinkedInBoolean(composed), [composed]);
   const nested = useMemo(() => toNestedSearch(composed), [composed]);
   const operatorCount = useMemo(() => countOperators(composed), [composed]);
+
+  useEffect(() => {
+    const trimmed = composed.trim();
+    if (!trimmed) return;
+    const id = setTimeout(() => {
+      setHistory((prev) => {
+        if (prev[0] === trimmed) return prev;
+        const next = [trimmed, ...prev.filter((h) => h !== trimmed)];
+        return next.slice(0, MAX_HISTORY);
+      });
+    }, 1200);
+    return () => clearTimeout(id);
+  }, [composed]);
 
   const scrollToBuilder = () => {
     document.getElementById("builder")?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -426,6 +473,46 @@ function SourcePro() {
                 searchUrl={`https://www.google.com/search?q=${encodeURIComponent(nested)}`}
               />
 
+              {history.length > 0 && (
+                <div className="rounded-xl border border-border bg-card p-5">
+                  <div className="mb-4 flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <History className="h-4 w-4 text-muted-foreground" />
+                      <h3 className="text-sm font-semibold">Boolean Search History</h3>
+                    </div>
+                    <button
+                      onClick={clearHistory}
+                      className="inline-flex items-center gap-1.5 text-xs text-muted-foreground transition hover:text-destructive"
+                    >
+                      <Trash2 className="h-3.5 w-3.5" /> Clear all
+                    </button>
+                  </div>
+                  <ul className="space-y-2">
+                    {history.map((item, idx) => (
+                      <li
+                        key={`${item}-${idx}`}
+                        className="group flex items-center justify-between gap-3 rounded-lg border border-border bg-background p-3 transition hover:border-primary/40"
+                      >
+                        <button
+                          onClick={() => restoreHistory(item)}
+                          className="flex min-w-0 flex-1 items-center gap-2 text-left text-sm"
+                          title="Restore this search"
+                        >
+                          <Clock className="h-3.5 w-3.5 shrink-0 text-muted-foreground" />
+                          <span className="truncate font-mono text-xs">{item}</span>
+                        </button>
+                        <button
+                          onClick={() => removeHistory(item)}
+                          aria-label="Remove from history"
+                          className="shrink-0 rounded-md p-1.5 text-muted-foreground opacity-0 transition hover:bg-accent hover:text-destructive group-hover:opacity-100"
+                        >
+                          <Trash2 className="h-3.5 w-3.5" />
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
             </div>
           </div>
 
