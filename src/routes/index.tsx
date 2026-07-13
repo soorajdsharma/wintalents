@@ -473,6 +473,46 @@ function SourcePro() {
                 searchUrl={`https://www.google.com/search?q=${encodeURIComponent(nested)}`}
               />
 
+              {history.length > 0 && (
+                <div className="rounded-xl border border-border bg-card p-5">
+                  <div className="mb-4 flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <History className="h-4 w-4 text-muted-foreground" />
+                      <h3 className="text-sm font-semibold">Boolean Search History</h3>
+                    </div>
+                    <button
+                      onClick={clearHistory}
+                      className="inline-flex items-center gap-1.5 text-xs text-muted-foreground transition hover:text-destructive"
+                    >
+                      <Trash2 className="h-3.5 w-3.5" /> Clear all
+                    </button>
+                  </div>
+                  <ul className="space-y-2">
+                    {history.map((item, idx) => (
+                      <li
+                        key={`${item}-${idx}`}
+                        className="group flex items-center justify-between gap-3 rounded-lg border border-border bg-background p-3 transition hover:border-primary/40"
+                      >
+                        <button
+                          onClick={() => restoreHistory(item)}
+                          className="flex min-w-0 flex-1 items-center gap-2 text-left text-sm"
+                          title="Restore this search"
+                        >
+                          <Clock className="h-3.5 w-3.5 shrink-0 text-muted-foreground" />
+                          <span className="truncate font-mono text-xs">{item}</span>
+                        </button>
+                        <button
+                          onClick={() => removeHistory(item)}
+                          aria-label="Remove from history"
+                          className="shrink-0 rounded-md p-1.5 text-muted-foreground opacity-0 transition hover:bg-accent hover:text-destructive group-hover:opacity-100"
+                        >
+                          <Trash2 className="h-3.5 w-3.5" />
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
             </div>
           </div>
 
