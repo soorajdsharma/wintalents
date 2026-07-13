@@ -247,6 +247,51 @@ function SourcePro() {
   const [competitive, setCompetitive] = useState<string[]>([]);
   const [education, setEducation] = useState<string[]>([]);
 
+  const [history, setHistory] = useState<string[]>(() => {
+    if (typeof window === "undefined") return [];
+    try {
+      const raw = localStorage.getItem(HISTORY_KEY);
+      const parsed = raw ? JSON.parse(raw) : [];
+      return Array.isArray(parsed) ? parsed.filter((h) => typeof h === "string") : [];
+    } catch {
+      return [];
+    }
+  });
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
+    } catch {
+      // ignore
+    }
+  }, [history]);
+
+  useEffect(() => {
+    const trimmed = composed.trim();
+    if (!trimmed) return;
+    const id = setTimeout(() => {
+      setHistory((prev) => {
+        if (prev[0] === trimmed) return prev;
+        const next = [trimmed, ...prev.filter((h) => h !== trimmed)];
+        return next.slice(0, MAX_HISTORY);
+      });
+    }, 1200);
+    return () => clearTimeout(id);
+  }, [composed]);
+
+  const restoreHistory = (item: string) => {
+    setQuery(item);
+    setLocations([]);
+    setCompetitive([]);
+    setEducation([]);
+  };
+
+  const removeHistory = (item: string) => {
+    setHistory((prev) => prev.filter((h) => h !== item));
+  };
+
+  const clearHistory = () => setHistory([]);
+
   const toggle = (list: string[], setList: (v: string[]) => void, value: string) => {
     setList(list.includes(value) ? list.filter((v) => v !== value) : [...list, value]);
   };
