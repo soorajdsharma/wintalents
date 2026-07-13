@@ -266,19 +266,6 @@ function SourcePro() {
     }
   }, [history]);
 
-  useEffect(() => {
-    const trimmed = composed.trim();
-    if (!trimmed) return;
-    const id = setTimeout(() => {
-      setHistory((prev) => {
-        if (prev[0] === trimmed) return prev;
-        const next = [trimmed, ...prev.filter((h) => h !== trimmed)];
-        return next.slice(0, MAX_HISTORY);
-      });
-    }, 1200);
-    return () => clearTimeout(id);
-  }, [composed]);
-
   const restoreHistory = (item: string) => {
     setQuery(item);
     setLocations([]);
