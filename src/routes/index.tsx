@@ -387,7 +387,7 @@ function SourcePro() {
             <div>
               <div className="rounded-xl border border-border bg-card p-1">
                 <div className="flex items-center justify-between border-b border-border px-3 py-2 text-xs text-muted-foreground">
-                  <span>Your Boolean</span>
+                  <span>Write Your Boolean Below:</span>
                   <div className="flex items-center gap-3">
                     <span
                       aria-live="polite"
