@@ -345,7 +345,16 @@ function SourcePro() {
               />
               <ConnectChip
                 href="https://medium.com/@surajdsharma"
-                icon={<Globe className="h-5 w-5 text-emerald-500" />}
+                icon={
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    className="h-5 w-5 text-emerald-500"
+                    aria-hidden="true"
+                  >
+                    <path d="M13.54 12a6.8 6.8 0 01-6.77 6.82A6.8 6.8 0 010 12a6.8 6.8 0 016.77-6.82 6.8 6.8 0 016.77 6.82zm6.75 0c.01 4.56-3.26 8.25-7.29 8.25A7.46 7.46 0 015.7 12c0-4.56 3.26-8.25 7.3-8.25 4.02 0 7.28 3.69 7.29 8.25zM24 12c0 4.17-1.84 7.55-4.1 7.55S15.8 16.17 15.8 12c0-4.17 1.84-7.55 4.1-7.55S24 7.83 24 12z" />
+                  </svg>
+                }
                 label="Medium"
               />
             </div>
