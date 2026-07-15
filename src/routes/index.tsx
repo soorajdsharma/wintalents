@@ -343,6 +343,11 @@ function SourcePro() {
                 icon={<Github className="h-4 w-4" />}
                 label="GitHub"
               />
+              <ConnectChip
+                href="https://medium.com/@surajdsharma"
+                icon={<Globe className="h-5 w-5 text-emerald-500" />}
+                label="Medium"
+              />
             </div>
           </div>
           <div className="flex items-center gap-2">
