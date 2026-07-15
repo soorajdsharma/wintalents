@@ -332,15 +332,15 @@ function SourcePro() {
             <span className="text-base font-semibold tracking-tight">Win Talents</span>
           </a>
           <div className="pointer-events-none absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 items-center gap-2">
-            <div className="pointer-events-auto flex items-center gap-2">
+            <div className="pointer-events-auto flex items-center gap-3">
               <ConnectChip
                 href="https://www.linkedin.com/in/soorajdsharma/"
-                icon={<Linkedin className="h-4 w-4 text-sky-500" />}
+                icon={<Linkedin className="h-5 w-5 text-sky-500" />}
                 label="LinkedIn"
               />
               <ConnectChip
                 href="https://github.com/soorajdsharma"
-                icon={<Github className="h-4 w-4" />}
+                icon={<Github className="h-5 w-5" />}
                 label="GitHub"
               />
             </div>
@@ -802,7 +802,7 @@ function ConnectChip({
       rel={isExternal ? "noreferrer" : undefined}
       aria-label={label}
       title={label}
-      className="inline-flex items-center justify-center rounded-md border border-border bg-card p-2 text-foreground transition hover:border-primary/40 hover:bg-accent"
+      className="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-border bg-card text-foreground transition hover:border-primary/40 hover:bg-accent"
     >
       {icon}
     </a>
