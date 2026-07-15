@@ -471,20 +471,24 @@ function SourcePro() {
                 searchUrl={`https://www.google.com/search?q=${encodeURIComponent(nested)}`}
               />
 
-              {history.length > 0 && (
-                <div className="rounded-xl border border-border bg-card p-5">
-                  <div className="mb-4 flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <History className="h-4 w-4 text-muted-foreground" />
-                      <h3 className="text-sm font-semibold">Boolean Search History</h3>
-                    </div>
+              <div className="rounded-xl border border-border bg-card p-5">
+                <div className="mb-4 flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <History className="h-4 w-4 text-muted-foreground" />
+                    <h3 className="text-sm font-semibold">Boolean Search History</h3>
+                  </div>
+                  {history.length > 0 && (
                     <button
                       onClick={clearHistory}
                       className="inline-flex items-center gap-1.5 text-xs text-muted-foreground transition hover:text-destructive"
                     >
                       <Trash2 className="h-3.5 w-3.5" /> Clear all
                     </button>
-                  </div>
+                  )}
+                </div>
+                {history.length === 0 ? (
+                  <p className="text-sm text-muted-foreground">No recent Boolean searches. Build a query above to see your last 5 searches here.</p>
+                ) : (
                   <ul className="space-y-2">
                     {history.map((item, idx) => (
                       <li
@@ -509,8 +513,8 @@ function SourcePro() {
                       </li>
                     ))}
                   </ul>
-                </div>
-              )}
+                )}
+              </div>
             </div>
           </div>
 
