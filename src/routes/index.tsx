@@ -351,18 +351,10 @@ function SourcePro() {
                     className="h-5 w-5"
                     aria-hidden="true"
                   >
-                    <rect width="24" height="24" rx="6" fill="currentColor" />
-                    <text
-                      x="12"
-                      y="16.5"
-                      textAnchor="middle"
-                      fill="white"
-                      fontFamily="Georgia, 'Times New Roman', serif"
-                      fontSize="13"
-                      fontWeight="500"
-                    >
-                      Me
-                    </text>
+                    <rect width="24" height="24" rx="6" fill="black" />
+                    <ellipse cx="8.5" cy="12" rx="4" ry="4.8" fill="white" />
+                    <ellipse cx="15.5" cy="12" rx="2.5" ry="4.3" fill="white" />
+                    <ellipse cx="20" cy="12" rx="1.3" ry="3.8" fill="white" />
                   </svg>
                 }
                 label="Medium"
