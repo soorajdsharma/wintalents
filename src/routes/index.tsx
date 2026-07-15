@@ -7,13 +7,13 @@ import sourceProLogo from "@/assets/suraj-profile.jpeg.asset.json";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Win Talent — AI Sourcing Assistant for Recruiters" },
+      { title: "Win Talents — AI Sourcing Assistant for Recruiters" },
       {
         name: "description",
         content:
-          "Win Talent instantly generates optimized Boolean and X-Ray searches for GitHub, Google, and LinkedIn. Built for recruiters and talent sourcers.",
+          "Win Talents instantly generates optimized Boolean and X-Ray searches for GitHub, Google, and LinkedIn. Built for recruiters and talent sourcers.",
       },
-      { property: "og:title", content: "Win Talent — AI Sourcing Assistant for Recruiters" },
+      { property: "og:title", content: "Win Talents — AI Sourcing Assistant for Recruiters" },
       {
         property: "og:description",
         content:
@@ -327,9 +327,9 @@ function SourcePro() {
         <div className="relative mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
           <a href="#top" className="flex items-center gap-2.5">
             <div className="h-10 w-10 rounded-full ring-1 ring-border overflow-hidden">
-              <img src={sourceProLogo.url} alt="Win Talent" className="h-full w-full object-cover" />
+              <img src={sourceProLogo.url} alt="Win Talents" className="h-full w-full object-cover" />
             </div>
-            <span className="text-base font-semibold tracking-tight">Win Talent</span>
+            <span className="text-base font-semibold tracking-tight">Win Talents</span>
           </a>
           <div className="pointer-events-none absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 items-center gap-2">
             <div className="pointer-events-auto flex items-center gap-2">
