@@ -367,19 +367,17 @@ function SourcePro() {
       <section id="builder" className="border-t border-border/60">
         <div className="mx-auto max-w-6xl px-6 pt-3 pb-6">
           <div className="mb-4 text-center">
-
-            <h2 className="font-display text-4xl tracking-tight md:text-5xl text-yellow-500 dark:text-yellow-400">
-              {"Talent Sourcing Assistant".split(" ").map((word, i) => (
-                <span
-                  key={i}
-                  className="inline-block opacity-0 animate-fade-in-up mr-[0.25em]"
-                  style={{ animationDelay: `${i * 120}ms`, animationFillMode: "forwards" }}
-                >
-                  {word}
+            <h2 className="font-display text-4xl tracking-tight md:text-5xl inline-flex items-center justify-center gap-3 flex-wrap opacity-0 animate-fade-in-up" style={{ animationFillMode: "forwards" }}>
+              <span className="inline-flex items-center gap-2">
+                <Sparkles className="h-8 w-8 text-primary" />
+                <span className="bg-gradient-to-r from-primary via-chart-3 to-chart-5 bg-clip-text text-transparent font-bold">
+                  Win Talents
                 </span>
-              ))}
+              </span>
+              <span className="text-muted-foreground font-light">—</span>
+              <span className="text-foreground">Talent Sourcing Assistant</span>
             </h2>
-            <p className="mt-1 text-muted-foreground">Write your Boolean query below.</p>
+            <p className="mt-2 text-muted-foreground">Write your Boolean query below.</p>
           </div>
 
 
