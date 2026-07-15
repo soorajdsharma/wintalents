@@ -530,9 +530,9 @@ function SourcePro() {
             <div>
               <div className="flex items-center gap-2.5">
                 <div className="h-10 w-10 rounded-full ring-1 ring-border overflow-hidden">
-                  <img src={sourceProLogo.url} alt="Win Talent" className="h-full w-full object-cover" />
+                  <img src={sourceProLogo.url} alt="Win Talents" className="h-full w-full object-cover" />
                 </div>
-                <span className="text-base font-semibold">Win Talent</span>
+                <span className="text-base font-semibold">Win Talents</span>
               </div>
               <p className="mt-3 max-w-sm text-sm text-muted-foreground">
                 Developed by a Recruiter, for Recruiters.
@@ -570,7 +570,7 @@ function SourcePro() {
             </div>
           </div>
           <div className="mt-10 border-t border-border/60 pt-6 text-center text-xs text-muted-foreground">
-            © {new Date().getFullYear()} Win Talent. All rights reserved.
+            © {new Date().getFullYear()} Win Talents. All rights reserved.
           </div>
         </div>
       </footer>
