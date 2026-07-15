@@ -564,6 +564,11 @@ function SourcePro() {
                     <Github className="h-4 w-4" /> github.com/soorajdsharma
                   </a>
                 </li>
+                <li>
+                  <a className="inline-flex items-center gap-2 text-muted-foreground transition hover:text-foreground" href="https://medium.com/@surajdsharma" target="_blank" rel="noreferrer">
+                    <Globe className="h-4 w-4" /> medium.com/@surajdsharma
+                  </a>
+                </li>
 
 
               </ul>
