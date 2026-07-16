@@ -348,13 +348,11 @@ function SourcePro() {
                 icon={
                   <svg
                     viewBox="0 0 24 24"
+                    fill="currentColor"
                     className="h-5 w-5"
                     aria-hidden="true"
                   >
-                    <rect width="24" height="24" rx="6" fill="black" />
-                    <ellipse cx="8.5" cy="12" rx="4" ry="4.8" fill="white" />
-                    <ellipse cx="15.5" cy="12" rx="2.5" ry="4.3" fill="white" />
-                    <ellipse cx="20" cy="12" rx="1.3" ry="3.8" fill="white" />
+                    <path d="M13.54 12a6.8 6.8 0 01-6.77 6.82A6.8 6.8 0 010 12a6.8 6.8 0 016.77-6.82A6.8 6.8 0 0113.54 12zm7.42 0c0 3.54-1.51 6.42-3.38 6.42s-3.38-2.88-3.38-6.42 1.51-6.42 3.38-6.42 3.38 2.88 3.38 6.42M24 12c0 3.17-.53 5.75-1.19 5.75s-1.18-2.58-1.18-5.75.53-5.75 1.18-5.75S24 8.83 24 12z" />
                   </svg>
                 }
                 label="Medium"
