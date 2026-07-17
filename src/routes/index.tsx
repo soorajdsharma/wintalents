@@ -489,6 +489,7 @@ function SourcePro() {
                 title="GitHub X-Ray"
                 description="Ready-to-use GitHub X-Ray search."
                 icon={<GitHubBrandIcon className="h-5 w-5" />}
+                iconHref="https://github.com/search/advanced"
                 value={github}
                 searchUrl={`https://www.google.com/search?q=${encodeURIComponent(github)}`}
               />
