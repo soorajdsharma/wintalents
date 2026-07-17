@@ -324,15 +324,16 @@ function SourcePro() {
     <div className="min-h-screen bg-background text-foreground">
       {/* Nav */}
       <header className="sticky top-0 z-30 border-b border-border/60 bg-background/80 backdrop-blur">
-        <div className="relative mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-          <a href="#top" className="flex items-center gap-2.5">
-            <div className="h-10 w-10 rounded-full ring-1 ring-border overflow-hidden">
+        <div className="mx-auto grid max-w-6xl grid-cols-[minmax(0,1fr)_auto] items-center gap-4 px-4 py-4 sm:px-6 sm:grid-cols-[1fr_auto_1fr]">
+          <a href="#top" className="flex min-w-0 items-center gap-2.5">
+            <div className="h-10 w-10 shrink-0 rounded-full ring-1 ring-border overflow-hidden">
               <img src={sourceProLogo.url} alt="Win Talents" className="h-full w-full object-cover" />
             </div>
-            <span className="text-base font-semibold tracking-tight">Win Talents</span>
+            <span className="truncate text-base font-semibold tracking-tight">Win Talents</span>
           </a>
-          <div className="pointer-events-none absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 items-center gap-2">
-            <div className="pointer-events-auto flex items-center gap-2">
+
+          <div className="flex items-center justify-end gap-2 sm:contents">
+            <div className="flex items-center gap-2 sm:justify-self-center">
               <ConnectChip
                 href="https://www.linkedin.com/in/soorajdsharma/"
                 icon={
@@ -373,18 +374,16 @@ function SourcePro() {
                 label="Medium"
               />
             </div>
+            <div className="flex items-center gap-2 sm:justify-self-end">
+              <button
+                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                aria-label="Toggle theme"
+                className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-border bg-background text-foreground transition hover:bg-accent"
+              >
+                {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+              </button>
+            </div>
           </div>
-          <div className="flex items-center gap-2">
-            <button
-              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              aria-label="Toggle theme"
-              className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-border bg-background text-foreground transition hover:bg-accent"
-            >
-              {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
-            </button>
-            
-          </div>
-
         </div>
       </header>
 
