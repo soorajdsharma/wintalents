@@ -648,12 +648,14 @@ function ResultCard({
   title,
   description,
   icon,
+  iconHref,
   value,
   searchUrl,
 }: {
   title: string;
   description: string;
   icon: React.ReactNode;
+  iconHref?: string;
   value: string;
   searchUrl: string;
 }) {
