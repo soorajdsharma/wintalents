@@ -1,7 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
-import { Copy, Check, Search, Github, Globe, Linkedin, Mail, Code2, Sparkles, Twitter, Layers, Pencil, RotateCcw, Sun, Moon, ExternalLink, History, Trash2, Clock } from "lucide-react";
+import { Copy, Check, Search, Github, Globe, Linkedin, Mail, Code2, Sparkles, Twitter, Layers, Pencil, RotateCcw, ExternalLink, History, Trash2, Clock } from "lucide-react";
 import sourceProLogo from "@/assets/suraj-profile.jpeg.asset.json";
+import themeToggle from "@/assets/theme-toggle.png.asset.json";
 
 
 export const Route = createFileRoute("/")({
@@ -378,9 +379,9 @@ function SourcePro() {
               <button
                 onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
                 aria-label="Toggle theme"
-                className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-border bg-background text-foreground transition hover:bg-accent"
+                className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-border bg-background text-foreground transition hover:bg-accent overflow-hidden"
               >
-                {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+                <img src={themeToggle.url} alt="Toggle theme" className="h-5 w-5 object-contain" />
               </button>
             </div>
           </div>
