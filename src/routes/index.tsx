@@ -379,9 +379,9 @@ function SourcePro() {
               <button
                 onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
                 aria-label="Toggle theme"
-                className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-border bg-background text-foreground transition hover:bg-accent overflow-hidden"
+                className="inline-flex h-9 w-9 items-center justify-center rounded-full overflow-hidden"
               >
-                <img src={themeToggle.url} alt="Toggle theme" className="h-5 w-5 object-contain" />
+                <img src={themeToggle.url} alt="Toggle theme" className="h-full w-full object-cover" />
               </button>
             </div>
           </div>
