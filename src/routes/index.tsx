@@ -693,9 +693,20 @@ function ResultCard({
     <div className="rounded-xl border border-border bg-card p-5 transition hover:border-primary/40">
       <div className="flex items-start justify-between gap-4">
         <div className="flex items-center gap-3">
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-white ring-1 ring-border">
-            {icon}
-          </div>
+          {iconHref ? (
+            <a
+              href={iconHref}
+              target="_blank"
+              rel="noreferrer"
+              className="flex h-9 w-9 items-center justify-center rounded-lg bg-white ring-1 ring-border transition hover:ring-primary/40"
+            >
+              {icon}
+            </a>
+          ) : (
+            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-white ring-1 ring-border">
+              {icon}
+            </div>
+          )}
           <div>
             <h4 className="text-sm font-semibold">
               {title}
