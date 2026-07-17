@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import { Copy, Check, Search, Github, Globe, Linkedin, Mail, Code2, Sparkles, Twitter, Layers, Pencil, RotateCcw, ExternalLink, History, Trash2, Clock } from "lucide-react";
 import sourceProLogo from "@/assets/suraj-profile.jpeg.asset.json";
-import themeToggle from "@/assets/theme-toggle.png.asset.json";
+import themeToggle from "@/assets/theme-toggle-sun.png.asset.json";
 
 
 export const Route = createFileRoute("/")({
