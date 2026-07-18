@@ -458,6 +458,7 @@ function SourcePro() {
                   selected={competitive}
                   onToggle={(v) => toggle(competitive, setCompetitive, v)}
                   onClear={() => setCompetitive([])}
+                  onSelectAll={() => setCompetitive(COMPETITIVE_PROGRAMMING_OPTIONS)}
                 />
               </div>
               <FilterGroup
@@ -783,27 +784,40 @@ function FilterGroup({
   selected,
   onToggle,
   onClear,
+  onSelectAll,
 }: {
   label: string;
   options: string[];
   selected: string[];
   onToggle: (value: string) => void;
   onClear: () => void;
+  onSelectAll?: () => void;
 }) {
+  const allSelected = selected.length === options.length && options.length > 0;
   return (
     <div className="mt-4 rounded-xl border border-border bg-card p-4">
       <div className="mb-3 flex items-center justify-between">
         <h4 className="text-xs font-semibold tracking-wide text-muted-foreground">
           {label}
         </h4>
-        {selected.length > 0 && (
-          <button
-            onClick={onClear}
-            className="text-xs text-muted-foreground transition hover:text-foreground"
-          >
-            Clear
-          </button>
-        )}
+        <div className="flex items-center gap-3">
+          {onSelectAll && !allSelected && (
+            <button
+              onClick={onSelectAll}
+              className="text-xs font-medium text-primary transition hover:text-primary/80"
+            >
+              Select All
+            </button>
+          )}
+          {selected.length > 0 && (
+            <button
+              onClick={onClear}
+              className="text-xs text-muted-foreground transition hover:text-foreground"
+            >
+              Clear
+            </button>
+          )}
+        </div>
       </div>
       <div className="flex flex-wrap gap-2">
         {options.map((opt) => {
