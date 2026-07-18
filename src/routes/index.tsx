@@ -458,6 +458,7 @@ function SourcePro() {
                   selected={competitive}
                   onToggle={(v) => toggle(competitive, setCompetitive, v)}
                   onClear={() => setCompetitive([])}
+                  onSelectAll={() => setCompetitive(COMPETITIVE_PROGRAMMING_OPTIONS)}
                 />
               </div>
               <FilterGroup
