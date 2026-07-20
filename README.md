@@ -194,7 +194,3 @@ Authentication is handled through Supabase, with an additional Lovable Cloud OAu
 - `vite.config.ts` is preconfigured by `@lovable.dev/vite-tanstack-config`; avoid manually adding plugins it already provides (TanStack Start, React, Tailwind, tsconfig paths, Nitro, component tagger, env injection, etc.).
 
 ---
-
-## License
-
-No license file is currently included in this repository. Add one (e.g. MIT, Apache-2.0) if you intend to open source this project.
