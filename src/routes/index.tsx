@@ -413,8 +413,17 @@ function SourcePro() {
           <div className="space-y-6">
             <div>
               <div className="rounded-xl border border-border bg-card p-1">
-                <div className="flex items-center justify-between border-b border-border px-3 py-2 text-xs text-muted-foreground">
+                <div className="relative flex items-center justify-between border-b border-border px-3 py-2 text-xs text-muted-foreground">
                   <span>Write Your Boolean Below:</span>
+                  <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+                    <button
+                      type="button"
+                      className="inline-flex items-center gap-1.5 rounded-full border border-border bg-background px-3 py-1 font-medium text-foreground transition hover:bg-accent"
+                    >
+                      <Code2 className="h-3 w-3 text-primary" />
+                      Advance Operators
+                    </button>
+                  </div>
                   <div className="flex items-center gap-3">
                     <span
                       aria-live="polite"
