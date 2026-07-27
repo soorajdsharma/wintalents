@@ -46,11 +46,11 @@ function wrapIfNeeded(q: string): string {
   return `(${q})`;
 }
 
-function toGoogleStyle(q: string): string {
+function toGoogleStyle(q: string, pipeOr = false): string {
   // Google X-Ray transform — token-based, case-sensitive:
   //   AND (uppercase)  -> ignored  (whitespace = implicit AND)
   //   NOT (uppercase)  -> "-" prefix on the next token/group  (exclusion)
-  //   OR  (uppercase)  -> kept as explicit OR node
+  //   OR  (uppercase)  -> kept as explicit OR node (rendered as "|" when pipeOr=true)
   //   "or" (lowercase) -> treated as a plain keyword
   //   quoted phrases   -> preserved verbatim
   //   parentheses      -> preserved when they contain an OR, otherwise stripped
@@ -94,10 +94,10 @@ function toGoogleStyle(q: string): string {
     );
   } while (s !== prev);
   // Tidy: fix "- foo" -> "-foo" from token join, tighten parens,
-  // ensure spaces around OR (only in Google X-Ray), then restore quotes.
+  // then render OR as "|" for Google X-Ray or " OR " otherwise, and restore quotes.
   s = s.replace(/-\s+/g, "-");
   s = s.replace(/\(\s+/g, "(").replace(/\s+\)/g, ")");
-  s = s.replace(/\s*OR\s*/g, " OR ");
+  s = s.replace(/\s*OR\s*/g, pipeOr ? " | " : " OR ");
   s = s.replace(/\u0000(\d+)\u0000/g, (_, idx) => quotes[Number(idx)]);
   return s.replace(/\s+/g, " ").trim();
 }
@@ -111,7 +111,7 @@ function toGitHubXRay(input: string): string {
 function toGoogleXRay(input: string): string {
   const q = normalizeBoolean(input);
   if (!q) return "";
-  return `site:linkedin.com/in ${toGoogleStyle(q)}`;
+  return `site:linkedin.com/in ${toGoogleStyle(q, true)}`;
 }
 
 function toNestedSearch(input: string): string {
