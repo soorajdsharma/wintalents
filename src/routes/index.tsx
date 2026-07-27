@@ -322,11 +322,13 @@ function SourcePro() {
   };
 
   const [theme, setTheme] = useState<"dark" | "light">("light");
+  const [operatorsOpen, setOperatorsOpen] = useState(false);
   useEffect(() => {
     const root = document.documentElement;
     if (theme === "dark") root.classList.add("dark");
     else root.classList.remove("dark");
   }, [theme]);
+
 
 
 
