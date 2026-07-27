@@ -3,6 +3,15 @@ import { useEffect, useMemo, useState } from "react";
 import { Copy, Check, Search, Github, Globe, Linkedin, Mail, Code2, Sparkles, Twitter, Layers, Pencil, RotateCcw, ExternalLink, History, Trash2, Clock } from "lucide-react";
 import sourceProLogo from "@/assets/suraj-profile.jpeg.asset.json";
 import themeToggle from "@/assets/theme-toggle-sun.png.asset.json";
+import platformSupport from "@/assets/platform-support.png.asset.json";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+
 
 
 export const Route = createFileRoute("/")({
@@ -313,11 +322,13 @@ function SourcePro() {
   };
 
   const [theme, setTheme] = useState<"dark" | "light">("light");
+  const [operatorsOpen, setOperatorsOpen] = useState(false);
   useEffect(() => {
     const root = document.documentElement;
     if (theme === "dark") root.classList.add("dark");
     else root.classList.remove("dark");
   }, [theme]);
+
 
 
 
@@ -416,14 +427,31 @@ function SourcePro() {
                 <div className="relative flex items-center justify-between border-b border-border px-3 py-2 text-xs text-muted-foreground">
                   <span>Write Your Boolean Below:</span>
                   <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-                    <button
-                      type="button"
-                      className="inline-flex items-center gap-1.5 rounded-full border border-border bg-background px-3 py-1 font-medium text-foreground transition hover:bg-accent"
-                    >
-                      <Code2 className="h-3 w-3 text-primary" />
-                      Advance Operators
-                    </button>
+                    <Dialog open={operatorsOpen} onOpenChange={setOperatorsOpen}>
+                      <DialogTrigger asChild>
+                        <button
+                          type="button"
+                          className="inline-flex items-center gap-1.5 rounded-full border border-border bg-background px-3 py-1 font-medium text-foreground transition hover:bg-accent"
+                        >
+                          <Code2 className="h-3 w-3 text-primary" />
+                          Advance Operators
+                        </button>
+                      </DialogTrigger>
+                      <DialogContent className="max-w-3xl">
+                        <DialogHeader>
+                          <DialogTitle className="text-left">Platform Support</DialogTitle>
+                        </DialogHeader>
+                        <div className="mt-2 overflow-hidden rounded-lg border border-border">
+                          <img
+                            src={platformSupport.url}
+                            alt="Platform support and operators supported"
+                            className="w-full bg-background"
+                          />
+                        </div>
+                      </DialogContent>
+                    </Dialog>
                   </div>
+
                   <div className="flex items-center gap-3">
                     <span
                       aria-live="polite"
