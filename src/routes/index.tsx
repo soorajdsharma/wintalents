@@ -211,6 +211,7 @@ const COMPETITIVE_PROGRAMMING_OPTIONS = [
   "DSA",
   "Data Structures and Algorithms",
   "Competitive Programming",
+  "CodeVita",
 ];
 const EDUCATION_OPTIONS = [
   "Computer Engineering",
