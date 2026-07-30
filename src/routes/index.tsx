@@ -293,10 +293,20 @@ function SourcePro() {
     setList(list.includes(value) ? list.filter((v) => v !== value) : [...list, value]);
   };
 
-  const composed = useMemo(
-    () => composeQuery(query, locations, competitive, education),
-    [query, locations, competitive, education],
-  );
+  const prevGroupsRef = useRef<string[]>([]);
+  useEffect(() => {
+    const next = [buildGroup(locations), buildGroup(competitive), buildGroup(education)].filter(Boolean);
+    const prev = prevGroupsRef.current;
+    if (prev.length === next.length && prev.every((g, i) => g === next[i])) return;
+    prevGroupsRef.current = next;
+    setQuery((q) => {
+      let base = q;
+      for (const g of prev) base = removeSegment(base, g);
+      return [base.trim(), ...next].filter(Boolean).join(" AND ");
+    });
+  }, [locations, competitive, education]);
+
+  const composed = query;
 
   const github = useMemo(() => toGitHubXRay(composed), [composed]);
   const google = useMemo(() => toGoogleXRay(composed), [composed]);
