@@ -241,16 +241,15 @@ function countOperators(input: string): number {
   return count;
 }
 
-function composeQuery(base: string, locations: string[], competitive: string[], education: string[]): string {
-  const segments = [base.trim()].filter(Boolean);
-  const loc = buildGroup(locations);
-  const cp = buildGroup(competitive);
-  const edu = buildGroup(education);
-  if (loc) segments.push(loc);
-  if (cp) segments.push(cp);
-  if (edu) segments.push(edu);
-  return segments.join(" AND ");
+function removeSegment(text: string, segment: string): string {
+  if (!segment) return text;
+  const esc = segment.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  let out = text.replace(new RegExp(`\\s*\\bAND\\b\\s*${esc}`), "");
+  if (out === text) out = text.replace(new RegExp(`${esc}\\s*\\bAND\\b\\s*`), "");
+  if (out === text) out = text.replace(new RegExp(esc), "");
+  return out.trim();
 }
+
 
 function SourcePro() {
   const [query, setQuery] = useState<string>(DEFAULT_QUERY);
