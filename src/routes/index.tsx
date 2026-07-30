@@ -507,7 +507,7 @@ function SourcePro() {
                       <h4 className="text-xs font-semibold">Google X-Ray Operators</h4>
                     </div>
                     <p className="mb-2 text-[11px] leading-snug text-muted-foreground">
-                      Predefined site operators for LinkedIn X-Ray searches. Click to copy.
+                      Predefined site operators for Google X-Ray searches. Click to copy.
                     </p>
                     <div className="flex flex-wrap gap-2">
                       <CopyablePill label="site:linkedin.com/in" />
