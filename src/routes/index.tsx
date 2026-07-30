@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Copy, Check, Search, Github, Globe, Linkedin, Mail, Code2, Sparkles, Twitter, Layers, Pencil, RotateCcw, ExternalLink, History, Trash2, Clock } from "lucide-react";
 import sourceProLogo from "@/assets/suraj-profile.jpeg.asset.json";
 import themeToggle from "@/assets/theme-toggle-sun.png.asset.json";
@@ -241,16 +241,15 @@ function countOperators(input: string): number {
   return count;
 }
 
-function composeQuery(base: string, locations: string[], competitive: string[], education: string[]): string {
-  const segments = [base.trim()].filter(Boolean);
-  const loc = buildGroup(locations);
-  const cp = buildGroup(competitive);
-  const edu = buildGroup(education);
-  if (loc) segments.push(loc);
-  if (cp) segments.push(cp);
-  if (edu) segments.push(edu);
-  return segments.join(" AND ");
+function removeSegment(text: string, segment: string): string {
+  if (!segment) return text;
+  const esc = segment.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  let out = text.replace(new RegExp(`\\s*\\bAND\\b\\s*${esc}`), "");
+  if (out === text) out = text.replace(new RegExp(`${esc}\\s*\\bAND\\b\\s*`), "");
+  if (out === text) out = text.replace(new RegExp(esc), "");
+  return out.trim();
 }
+
 
 function SourcePro() {
   const [query, setQuery] = useState<string>(DEFAULT_QUERY);
@@ -278,6 +277,7 @@ function SourcePro() {
   }, [history]);
 
   const restoreHistory = (item: string) => {
+    prevGroupsRef.current = [];
     setQuery(item);
     setLocations([]);
     setCompetitive([]);
@@ -294,10 +294,20 @@ function SourcePro() {
     setList(list.includes(value) ? list.filter((v) => v !== value) : [...list, value]);
   };
 
-  const composed = useMemo(
-    () => composeQuery(query, locations, competitive, education),
-    [query, locations, competitive, education],
-  );
+  const prevGroupsRef = useRef<string[]>([]);
+  useEffect(() => {
+    const next = [buildGroup(locations), buildGroup(competitive), buildGroup(education)].filter(Boolean);
+    const prev = prevGroupsRef.current;
+    if (prev.length === next.length && prev.every((g, i) => g === next[i])) return;
+    prevGroupsRef.current = next;
+    setQuery((q) => {
+      let base = q;
+      for (const g of prev) base = removeSegment(base, g);
+      return [base.trim(), ...next].filter(Boolean).join(" AND ");
+    });
+  }, [locations, competitive, education]);
+
+  const composed = query;
 
   const github = useMemo(() => toGitHubXRay(composed), [composed]);
   const google = useMemo(() => toGoogleXRay(composed), [composed]);
