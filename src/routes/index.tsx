@@ -596,6 +596,20 @@ function SourcePro() {
                   </ul>
                 )}
               </div>
+
+              <div className="rounded-xl border border-border bg-card p-5">
+                <div className="mb-3 flex items-center gap-2">
+                  <Search className="h-4 w-4 text-primary" />
+                  <h4 className="text-sm font-semibold">Google X-Ray Operators</h4>
+                </div>
+                <p className="mb-3 text-xs text-muted-foreground">
+                  Predefined site operators for LinkedIn X-Ray searches. Click to copy.
+                </p>
+                <div className="flex flex-wrap gap-3">
+                  <CopyablePill label="site:linkedin.com/in" />
+                  <CopyablePill label="inurl:linkedin.com/in" />
+                </div>
+              </div>
             </div>
           </div>
 
