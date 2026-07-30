@@ -277,6 +277,7 @@ function SourcePro() {
   }, [history]);
 
   const restoreHistory = (item: string) => {
+    prevGroupsRef.current = [];
     setQuery(item);
     setLocations([]);
     setCompetitive([]);
