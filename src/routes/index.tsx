@@ -929,3 +929,27 @@ function ConnectChip({
     </a>
   );
 }
+
+function CopyablePill({ label }: { label: string }) {
+  const [copied, setCopied] = useState(false);
+
+  const copy = async () => {
+    try {
+      await navigator.clipboard.writeText(label);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1500);
+    } catch {
+      // ignore
+    }
+  };
+
+  return (
+    <button
+      onClick={copy}
+      className="inline-flex items-center gap-2 rounded-lg border border-border bg-background px-3 py-2 text-xs font-mono font-medium text-foreground transition hover:border-primary/40 hover:bg-accent"
+    >
+      <span>{label}</span>
+      {copied ? <Check className="h-3.5 w-3.5 text-green-500" /> : <Copy className="h-3.5 w-3.5 text-muted-foreground" />}
+    </button>
+  );
+}
