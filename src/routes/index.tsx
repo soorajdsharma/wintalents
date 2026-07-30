@@ -493,13 +493,28 @@ function SourcePro() {
               </p>
 
               <div className="mt-4 grid gap-4 md:grid-cols-2">
-                <FilterGroup
-                  label="Location"
-                  options={LOCATION_OPTIONS}
-                  selected={locations}
-                  onToggle={(v) => toggle(locations, setLocations, v)}
-                  onClear={() => setLocations([])}
-                />
+                <div className="space-y-4">
+                  <FilterGroup
+                    label="Location"
+                    options={LOCATION_OPTIONS}
+                    selected={locations}
+                    onToggle={(v) => toggle(locations, setLocations, v)}
+                    onClear={() => setLocations([])}
+                  />
+                  <div className="rounded-xl border border-border bg-card p-3">
+                    <div className="mb-2 flex items-center gap-2">
+                      <Search className="h-3.5 w-3.5 text-primary" />
+                      <h4 className="text-xs font-semibold">Google X-Ray Operators</h4>
+                    </div>
+                    <p className="mb-2 text-[11px] leading-snug text-muted-foreground">
+                      Predefined site operators for LinkedIn X-Ray searches. Click to copy.
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      <CopyablePill label="site:linkedin.com/in" />
+                      <CopyablePill label="inurl:linkedin.com/in" />
+                    </div>
+                  </div>
+                </div>
                 <FilterGroup
                   label="Competitive Programming"
                   options={COMPETITIVE_PROGRAMMING_OPTIONS}
