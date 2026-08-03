@@ -512,6 +512,7 @@ function SourcePro() {
                     <div className="flex flex-wrap gap-2">
                       <CopyablePill label="site:linkedin.com/in" />
                       <CopyablePill label="inurl:linkedin.com/in" />
+                      <CopyablePill label="*.linkedin.com/in/*" />
                     </div>
                   </div>
                 </div>
