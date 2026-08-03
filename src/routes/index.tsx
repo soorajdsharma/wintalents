@@ -257,16 +257,18 @@ function SourcePro() {
   const [competitive, setCompetitive] = useState<string[]>([]);
   const [education, setEducation] = useState<string[]>([]);
 
-  const [history, setHistory] = useState<string[]>(() => {
-    if (typeof window === "undefined") return [];
+  const [history, setHistory] = useState<string[]>([]);
+
+  useEffect(() => {
     try {
       const raw = localStorage.getItem(HISTORY_KEY);
       const parsed = raw ? JSON.parse(raw) : [];
-      return Array.isArray(parsed) ? parsed.filter((h) => typeof h === "string") : [];
+      const loaded = Array.isArray(parsed) ? parsed.filter((h) => typeof h === "string") : [];
+      setHistory(loaded);
     } catch {
-      return [];
+      // ignore
     }
-  });
+  }, []);
 
   useEffect(() => {
     try {
