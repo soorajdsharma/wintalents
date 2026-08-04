@@ -221,6 +221,9 @@ const EDUCATION_OPTIONS = [
   "BCA",
   "MCA",
   "MBA",
+  "Artificial Intelligence",
+  "Machine Learning",
+  "AIDS",
 ];
 
 function buildGroup(values: string[]): string {
@@ -533,6 +536,7 @@ function SourcePro() {
                 selected={education}
                 onToggle={(v) => toggle(education, setEducation, v)}
                 onClear={() => setEducation([])}
+                onSelectAll={() => setEducation(EDUCATION_OPTIONS)}
               />
             </div>
 
