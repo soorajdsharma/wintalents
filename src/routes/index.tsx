@@ -490,7 +490,7 @@ function SourcePro() {
                   onChange={(e) => setQuery(e.target.value)}
                   spellCheck={false}
                   placeholder=""
-                  className="h-40 w-full resize-none bg-transparent p-4 font-mono text-sm outline-none placeholder:text-muted-foreground/60"
+                  className="font-notepad h-40 w-full resize-none bg-transparent p-4 text-sm leading-relaxed outline-none placeholder:text-muted-foreground/60"
                 />
               </div>
               <p className="mt-3 text-xs text-muted-foreground">
