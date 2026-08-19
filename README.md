@@ -1,4 +1,4 @@
-# Win Talents — AI Sourcing Assistant for Recruiters
+# Win Talents — Talent Sourcing Assistant for Recruiters
 
 Win Talents instantly turns a plain search into optimized **Boolean** and **X-Ray** search strings for **GitHub**, **Google**, and **LinkedIn**. It's built for recruiters and talent sourcers who want to go from "I need a backend engineer in Surat who knows DSA" to a ready-to-paste search query in seconds.
 
