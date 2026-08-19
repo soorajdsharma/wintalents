@@ -272,6 +272,8 @@ function SourcePro() {
   const [locations, setLocations] = useState<string[]>([]);
   const [competitive, setCompetitive] = useState<string[]>([]);
   const [education, setEducation] = useState<string[]>([]);
+  const [googleOperators, setGoogleOperators] = useState<string[]>([]);
+
 
   const [history, setHistory] = useState<string[]>([]);
 
