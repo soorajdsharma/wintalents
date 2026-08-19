@@ -530,19 +530,44 @@ function SourcePro() {
                     onClear={() => setLocations([])}
                   />
                   <div className="rounded-xl border border-border bg-card p-3">
-                    <div className="mb-2 flex items-center gap-2">
-                      <Search className="h-3.5 w-3.5 text-primary" />
-                      <h4 className="text-xs font-semibold">Google X-Ray Operators</h4>
+                    <div className="mb-2 flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <Search className="h-3.5 w-3.5 text-primary" />
+                        <h4 className="text-xs font-semibold">Google X-Ray Operators</h4>
+                      </div>
+                      {googleOperators.length > 0 && (
+                        <button
+                          onClick={() => setGoogleOperators([])}
+                          className="text-xs text-muted-foreground transition hover:text-foreground"
+                        >
+                          Clear
+                        </button>
+                      )}
                     </div>
                     <p className="mb-2 text-[11px] leading-snug text-muted-foreground">
-                      Predefined site operators for Google X-Ray searches. Click to copy.
+                      Predefined site operators for Google X-Ray searches. Click to apply.
                     </p>
                     <div className="flex flex-wrap gap-2">
-                      <CopyablePill label="site:linkedin.com/in" />
-                      <CopyablePill label="inurl:linkedin.com/in" />
-                      <CopyablePill label="*.linkedin.com/in/*" />
+                      {GOOGLE_XRAY_OPERATORS.map((op) => {
+                        const active = googleOperators.includes(op);
+                        return (
+                          <button
+                            key={op}
+                            type="button"
+                            onClick={() => toggle(googleOperators, setGoogleOperators, op)}
+                            className={`rounded-lg border px-3 py-2 text-xs font-mono font-medium transition ${
+                              active
+                                ? "border-primary bg-primary text-primary-foreground"
+                                : "border-border bg-background text-muted-foreground hover:border-primary/40 hover:text-foreground"
+                            }`}
+                          >
+                            {op}
+                          </button>
+                        );
+                      })}
                     </div>
                   </div>
+
                 </div>
                 <FilterGroup
                   label="Competitive Programming"
