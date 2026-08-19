@@ -332,7 +332,8 @@ function SourcePro() {
   const github = useMemo(() => toGitHubXRay(composed), [composed]);
   const google = useMemo(() => {
     const base = toGoogleXRay(composed);
-    const prefix = googleOperators.length > 0 ? googleOperators.join(" ") : "site:linkedin.com/in";
+    const prefix = googleOperators.join(" ");
+    if (!prefix) return base;
     if (!base) return prefix;
     return `${prefix} ${base}`;
   }, [composed, googleOperators]);
