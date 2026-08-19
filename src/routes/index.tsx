@@ -297,11 +297,13 @@ function SourcePro() {
   }, [history]);
 
   const restoreHistory = (item: string) => {
+    prevOperatorsRef.current = "";
     prevGroupsRef.current = [];
     setQuery(item);
     setLocations([]);
     setCompetitive([]);
     setEducation([]);
+    setGoogleOperators([]);
   };
 
   const removeHistory = (item: string) => {
@@ -314,20 +316,31 @@ function SourcePro() {
     setList(list.includes(value) ? list.filter((v) => v !== value) : [...list, value]);
   };
 
+  const prevOperatorsRef = useRef<string>("");
   const prevGroupsRef = useRef<string[]>([]);
   useEffect(() => {
-    const next = [buildGroup(locations), buildGroup(competitive), buildGroup(education)].filter(Boolean);
-    const prev = prevGroupsRef.current;
-    if (prev.length === next.length && prev.every((g, i) => g === next[i])) return;
-    prevGroupsRef.current = next;
+    const opPrefix = googleOperators.join(" ");
+    const nextGroups = [buildGroup(locations), buildGroup(competitive), buildGroup(education)].filter(Boolean);
+    const prevOp = prevOperatorsRef.current;
+    const prevGroups = prevGroupsRef.current;
+
+    if (prevOp === opPrefix && prevGroups.length === nextGroups.length && prevGroups.every((g, i) => g === nextGroups[i])) return;
+
+    prevOperatorsRef.current = opPrefix;
+    prevGroupsRef.current = nextGroups;
+
     setQuery((q) => {
       let base = q;
-      for (const g of prev) base = removeSegment(base, g);
-      return [base.trim(), ...next].filter(Boolean).join(" AND ");
+      if (prevOp && base.startsWith(prevOp)) base = base.slice(prevOp.length).trim();
+      for (const g of prevGroups) base = removeSegment(base, g);
+      if (opPrefix) base = `${opPrefix} ${base}`;
+      return [base.trim(), ...nextGroups].filter(Boolean).join(" AND ");
     });
-  }, [locations, competitive, education]);
+  }, [googleOperators, locations, competitive, education]);
 
-  const composed = query;
+  const opPrefix = googleOperators.join(" ");
+  const baseQuery = opPrefix && query.startsWith(opPrefix) ? query.slice(opPrefix.length).trim() : query;
+  const composed = baseQuery;
 
   const github = useMemo(() => toGitHubXRay(composed), [composed]);
   const google = useMemo(() => {
@@ -340,10 +353,10 @@ function SourcePro() {
   const linkedin = useMemo(() => toLinkedInBoolean(composed), [composed]);
 
   const nested = useMemo(() => toNestedSearch(composed), [composed]);
-  const operatorCount = useMemo(() => countOperators(composed), [composed]);
+  const operatorCount = useMemo(() => countOperators(query), [query]);
 
   useEffect(() => {
-    const trimmed = composed.trim();
+    const trimmed = query.trim();
     if (!trimmed) return;
     const id = setTimeout(() => {
       setHistory((prev) => {
@@ -353,7 +366,7 @@ function SourcePro() {
       });
     }, 1200);
     return () => clearTimeout(id);
-  }, [composed]);
+  }, [query]);
 
   const scrollToBuilder = () => {
     document.getElementById("builder")?.scrollIntoView({ behavior: "smooth", block: "start" });
