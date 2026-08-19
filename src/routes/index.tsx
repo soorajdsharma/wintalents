@@ -43,6 +43,12 @@ export const Route = createFileRoute("/")({
 const DEFAULT_QUERY = "";
 const HISTORY_KEY = "source-pro-boolean-history";
 const MAX_HISTORY = 5;
+const GOOGLE_XRAY_OPERATORS = [
+  "site:linkedin.com/in",
+  "inurl:linkedin.com/in",
+  "*.linkedin.com/in/*",
+];
+
 
 function normalizeBoolean(input: string): string {
   // Collapse whitespace/newlines into single spaces while preserving quoted strings
@@ -126,8 +132,9 @@ function toGitHubXRay(input: string): string {
 function toGoogleXRay(input: string): string {
   const q = normalizeBoolean(input);
   if (!q) return "";
-  return `site:linkedin.com/in ${toGoogleStyle(q, true)}`;
+  return toGoogleStyle(q, true);
 }
+
 
 function toNestedSearch(input: string): string {
   // LinkedIn Free Boolean Optimizer.
@@ -265,6 +272,8 @@ function SourcePro() {
   const [locations, setLocations] = useState<string[]>([]);
   const [competitive, setCompetitive] = useState<string[]>([]);
   const [education, setEducation] = useState<string[]>([]);
+  const [googleOperators, setGoogleOperators] = useState<string[]>([]);
+
 
   const [history, setHistory] = useState<string[]>([]);
 
@@ -321,8 +330,14 @@ function SourcePro() {
   const composed = query;
 
   const github = useMemo(() => toGitHubXRay(composed), [composed]);
-  const google = useMemo(() => toGoogleXRay(composed), [composed]);
+  const google = useMemo(() => {
+    const base = toGoogleXRay(composed);
+    const prefix = googleOperators.length > 0 ? googleOperators.join(" ") : "site:linkedin.com/in";
+    if (!base) return prefix;
+    return `${prefix} ${base}`;
+  }, [composed, googleOperators]);
   const linkedin = useMemo(() => toLinkedInBoolean(composed), [composed]);
+
   const nested = useMemo(() => toNestedSearch(composed), [composed]);
   const operatorCount = useMemo(() => countOperators(composed), [composed]);
 
@@ -515,19 +530,44 @@ function SourcePro() {
                     onClear={() => setLocations([])}
                   />
                   <div className="rounded-xl border border-border bg-card p-3">
-                    <div className="mb-2 flex items-center gap-2">
-                      <Search className="h-3.5 w-3.5 text-primary" />
-                      <h4 className="text-xs font-semibold">Google X-Ray Operators</h4>
+                    <div className="mb-2 flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <Search className="h-3.5 w-3.5 text-primary" />
+                        <h4 className="text-xs font-semibold">Google X-Ray Operators</h4>
+                      </div>
+                      {googleOperators.length > 0 && (
+                        <button
+                          onClick={() => setGoogleOperators([])}
+                          className="text-xs text-muted-foreground transition hover:text-foreground"
+                        >
+                          Clear
+                        </button>
+                      )}
                     </div>
                     <p className="mb-2 text-[11px] leading-snug text-muted-foreground">
-                      Predefined site operators for Google X-Ray searches. Click to copy.
+                      Predefined site operators for Google X-Ray searches. Click to apply.
                     </p>
                     <div className="flex flex-wrap gap-2">
-                      <CopyablePill label="site:linkedin.com/in" />
-                      <CopyablePill label="inurl:linkedin.com/in" />
-                      <CopyablePill label="*.linkedin.com/in/*" />
+                      {GOOGLE_XRAY_OPERATORS.map((op) => {
+                        const active = googleOperators.includes(op);
+                        return (
+                          <button
+                            key={op}
+                            type="button"
+                            onClick={() => toggle(googleOperators, setGoogleOperators, op)}
+                            className={`rounded-lg border px-3 py-2 text-xs font-mono font-medium transition ${
+                              active
+                                ? "border-primary bg-primary text-primary-foreground"
+                                : "border-border bg-background text-muted-foreground hover:border-primary/40 hover:text-foreground"
+                            }`}
+                          >
+                            {op}
+                          </button>
+                        );
+                      })}
                     </div>
                   </div>
+
                 </div>
                 <FilterGroup
                   label="Competitive Programming"
@@ -946,26 +986,3 @@ function ConnectChip({
   );
 }
 
-function CopyablePill({ label }: { label: string }) {
-  const [copied, setCopied] = useState(false);
-
-  const copy = async () => {
-    try {
-      await copyText(label);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      // ignore
-    }
-  };
-
-  return (
-    <button
-      onClick={copy}
-      className="inline-flex items-center gap-2 rounded-lg border border-border bg-background px-3 py-2 text-xs font-mono font-medium text-foreground transition hover:border-primary/40 hover:bg-accent"
-    >
-      <span>{label}</span>
-      {copied ? <Check className="h-3.5 w-3.5 text-green-500" /> : <Copy className="h-3.5 w-3.5 text-muted-foreground" />}
-    </button>
-  );
-}
