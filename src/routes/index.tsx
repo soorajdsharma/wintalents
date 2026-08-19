@@ -330,8 +330,14 @@ function SourcePro() {
   const composed = query;
 
   const github = useMemo(() => toGitHubXRay(composed), [composed]);
-  const google = useMemo(() => toGoogleXRay(composed), [composed]);
+  const google = useMemo(() => {
+    const base = toGoogleXRay(composed);
+    const prefix = googleOperators.length > 0 ? googleOperators.join(" ") : "site:linkedin.com/in";
+    if (!base) return prefix;
+    return `${prefix} ${base}`;
+  }, [composed, googleOperators]);
   const linkedin = useMemo(() => toLinkedInBoolean(composed), [composed]);
+
   const nested = useMemo(() => toNestedSearch(composed), [composed]);
   const operatorCount = useMemo(() => countOperators(composed), [composed]);
 
