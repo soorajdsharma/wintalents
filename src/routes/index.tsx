@@ -353,10 +353,10 @@ function SourcePro() {
   const linkedin = useMemo(() => toLinkedInBoolean(composed), [composed]);
 
   const nested = useMemo(() => toNestedSearch(composed), [composed]);
-  const operatorCount = useMemo(() => countOperators(composed), [composed]);
+  const operatorCount = useMemo(() => countOperators(query), [query]);
 
   useEffect(() => {
-    const trimmed = composed.trim();
+    const trimmed = query.trim();
     if (!trimmed) return;
     const id = setTimeout(() => {
       setHistory((prev) => {
@@ -366,7 +366,7 @@ function SourcePro() {
       });
     }, 1200);
     return () => clearTimeout(id);
-  }, [composed]);
+  }, [query]);
 
   const scrollToBuilder = () => {
     document.getElementById("builder")?.scrollIntoView({ behavior: "smooth", block: "start" });
