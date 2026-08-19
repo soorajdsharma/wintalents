@@ -79,10 +79,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   head: () => ({
     meta: [
       { charSet: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
+      { name: "viewport", content: "width=device-width, initial-scale=1, viewport-fit=cover" },
       { title: "Find the right talent. Instantly." },
       { name: "description", content: "Build Boolean searches for LinkedIn, Google X-Ray, GitHub and more." },
       { name: "author", content: "Lovable" },
+      { name: "theme-color", content: "#F9F9F9" },
+      { name: "apple-mobile-web-app-capable", content: "yes" },
+      { name: "mobile-web-app-capable", content: "yes" },
       { property: "og:title", content: "Find the right talent. Instantly." },
       { property: "og:description", content: "Build Boolean searches for LinkedIn, Google X-Ray, GitHub and more." },
       { property: "og:type", content: "website" },
