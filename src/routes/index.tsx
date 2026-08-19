@@ -132,8 +132,9 @@ function toGitHubXRay(input: string): string {
 function toGoogleXRay(input: string): string {
   const q = normalizeBoolean(input);
   if (!q) return "";
-  return `site:linkedin.com/in ${toGoogleStyle(q, true)}`;
+  return toGoogleStyle(q, true);
 }
+
 
 function toNestedSearch(input: string): string {
   // LinkedIn Free Boolean Optimizer.
