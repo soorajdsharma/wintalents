@@ -17,20 +17,25 @@ import {
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Win Talents — AI Sourcing Assistant for Recruiters" },
+      { title: "LinkedIn X-Ray Search & Boolean Generator | Win Talents" },
       {
         name: "description",
         content:
-          "Win Talents instantly generates optimized Boolean and X-Ray searches for GitHub, Google, and LinkedIn. Built for recruiters and talent sourcers.",
+          "Win Talents builds LinkedIn X-Ray Search strings and Boolean queries for Google and GitHub in seconds. Free sourcing tool for recruiters.",
       },
-      { property: "og:title", content: "Win Talents — AI Sourcing Assistant for Recruiters" },
+      { property: "og:title", content: "LinkedIn X-Ray Search & Boolean Generator | Win Talents" },
       {
         property: "og:description",
         content:
-          "Build powerful Boolean searches. Source better talent, faster. GitHub & Google X-Ray, LinkedIn-friendly Boolean.",
+          "Generate LinkedIn X-Ray Search, Google X-Ray and GitHub Boolean queries instantly. Source better talent, faster.",
       },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://wintalent.lovable.app/" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
+    links: [{ rel: "canonical", href: "https://wintalent.lovable.app/" }],
   }),
+
   component: SourcePro,
 });
 
