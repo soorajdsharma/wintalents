@@ -324,22 +324,17 @@ function SourcePro() {
     const prevOp = prevOperatorsRef.current;
     const prevGroups = prevGroupsRef.current;
 
-    console.log("effect run", { opPrefix, prevOp, nextGroups, prevGroups, query });
-
     if (prevOp === opPrefix && prevGroups.length === nextGroups.length && prevGroups.every((g, i) => g === nextGroups[i])) return;
 
     prevOperatorsRef.current = opPrefix;
     prevGroupsRef.current = nextGroups;
 
     setQuery((q) => {
-      console.log("setQuery callback", { q, prevOp, opPrefix, prevGroups, nextGroups });
       let base = q;
       if (prevOp && base.startsWith(prevOp)) base = base.slice(prevOp.length).trim();
       for (const g of prevGroups) base = removeSegment(base, g);
       if (opPrefix) base = `${opPrefix} ${base}`;
-      const result = [base.trim(), ...nextGroups].filter(Boolean).join(" AND ");
-      console.log("setQuery result", result);
-      return result;
+      return [base.trim(), ...nextGroups].filter(Boolean).join(" AND ");
     });
   }, [googleOperators, locations, competitive, education]);
 
