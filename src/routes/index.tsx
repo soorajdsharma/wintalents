@@ -551,13 +551,6 @@ function SourcePro() {
               <h3 className="text-sm font-medium text-muted-foreground">Generated Searches</h3>
 
               <ResultCard
-                title="LinkedIn Boolean"
-                description="LinkedIn-compatible Boolean syntax."
-                icon={<LinkedInBrandIcon className="h-5 w-5" />}
-                value={linkedin}
-                searchUrl={`https://www.linkedin.com/search/results/people/?keywords=${encodeURIComponent(linkedin)}`}
-              />
-              <ResultCard
                 title="Google X-Ray"
                 description="Optimized Google X-Ray query."
                 icon={<GoogleGIcon className="h-5 w-5" />}
@@ -566,12 +559,11 @@ function SourcePro() {
                 searchUrl={`https://www.google.com/search?q=${encodeURIComponent(google)}`}
               />
               <ResultCard
-                title="GitHub X-Ray"
-                description="Ready-to-use GitHub X-Ray search."
-                icon={<GitHubBrandIcon className="h-5 w-5" />}
-                iconHref="https://github.com/search/advanced"
-                value={github}
-                searchUrl={`https://www.google.com/search?q=${encodeURIComponent(github)}`}
+                title="LinkedIn Boolean"
+                description="LinkedIn-compatible Boolean syntax."
+                icon={<LinkedInBrandIcon className="h-5 w-5" />}
+                value={linkedin}
+                searchUrl={`https://www.linkedin.com/search/results/people/?keywords=${encodeURIComponent(linkedin)}`}
               />
               <ResultCard
                 title="LinkedIn Leakage"
@@ -579,6 +571,14 @@ function SourcePro() {
                 icon={<LinkedInBrandIcon className="h-5 w-5" />}
                 value={nested}
                 searchUrl={`https://www.google.com/search?q=${encodeURIComponent(nested)}`}
+              />
+              <ResultCard
+                title="GitHub X-Ray"
+                description="Ready-to-use GitHub X-Ray search."
+                icon={<GitHubBrandIcon className="h-5 w-5" />}
+                iconHref="https://github.com/search/advanced"
+                value={github}
+                searchUrl={`https://www.google.com/search?q=${encodeURIComponent(github)}`}
               />
 
               <div className="rounded-xl border border-border bg-card p-5">
