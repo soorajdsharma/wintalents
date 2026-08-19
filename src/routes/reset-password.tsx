@@ -6,7 +6,24 @@ import { supabase } from "@/integrations/supabase/client";
 import sourceProLogo from "@/assets/source-pro-logo.png.asset.json";
 
 export const Route = createFileRoute("/reset-password")({
-  head: () => ({ meta: [{ title: "Reset password — Win Talent" }] }),
+  head: () => ({
+    meta: [
+      { title: "Reset your password — Win Talents" },
+      {
+        name: "description",
+        content: "Choose a new password for your Win Talents account and get back to sourcing candidates.",
+      },
+      { property: "og:title", content: "Reset your password — Win Talents" },
+      {
+        property: "og:description",
+        content: "Set a new password for your Win Talents recruiter account.",
+      },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://wintalent.lovable.app/reset-password" },
+      { name: "twitter:card", content: "summary" },
+    ],
+    links: [{ rel: "canonical", href: "https://wintalent.lovable.app/reset-password" }],
+  }),
   component: ResetPasswordPage,
 });
 
@@ -45,7 +62,7 @@ function ResetPasswordPage() {
           <div className="h-10 w-10 overflow-hidden rounded-full ring-1 ring-border">
             <img src={sourceProLogo.url} alt="Win Talent" className="h-full w-full object-cover" />
           </div>
-          <span className="text-lg font-semibold tracking-tight">Win Talent</span>
+          <h1 className="text-lg font-semibold tracking-tight">Win Talents — Reset password</h1>
         </div>
         <form onSubmit={submit} className="space-y-4 rounded-2xl border border-border bg-card p-6 shadow-lg">
           <div>

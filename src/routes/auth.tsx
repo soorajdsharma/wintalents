@@ -9,7 +9,23 @@ import sourceProLogo from "@/assets/source-pro-logo.png.asset.json";
 
 export const Route = createFileRoute("/auth")({
   head: () => ({
-    meta: [{ title: "Sign in — Win Talent" }],
+    meta: [
+      { title: "Sign in or create an account — Win Talents" },
+      {
+        name: "description",
+        content:
+          "Sign in to Win Talents or create a free account to build LinkedIn X-Ray and Boolean sourcing searches.",
+      },
+      { property: "og:title", content: "Sign in or create an account — Win Talents" },
+      {
+        property: "og:description",
+        content: "Log in or register for Win Talents, the Boolean and X-Ray search builder for recruiters.",
+      },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://wintalent.lovable.app/auth" },
+      { name: "twitter:card", content: "summary" },
+    ],
+    links: [{ rel: "canonical", href: "https://wintalent.lovable.app/auth" }],
   }),
   component: AuthPage,
 });
@@ -132,7 +148,7 @@ function AuthPage() {
           <div className="h-10 w-10 overflow-hidden rounded-full ring-1 ring-border">
             <img src={sourceProLogo.url} alt="Win Talent" className="h-full w-full object-cover" />
           </div>
-          <span className="text-lg font-semibold tracking-tight">Win Talent</span>
+          <h1 className="text-lg font-semibold tracking-tight">Win Talents — Sign in</h1>
         </div>
 
         <div className="rounded-2xl border border-border bg-card p-6 shadow-lg">
