@@ -43,6 +43,12 @@ export const Route = createFileRoute("/")({
 const DEFAULT_QUERY = "";
 const HISTORY_KEY = "source-pro-boolean-history";
 const MAX_HISTORY = 5;
+const GOOGLE_XRAY_OPERATORS = [
+  "site:linkedin.com/in",
+  "inurl:linkedin.com/in",
+  "*.linkedin.com/in/*",
+];
+
 
 function normalizeBoolean(input: string): string {
   // Collapse whitespace/newlines into single spaces while preserving quoted strings
