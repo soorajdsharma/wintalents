@@ -4,6 +4,7 @@ import { Copy, Check, Search, Github, Globe, Linkedin, Mail, Code2, Sparkles, Tw
 import sourceProLogo from "@/assets/suraj-profile.jpeg.asset.json";
 import themeToggle from "@/assets/theme-toggle-sun.png.asset.json";
 import platformSupport from "@/assets/platform-support.png.asset.json";
+import { copyText } from "@/lib/clipboard";
 import {
   Dialog,
   DialogContent,
@@ -447,9 +448,9 @@ function SourcePro() {
           <div className="space-y-6">
             <div>
               <div className="rounded-xl border border-border bg-card p-1">
-                <div className="relative flex items-center justify-between border-b border-border px-3 py-2 text-xs text-muted-foreground">
+                <div className="relative flex flex-wrap items-center justify-between gap-2 border-b border-border px-3 py-2 text-xs text-muted-foreground">
                   <span>Write Your Boolean Below:</span>
-                  <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+                  <div className="order-3 w-full sm:order-none sm:absolute sm:left-1/2 sm:top-1/2 sm:w-auto sm:-translate-x-1/2 sm:-translate-y-1/2 flex justify-center">
                     <Dialog open={operatorsOpen} onOpenChange={setOperatorsOpen}>
                       <DialogTrigger asChild>
                         <button
@@ -497,7 +498,7 @@ function SourcePro() {
                   onChange={(e) => setQuery(e.target.value)}
                   spellCheck={false}
                   placeholder=""
-                  className="font-notepad h-40 w-full resize-none bg-transparent p-4 text-sm leading-relaxed outline-none placeholder:text-muted-foreground/60"
+                  className="font-notepad h-40 w-full resize-none bg-transparent p-4 text-base leading-relaxed outline-none sm:text-sm placeholder:text-muted-foreground/60"
                 />
               </div>
               <p className="mt-3 text-xs text-muted-foreground">
@@ -752,7 +753,7 @@ function ResultCard({
   const copy = async () => {
     if (!displayValue) return;
     try {
-      await navigator.clipboard.writeText(displayValue);
+      await copyText(displayValue);
       setCopied(true);
       setTimeout(() => setCopied(false), 1500);
     } catch {
@@ -772,8 +773,8 @@ function ResultCard({
 
   return (
     <div className="rounded-xl border border-border bg-card p-5 transition hover:border-primary/40">
-      <div className="flex items-start justify-between gap-4">
-        <div className="flex items-center gap-3">
+      <div className="flex flex-wrap items-start justify-between gap-3">
+        <div className="flex min-w-0 items-center gap-3">
           {iconHref ? (
             <a
               href={iconHref}
@@ -846,10 +847,10 @@ function ResultCard({
           value={draft ?? ""}
           onChange={(e) => setDraft(e.target.value)}
           spellCheck={false}
-          className="mt-4 h-40 w-full resize-none rounded-lg bg-muted p-3 font-mono text-xs leading-relaxed text-foreground outline-none ring-1 ring-primary/40 focus:ring-2 focus:ring-primary"
+          className="mt-4 h-40 w-full resize-none rounded-lg bg-muted p-3 font-mono text-base leading-relaxed text-foreground outline-none ring-1 ring-primary/40 focus:ring-2 focus:ring-primary sm:text-xs"
         />
       ) : (
-        <pre className="mt-4 max-h-40 overflow-auto rounded-lg bg-muted p-3 font-mono text-xs leading-relaxed text-foreground">
+        <pre className="mt-4 max-h-40 overflow-auto whitespace-pre-wrap break-words rounded-lg bg-muted p-3 font-mono text-xs leading-relaxed text-foreground">
           {displayValue || "—"}
         </pre>
       )}
@@ -950,7 +951,7 @@ function CopyablePill({ label }: { label: string }) {
 
   const copy = async () => {
     try {
-      await navigator.clipboard.writeText(label);
+      await copyText(label);
       setCopied(true);
       setTimeout(() => setCopied(false), 1500);
     } catch {
