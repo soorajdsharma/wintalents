@@ -609,7 +609,7 @@ function SourcePro() {
                 title="Google X-Ray"
                 description="Optimized Google X-Ray query."
                 icon={<GoogleGIcon className="h-5 w-5" />}
-                iconHref="https://programmablesearchengine.google.com/about/"
+                iconHref="https://programmablesearchengine.google.com/controlpanel/create"
                 value={google}
                 searchUrl={`https://www.google.com/search?q=${encodeURIComponent(google)}`}
               />
