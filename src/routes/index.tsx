@@ -47,6 +47,8 @@ const GOOGLE_XRAY_OPERATORS = [
   "site:linkedin.com/in",
   "inurl:linkedin.com/in",
   "*.linkedin.com/in/*",
+  "site:scribd.com/document",
+  "site:leetcode.com/u/",
 ];
 
 
