@@ -239,6 +239,10 @@ const EDUCATION_OPTIONS = [
   "Artificial Intelligence",
   "Machine Learning",
   "AIDS",
+  "Bachelor of Engineering",
+  "Bachelor of Technology",
+  "BTech",
+  "BE",
 ];
 
 function buildGroup(values: string[]): string {
