@@ -227,6 +227,8 @@ const COMPETITIVE_PROGRAMMING_OPTIONS = [
   "Data Structures and Algorithms",
   "Competitive Programming",
   "CodeVita",
+  "Hackathons",
+  "Hackathon",
 ];
 const EDUCATION_OPTIONS = [
   "Computer Engineering",
