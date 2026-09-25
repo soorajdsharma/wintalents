@@ -632,6 +632,7 @@ function SourcePro() {
                 title="LinkedIn Leakage"
                 description="Bypass LinkedIn Limitation"
                 icon={<LinkedInBrandIcon className="h-5 w-5" />}
+                iconHref="https://chatgpt.com/g/g-68025e7666d881919b331a9188b9226f-sourcegpt"
                 value={nested}
                 searchUrl={`https://www.google.com/search?q=${encodeURIComponent(nested)}`}
               />
