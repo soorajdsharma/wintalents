@@ -625,6 +625,7 @@ function SourcePro() {
                 title="LinkedIn Boolean"
                 description="LinkedIn-compatible Boolean syntax."
                 icon={<LinkedInBrandIcon className="h-5 w-5" />}
+                iconHref="https://chatgpt.com/g/g-695f6ccd93988191af2dbec563d72a1b-naukrigpt"
                 value={linkedin}
                 searchUrl={`https://www.linkedin.com/search/results/people/?keywords=${encodeURIComponent(linkedin)}`}
               />
