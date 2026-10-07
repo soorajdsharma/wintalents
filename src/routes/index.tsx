@@ -611,7 +611,16 @@ function SourcePro() {
             </div>
 
             <div className="space-y-4">
-              <h3 className="text-sm font-medium text-muted-foreground">Generated Searches</h3>
+              <h3 className="text-sm font-medium text-muted-foreground">
+                <a
+                  href="https://claude.ai/artifact/KRHWJVoym4VJYvxHtDEhFY"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline-offset-4 transition-colors hover:text-foreground hover:underline"
+                >
+                  Generated Searches
+                </a>
+              </h3>
 
               <ResultCard
                 title="Google X-Ray"
