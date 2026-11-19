@@ -597,7 +597,7 @@ function SourcePro() {
                     <div className="mb-2 flex items-center justify-between">
                       <div className="flex items-center gap-2">
                         <Search className="h-3.5 w-3.5 text-primary" />
-                        <h4 className="text-xs font-semibold">X-Ray site to Source</h4>
+                        <h4 className="text-xs font-semibold">X-Ray Site to Source Candidate</h4>
                       </div>
                       {googleOperators.length > 0 && (
                         <button
