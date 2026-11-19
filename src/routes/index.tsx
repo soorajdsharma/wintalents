@@ -254,6 +254,17 @@ const EDUCATION_OPTIONS = [
   "BTech",
   "BE",
 ];
+const EXPERIENCE_SYNTAX_OPTIONS = [
+  '("1+" | "2+" | "3+" | "4+")',
+  "2..4 AROUND(4) (exp | experience | years | yrs) Gujarat",
+  '3..8 AROUND(4) (exp | experience | years | yrs | "yr of")',
+  '"2..5 * experience"',
+];
+
+function appendSyntax(query: string, syntax: string): string {
+  if (!syntax) return query;
+  return query ? `${query} ${syntax}` : syntax;
+}
 
 function buildGroup(values: string[]): string {
   const parts = values.map((v) => (/\s/.test(v) ? `"${v}"` : v));
@@ -289,6 +300,7 @@ function SourcePro() {
   const [competitive, setCompetitive] = useState<string[]>([]);
   const [education, setEducation] = useState<string[]>([]);
   const [googleOperators, setGoogleOperators] = useState<string[]>([]);
+  const [experienceSyntax, setExperienceSyntax] = useState<string[]>([]);
 
 
   const [history, setHistory] = useState<string[]>([]);
@@ -320,6 +332,7 @@ function SourcePro() {
     setCompetitive([]);
     setEducation([]);
     setGoogleOperators([]);
+    setExperienceSyntax([]);
   };
 
   const removeHistory = (item: string) => {
@@ -334,41 +347,62 @@ function SourcePro() {
 
   const prevOperatorsRef = useRef<string>("");
   const prevGroupsRef = useRef<string[]>([]);
+  const prevExpRef = useRef<string[]>([]);
   useEffect(() => {
     const opPrefix = googleOperators.join(" ");
     const nextGroups = [buildGroup(locations), buildGroup(competitive), buildGroup(education)].filter(Boolean);
+    const nextExp = experienceSyntax;
     const prevOp = prevOperatorsRef.current;
     const prevGroups = prevGroupsRef.current;
+    const prevExp = prevExpRef.current;
 
-    if (prevOp === opPrefix && prevGroups.length === nextGroups.length && prevGroups.every((g, i) => g === nextGroups[i])) return;
+    const sameList = (a: string[], b: string[]) =>
+      a.length === b.length && a.every((v, idx) => v === b[idx]);
+    if (prevOp === opPrefix && sameList(prevGroups, nextGroups) && sameList(prevExp, nextExp)) return;
 
     prevOperatorsRef.current = opPrefix;
     prevGroupsRef.current = nextGroups;
+    prevExpRef.current = nextExp;
 
     setQuery((q) => {
       let base = q;
       if (prevOp && base.startsWith(prevOp)) base = base.slice(prevOp.length).trim();
       for (const g of prevGroups) base = removeSegment(base, g);
+      for (const s of prevExp) base = removeSegment(base, s);
       if (opPrefix) base = `${opPrefix} ${base}`;
-      return [base.trim(), ...nextGroups].filter(Boolean).join(" AND ");
+      const core = [base.trim(), ...nextGroups].filter(Boolean).join(" AND ");
+      return [core, ...nextExp].filter(Boolean).join(" ");
     });
-  }, [googleOperators, locations, competitive, education]);
+  }, [googleOperators, locations, competitive, education, experienceSyntax]);
 
   const opPrefix = googleOperators.join(" ");
-  const baseQuery = opPrefix && query.startsWith(opPrefix) ? query.slice(opPrefix.length).trim() : query;
-  const composed = baseQuery;
+  const expSuffix = experienceSyntax.join(" ");
+  const composed = useMemo(() => {
+    let base = query;
+    if (opPrefix && base.startsWith(opPrefix)) base = base.slice(opPrefix.length).trim();
+    for (const snip of experienceSyntax) base = removeSegment(base, snip);
+    return base.trim();
+  }, [query, opPrefix, experienceSyntax]);
 
-  const github = useMemo(() => toGitHubXRay(composed), [composed]);
+  const github = useMemo(
+    () => appendSyntax(toGitHubXRay(composed), expSuffix),
+    [composed, expSuffix],
+  );
   const google = useMemo(() => {
     const base = toGoogleXRay(composed);
     const prefix = googleOperators.join(" ");
-    if (!prefix) return base;
-    if (!base) return prefix;
-    return `${prefix} ${base}`;
-  }, [composed, googleOperators]);
-  const linkedin = useMemo(() => toLinkedInBoolean(composed), [composed]);
+    const merged = !prefix ? base : !base ? prefix : `${prefix} ${base}`;
+    return appendSyntax(merged, expSuffix);
+  }, [composed, googleOperators, expSuffix]);
+  const linkedin = useMemo(
+    () => appendSyntax(toLinkedInBoolean(composed), expSuffix),
+    [composed, expSuffix],
+  );
 
-  const nested = useMemo(() => toNestedSearch(composed), [composed]);
+  const nested = useMemo(
+    () => appendSyntax(toNestedSearch(composed), expSuffix),
+    [composed, expSuffix],
+  );
   const operatorCount = useMemo(() => countOperators(query), [query]);
 
   useEffect(() => {
@@ -599,14 +633,45 @@ function SourcePro() {
                   </div>
 
                 </div>
-                <FilterGroup
-                  label="Competitive Programming"
-                  options={COMPETITIVE_PROGRAMMING_OPTIONS}
-                  selected={competitive}
-                  onToggle={(v) => toggle(competitive, setCompetitive, v)}
-                  onClear={() => setCompetitive([])}
-                  onSelectAll={() => setCompetitive(COMPETITIVE_PROGRAMMING_OPTIONS)}
-                />
+                <div className="space-y-4">
+                  <FilterGroup
+                    label="Competitive Programming"
+                    options={COMPETITIVE_PROGRAMMING_OPTIONS}
+                    selected={competitive}
+                    onToggle={(v) => toggle(competitive, setCompetitive, v)}
+                    onClear={() => setCompetitive([])}
+                    onSelectAll={() => setCompetitive(COMPETITIVE_PROGRAMMING_OPTIONS)}
+                  />
+                  <div className="rounded-xl border border-border bg-card p-3">
+                    <div className="mb-2 flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <Layers className="h-3.5 w-3.5 text-primary" />
+                        <h4 className="text-xs font-semibold">Years of experience Syntax</h4>
+                      </div>
+                      {experienceSyntax.length > 0 && (
+                        <button
+                          onClick={() => setExperienceSyntax([])}
+                          className="text-xs text-muted-foreground transition hover:text-foreground"
+                        >
+                          Clear
+                        </button>
+                      )}
+                    </div>
+                    <p className="mb-2 text-[11px] leading-snug text-muted-foreground">
+                      Ready-made experience operators. Click to apply, copy to use anywhere.
+                    </p>
+                    <div className="space-y-2">
+                      {EXPERIENCE_SYNTAX_OPTIONS.map((snip) => (
+                        <SyntaxRow
+                          key={snip}
+                          text={snip}
+                          active={experienceSyntax.includes(snip)}
+                          onToggle={() => toggle(experienceSyntax, setExperienceSyntax, snip)}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                </div>
               </div>
               <FilterGroup
                 label="Education"
@@ -999,6 +1064,54 @@ function FilterGroup({
           );
         })}
       </div>
+    </div>
+  );
+}
+
+function SyntaxRow({
+  text,
+  active,
+  onToggle,
+}: {
+  text: string;
+  active: boolean;
+  onToggle: () => void;
+}) {
+  const [copied, setCopied] = useState(false);
+
+  const copy = async () => {
+    const ok = await copyText(text);
+    if (ok) {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1500);
+    }
+  };
+
+  return (
+    <div
+      className={`flex items-stretch gap-1 rounded-lg border transition ${
+        active ? "border-primary bg-primary/5" : "border-border bg-background hover:border-primary/40"
+      }`}
+    >
+      <button
+        type="button"
+        onClick={onToggle}
+        aria-pressed={active}
+        className={`min-w-0 flex-1 px-3 py-2 text-left font-mono text-[11px] leading-snug break-words transition ${
+          active ? "text-primary" : "text-muted-foreground hover:text-foreground"
+        }`}
+      >
+        {text}
+      </button>
+      <button
+        type="button"
+        onClick={copy}
+        aria-label="Copy this syntax"
+        title="Copy this syntax"
+        className="shrink-0 rounded-r-lg px-2 text-muted-foreground transition hover:bg-accent hover:text-foreground"
+      >
+        {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
+      </button>
     </div>
   );
 }
