@@ -49,6 +49,14 @@ const GOOGLE_XRAY_OPERATORS = [
   "*.linkedin.com/in/*",
   "site:scribd.com/document",
   "site:leetcode.com/u/",
+  "site:codebasics.io/portfolio/",
+  "site:stackoverflow.com/users",
+  "site:npmjs.com/~",
+  "site:pypi.org/user/",
+  "site:kaggle.com",
+  "site:hackerrank.com",
+  "site:codechef.com",
+  "site:dev.to",
 ];
 
 
