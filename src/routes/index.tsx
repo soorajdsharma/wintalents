@@ -225,6 +225,12 @@ function toNestedSearch(input: string): string {
 
 const LOCATION_OPTIONS = ["Surat", "Gujarat", "India"];
 const PRODUCT_COMPANY_OPTIONS = ["Surat", "Gujarat", "BLR", "Mumbai", "DevTools"];
+const LOCATION_SEARCH_LINKS: Record<string, string[]> = {
+  Surat: [
+    "https://www.linkedin.com/search/results/people/?origin=FACETED_SEARCH&geoUrn=%5B%2290009629%22%2C%22114495808%22%2C%22115855341%22%5D&currentCompany=%5B%22105920263%22%2C%2210238242%22%2C%2213591725%22%2C%2213638290%22%2C%2210378995%22%2C%2213249114%22%2C%22116164382%22%2C%2278303173%22%2C%2276418138%22%2C%22103248751%22%2C%2271940284%22%2C%2280841680%22%2C%2286853191%22%2C%2273858067%22%2C%2282910603%22%2C%2290465035%22%2C%227791920%22%2C%225175084%22%2C%22112995038%22%2C%2214676910%22%2C%2282142996%22%2C%2228741613%22%2C%2277584404%22%2C%22109169983%22%2C%2271753949%22%2C%22135216569%22%2C%2289706940%22%2C%2295057809%22%2C%2278054562%22%2C%2214536937%22%2C%22101596993%22%2C%222260852%22%2C%2281763622%22%2C%2214398501%22%2C%2282556241%22%2C%2286438706%22%2C%226626044%22%2C%2240663328%22%2C%2213187469%22%2C%2279902754%22%2C%2296632121%22%2C%22108234777%22%2C%221612778%22%2C%2213704273%22%2C%2213199209%22%2C%2275882171%22%2C%22134364103%22%2C%22101066764%22%2C%2271246256%22%2C%2213348899%22%2C%2268146166%22%2C%22101887431%22%2C%22108777908%22%2C%2278301119%22%5D",
+    "https://www.linkedin.com/search/results/people/?origin=FACETED_SEARCH&geoUrn=%5B%22101588871%22%5D&currentCompany=%5B%2290823694%22%2C%223824966%22%2C%2281763622%22%2C%2247647578%22%2C%221005672%22%2C%22102893256%22%2C%221413983%22%2C%2213704273%22%2C%2281838640%22%2C%2211477190%22%2C%22107676138%22%2C%2273858067%22%2C%2269589011%22%2C%22250956%22%2C%2296632121%22%2C%2214559449%22%2C%2213199209%22%2C%2286438706%22%2C%22104095092%22%2C%2210667909%22%2C%2255874%22%2C%222844383%22%2C%2211153452%22%2C%2210360663%22%2C%2231194466%22%2C%2268146166%22%2C%2213672016%22%2C%2213591725%22%2C%2299999950%22%2C%2276418138%22%2C%22116164382%22%2C%22109852113%22%2C%2278303173%22%2C%2210378995%22%2C%2265548841%22%2C%2242841004%22%2C%2293269900%22%2C%22100008585%22%2C%2213737839%22%2C%222436910%22%2C%227791920%22%2C%2214765618%22%2C%2214566429%22%2C%2295057809%22%2C%22567268%22%2C%2282142996%22%2C%2228741613%22%2C%2210043620%22%2C%2214676910%22%2C%22112995038%22%2C%22399351%22%2C%2213581265%22%2C%222260852%22%2C%22104603719%22%2C%226626044%22%2C%22606710%22%2C%2290568019%22%2C%2214470267%22%2C%22108859324%22%2C%227211342%22%2C%22101596993%22%2C%223762840%22%2C%2271246256%22%2C%2214398501%22%2C%2213427392%22%2C%2214702949%22%2C%2213194805%22%2C%227790677%22%2C%22117924327%22%2C%2213348899%22%2C%22105008922%22%2C%226431738%22%2C%2279725050%22%2C%226643262%22%2C%2210505302%22%2C%222339440%22%2C%2280841680%22%2C%22103945413%22%2C%2214508165%22%2C%22105973595%22%2C%22163093%22%2C%22108142805%22%2C%2288019561%22%2C%2213251538%22%2C%22108422%22%2C%225053%22%2C%22105483822%22%2C%2210238242%22%2C%2280947197%22%2C%2270954048%22%2C%221701810%22%2C%2277740996%22%2C%2278607284%22%2C%2271940284%22%2C%2288000136%22%2C%2213466894%22%2C%22143247974%22%2C%2288004760%22%2C%2281491877%22%2C%2282166108%22%2C%2213753752%22%2C%2292492121%22%2C%22106638439%22%2C%2213339628%22%2C%2277584404%22%2C%2273377952%22%2C%221190373%22%2C%22103193113%22%2C%2273497823%22%2C%223667747%22%2C%229381687%22%2C%2278054562%22%2C%2271753949%22%2C%22328453%22%2C%22633558%22%5D",
+  ],
+};
 const COMPETITIVE_PROGRAMMING_OPTIONS = [
   "LeetCode",
   "CodeChef",
@@ -595,6 +601,7 @@ function SourcePro() {
                     selected={locations}
                     onToggle={(v) => toggle(locations, setLocations, v)}
                     onClear={() => setLocations([])}
+                    links={LOCATION_SEARCH_LINKS}
                   />
                   <div className="rounded-xl border border-border bg-card p-3">
                     <div className="mb-2 flex items-center justify-between">
@@ -691,6 +698,7 @@ function SourcePro() {
                 onToggle={(v) => toggle(productCompany, setProductCompany, v)}
                 onClear={() => setProductCompany([])}
                 onSelectAll={() => setProductCompany(PRODUCT_COMPANY_OPTIONS)}
+                links={LOCATION_SEARCH_LINKS}
               />
             </div>
 
@@ -1022,6 +1030,7 @@ function FilterGroup({
   onToggle,
   onClear,
   onSelectAll,
+  links,
 }: {
   label: string;
   options: string[];
@@ -1029,6 +1038,7 @@ function FilterGroup({
   onToggle: (value: string) => void;
   onClear: () => void;
   onSelectAll?: () => void;
+  links?: Record<string, string[]>;
 }) {
   const allSelected = selected.length === options.length && options.length > 0;
   return (
@@ -1059,19 +1069,38 @@ function FilterGroup({
       <div className="flex flex-wrap gap-2">
         {options.map((opt) => {
           const active = selected.includes(opt);
+          const hrefs = links?.[opt] ?? [];
           return (
-            <button
+            <span
               key={opt}
-              type="button"
-              onClick={() => onToggle(opt)}
-              className={`rounded-full border px-3 py-1 text-xs font-medium transition ${
+              className={`inline-flex items-center rounded-full border text-xs font-medium transition ${
                 active
                   ? "border-primary bg-primary text-primary-foreground"
                   : "border-border bg-background text-muted-foreground hover:border-primary/40 hover:text-foreground"
               }`}
             >
-              {opt}
-            </button>
+              <button
+                type="button"
+                onClick={() => onToggle(opt)}
+                className={`rounded-full py-1 font-medium outline-none ${
+                  hrefs.length ? "pl-3 pr-2" : "px-3"
+                }`}
+              >
+                {opt}
+              </button>
+              {hrefs.map((href, i) => (
+                <a
+                  key={href}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title={`Open ${opt} search ${i + 1} on LinkedIn`}
+                  className="rounded-full py-1 pl-0.5 pr-3 opacity-70 transition hover:opacity-100"
+                >
+                  <ExternalLink className="h-3 w-3" />
+                </a>
+              ))}
+            </span>
           );
         })}
       </div>
