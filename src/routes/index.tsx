@@ -224,6 +224,7 @@ function toNestedSearch(input: string): string {
 
 
 const LOCATION_OPTIONS = ["Surat", "Gujarat", "India"];
+const PRODUCT_COMPANY_OPTIONS = ["Surat", "Gujarat", "BLR", "Mumbai", "DevTools"];
 const COMPETITIVE_PROGRAMMING_OPTIONS = [
   "LeetCode",
   "CodeChef",
@@ -301,6 +302,7 @@ function SourcePro() {
   const [education, setEducation] = useState<string[]>([]);
   const [googleOperators, setGoogleOperators] = useState<string[]>([]);
   const [experienceSyntax, setExperienceSyntax] = useState<string[]>([]);
+  const [productCompany, setProductCompany] = useState<string[]>([]);
 
 
   const [history, setHistory] = useState<string[]>([]);
@@ -333,6 +335,7 @@ function SourcePro() {
     setEducation([]);
     setGoogleOperators([]);
     setExperienceSyntax([]);
+    setProductCompany([]);
   };
 
   const removeHistory = (item: string) => {
@@ -350,7 +353,7 @@ function SourcePro() {
   const prevExpRef = useRef<string[]>([]);
   useEffect(() => {
     const opPrefix = googleOperators.join(" ");
-    const nextGroups = [buildGroup(locations), buildGroup(competitive), buildGroup(education)].filter(Boolean);
+    const nextGroups = [buildGroup(locations), buildGroup(competitive), buildGroup(education), buildGroup(productCompany)].filter(Boolean);
     const nextExp = experienceSyntax;
     const prevOp = prevOperatorsRef.current;
     const prevGroups = prevGroupsRef.current;
@@ -373,7 +376,7 @@ function SourcePro() {
       const core = [base.trim(), ...nextGroups].filter(Boolean).join(" AND ");
       return [core, ...nextExp].filter(Boolean).join(" ");
     });
-  }, [googleOperators, locations, competitive, education, experienceSyntax]);
+  }, [googleOperators, locations, competitive, education, experienceSyntax, productCompany]);
 
   const opPrefix = googleOperators.join(" ");
   const expSuffix = experienceSyntax.join(" ");
@@ -680,6 +683,14 @@ function SourcePro() {
                 onToggle={(v) => toggle(education, setEducation, v)}
                 onClear={() => setEducation([])}
                 onSelectAll={() => setEducation(EDUCATION_OPTIONS)}
+              />
+              <FilterGroup
+                label="Product Company LinkedIn Filter"
+                options={PRODUCT_COMPANY_OPTIONS}
+                selected={productCompany}
+                onToggle={(v) => toggle(productCompany, setProductCompany, v)}
+                onClear={() => setProductCompany([])}
+                onSelectAll={() => setProductCompany(PRODUCT_COMPANY_OPTIONS)}
               />
             </div>
 
